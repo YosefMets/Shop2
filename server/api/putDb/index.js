@@ -24,7 +24,7 @@ export default defineEventHandler((event) => {
   });
 
   let testReading = 'No'
-  fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
+  fs.readFile(`${folder}/ru.json`, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
