@@ -23,5 +23,15 @@ export default defineEventHandler((event) => {
     }
   });
 
-  return { a: query.foo, b: query.baz }
+  let testReading = 'No'
+  fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(data);
+    testReading = data;
+  });
+
+  return 'Look: ' + testReading
 })
