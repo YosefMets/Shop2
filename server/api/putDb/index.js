@@ -33,5 +33,5 @@ export default defineEventHandler((event) => {
     testReading = data;
   });
 
-  return 'Look: ' + testReading
+  return 'Look: ' + testReading + 'q'
 })
