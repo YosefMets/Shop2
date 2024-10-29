@@ -3,8 +3,8 @@ const require = createRequire(import.meta.url);
 
 export default defineEventHandler( async (event) => {
   const body = await readBody(event)
-  console.log(body)
   const fs = require('node:fs');
+  const fsP = require('node:fs/promises');
 
   const folder = 'public/db'
 
@@ -24,5 +24,13 @@ export default defineEventHandler( async (event) => {
     }
   });
 
-  return body
+  let testReading;
+  try {
+    testReading = await fsP.readFile(`${folder}/ru.json`, { encoding: 'utf8' });
+  } catch (err) {
+    console.log(err);
+  }
+  console.log('W:', testReading);
+
+  return 'Look: '+testReading
 })
