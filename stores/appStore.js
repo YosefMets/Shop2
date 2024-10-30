@@ -60,7 +60,7 @@ export const useAppStore = defineStore('app', () => {
     return res.sort( ( a, b ) => sortsFunctions[activeSort.value]( a, b ) );
   });
   const itemsMinMax = computed( () => {
-    const a = displayedItems.value.map( ({price}) => price).sort( ( a, b ) => a-b );
+    const a = displayedItems.value?.map( ({price}) => price).sort( ( a, b ) => a-b );
     return { min: a[0], max: a[a.length-1] };
   } );
 

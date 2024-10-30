@@ -56,10 +56,12 @@ watch(quantity, (newVal, oldVal) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: .1rem solid var(--hover-bg-dark);
-  background-color: var(--hover-bg-dark);
+  /*border: .1rem solid var(--hover-bg-dark);*/
+  /*background-color: var(--hover-bg-dark);*/
   border-radius: var(--br);
+  transition: background-color .2s;
 }
+.cart-but-wr:hover { background-color: var(--hover-bg-dark) }
 .cart-but {
   display: flex;
   /*flex-direction: row;*/
@@ -105,7 +107,7 @@ watch(quantity, (newVal, oldVal) => {
   display: flex;
   transition: transform .1s;
 }
-.cart-but:hover > .cart-but-ic-el { transform: translateX(.1rem) }
+/*.cart-but:hover > .cart-but-ic-el { transform: translateX(.1rem) }*/
 
 .cart-but-ic {
   width: 2rem;

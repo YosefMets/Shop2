@@ -36,8 +36,8 @@ export default function () {
 
   brands.value.forEach( brand => {
     if (brand.items?.length) {
-      brand.dirs = Array.from( new Set( brand.items.map( ({ P }) => P ) ) )
-                        .map( dirId => db.value[dirId] )
+      brand.dirs = Array.from( new Set( brand.items?.map( ({ P }) => P ) ) )
+                        ?.map( dirId => db.value[dirId] )
     }
   });
 

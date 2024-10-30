@@ -34,7 +34,7 @@ const filtersQuery1 = computed( () => {
   })
 
   return ( Object.keys( dblFilters ) || [] ).flatMap( key => {
-    return dblFilters[key].map( value => {
+    return dblFilters[key]?.map( value => {
       const dbValue = db.value[value];
       const res = dbValue?.P
           ? [ dbValue.I, dbValue.S ]
