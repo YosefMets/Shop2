@@ -79,6 +79,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
 }
 .mb-cat {
   grid-area: cat;
+  margin: 0 -1rem;
 }
 .mb-cart {
   grid-area: cart;

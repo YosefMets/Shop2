@@ -1,4 +1,6 @@
 export default {
+  mainMenu: 'All categories',
+  shopAll: 'Shop all',
 
   countries: {
     ae: "United Arab Emirates",

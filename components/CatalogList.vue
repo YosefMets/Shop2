@@ -57,7 +57,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 .cat-list {
   list-style: none;
   margin: 0;
-  padding: .5rem 0;
+  padding: .5rem 1rem;
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -97,15 +97,18 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   grid-gap: .5rem;
   padding: .5rem 0;
   margin: -.5rem 0 0;
-  /*font-size: .9rem;*/
+  font-size: .9rem;
+  font-weight: 300;
   /*text-transform: uppercase;*/
   /*background-color: var(--bg2);*/
   cursor: pointer;
   /*background-color: #fff;*/
   /*transition: background-color .2s;*/
   border-radius: var(--br);
-  transition: all .2s;
+  transition: opacity .2s;
+  opacity: .6;
 }
+.cat-back:hover { opacity: 1 }
 .cat-back-ic {
   /*width: 2rem;*/
   /*height: 1.2rem;*/
@@ -124,7 +127,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 }
 
 .cat-subtitle {
-  padding: .5rem 0 1rem;
+  padding: .3rem 0 1rem;
   margin: 0 0 .5rem;
   font-size: 1.8rem;
   line-height: 1.2em;

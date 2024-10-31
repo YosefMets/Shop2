@@ -77,7 +77,7 @@ const isInChain = computed( () => {
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
-  padding: .5em 0;
+  padding: .4em 0;
   text-decoration: none;
   color: #fff;
   align-items: center;
@@ -99,7 +99,7 @@ const isInChain = computed( () => {
 */
 .active > .cat-link,
 .cat-link:active {
-  color: var(--active);
+  color: #fd0;
 }
 .cat-link > svg {
   width: 1rem;
@@ -120,7 +120,7 @@ const isInChain = computed( () => {
 
 .sub-menu-enter-active,
 .sub-menu-leave-active {
-  transition: transform .2s;
+  transition: transform .3s;
 }
 .sub-menu-enter-from,
 .sub-menu-leave-to {
