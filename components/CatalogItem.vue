@@ -47,6 +47,7 @@ const isInChain = computed( () => {
     <div v-if="dir.children"
          :class="['cat-link', { 'cat-link-curr': dir === group }]"
          @click="activeDir = dir">
+      <i class="cat-ic">{{ dir.IC }}</i>
       {{ dir.N }}
       <svg-v v-if="dir.children" />
     </div>
@@ -56,6 +57,7 @@ const isInChain = computed( () => {
            :max="null"
            :class="['cat-link', { 'cat-link-curr': dir === group }]"
            @click="emit('x')">
+      <i class="cat-ic">{{ dir.IC }}</i>
       {{ dir.N }}
     </NLink>
 
@@ -75,8 +77,8 @@ const isInChain = computed( () => {
 <style scoped>
 .cat-link {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-gap: 2rem;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: .5rem;
   padding: .4em 0;
   text-decoration: none;
   color: #fff;
@@ -91,6 +93,12 @@ const isInChain = computed( () => {
   padding-left: .3rem;
   padding-right: .3rem;
   background-color: var(--hover-bg-dark);
+}
+.cat-ic {
+  font-style: normal;
+  width: 1.6rem;
+  text-align: center;
+  /*aspect-ratio: 1 / 1;*/
 }
 /*
 .cat-item:hover > .cat-link:not(.cat-link-curr) {

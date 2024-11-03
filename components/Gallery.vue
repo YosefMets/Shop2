@@ -1,16 +1,22 @@
 <script setup>
 const props = defineProps({ item: Object });
 
-const images = computed( () => props.item?.M?.map( (ext, i) => `/i/${props.item.I}-${i}.${ext}` ) || null)
+const images = computed( () => {
+  const media = props.item?.M
+  return media
+      ? new Array(media).fill().map((x, i) => `/${props.item.I}-${i}.avif`)
+      : null
+})
 </script>
 
 <template>
   <div class="gallery">
     <template v-if="images">
       <div v-for="img in images" class="gal-item">
-        <img class="gal-img"
-             :src="img"
-             :alt="item.N">
+        <NuxtImg :src="img"
+                 :alt="item.N"
+                 :key="item.I"
+                 loading="lazy" />
       </div>
     </template>
   </div>

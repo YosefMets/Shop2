@@ -1,14 +1,15 @@
-import {useAppStore} from "~/stores/appStore.js";
-import {useUserStore} from "~/stores/userStore.js";
+// import {useAppStore} from "~/stores/appStore.js";
+// import {useUserStore} from "~/stores/userStore.js";
 
 export default function () {
   const { db, dirs, items, brands, currencies, currency, activeGroup } = storeToRefs( useAppStore() );
   const { user } = storeToRefs( useUserStore() );
 
-  items.value.forEach( item => {
+  items.value?.forEach( item => {
     if (item['%']) item['$%'] = Math.floor( item.$ * (100 - item['%']) ) / 100;
 
-    const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[user.value.currency]?.K || 1 );
+    const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[user.value.currency] || 1 );
+    // console.log(1);
     item.price = Math.round(( price ) * 100) / 100;
 
     let dir = db.value[item.P];
@@ -23,7 +24,7 @@ export default function () {
     brand.items.push( item );
   });
 
-  dirs.value.forEach( dir => {
+  dirs.value?.forEach( dir => {
     if (!dir.items) dir.items = [];
 
     if (dir.P && db.value[dir.P]) {
@@ -34,7 +35,7 @@ export default function () {
     dir.keywords = getKeywords( dir );
   });
 
-  brands.value.forEach( brand => {
+  brands.value?.forEach( brand => {
     if (brand.items?.length) {
       brand.dirs = Array.from( new Set( brand.items?.map( ({ P }) => P ) ) )
                         ?.map( dirId => db.value[dirId] )

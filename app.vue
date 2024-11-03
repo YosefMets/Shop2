@@ -1,5 +1,9 @@
+<script setup>
+const { currency, activeGroup } = storeToRefs( useAppStore() );
+</script>
+
 <template>
-  <NuxtLayout>qwe
+  <NuxtLayout>{{ currency }}
     <NuxtPage />
   </NuxtLayout>
 </template>

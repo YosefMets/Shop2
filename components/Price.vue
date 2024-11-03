@@ -32,7 +32,7 @@ const { currency } = storeToRefs( useAppStore() );
   grid-gap: .5rem;
   /*align-items: baseline;*/
   line-height: 1em;
-  font-weight: 600;
+  font-weight: 400;
 }
 .price > b {
   font-weight: inherit;
@@ -49,11 +49,11 @@ const { currency } = storeToRefs( useAppStore() );
 i {font-style: normal}
 
 .pc-f {
-  font-size: .65em;
-  font-weight: 500;
+  font-size: .5em;
+  font-weight: inherit;
   line-height: 1em;
   margin-left: .1em;
-  margin-top: .1em;
+  margin-top: .15em;
 }
 .literal { /*display: none;*/ }
 

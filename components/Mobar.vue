@@ -40,7 +40,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
       "cat  cat"
       "sett sett";
   /*box-shadow: .2rem 0 1rem -.7rem #000000;*/
-  border-radius: calc( 3 * var(--br) );
+  border-radius: var(--Br);
   background-color: var(--dark);
   color: #fff;
   padding: 1rem;

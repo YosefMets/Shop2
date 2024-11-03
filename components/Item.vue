@@ -4,31 +4,30 @@ import NLink from "~/components/controls/NLink.vue";
 
 const props = defineProps({ item: Object });
 
-const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[0]}` : null );
-
-// const image = await $fetch(`http://localhost:5500/i/${props.item.I}-0.png`);
-// console.log(image)
+// const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[0]}` : null );
+const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
 </script>
 
 <template>
   <NLink :to="item" :min="null" :max="null" class="item">
 
     <i class="it-i">
-      <img :src="img" :alt="item.N" :key="item.I" loading="lazy" />
+      <NuxtImg v-if="img" :src="img" :alt="item.N" :key="item.I" loading="lazy" />
+<!--      <img :src="img" :alt="item.N" :key="item.I" loading="lazy" />-->
     </i>
 
     <p class="it-n" :title="item.N">{{ item.N }}</p>
 
-    <Price :amount="item?.price" />
+    <Price class="it-pr" :amount="item?.price" />
 
   </NLink>
 </template>
 
 <style scoped>
 .item {
-  /*background-color: #fff;*/
-  background-color: var(--bg);
-  padding: .5rem;
+  background-color: #fff;
+  /*background-color: var(--bg);*/
+  padding: 0 0 1rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
@@ -38,6 +37,7 @@ const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[
   text-decoration: none;
   z-index: 10;
   overflow: hidden;
+  border-radius: var(--Br);
 }
 
 .it-i {
@@ -61,15 +61,16 @@ const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[
 /*  background-color: transparent;*/
 /*}*/
 .it-i > img {
-  object-fit: contain;
+  object-fit: cover;
   object-position: 50% 50%;
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, -50%);
   transition: transform .1s linear;
+  /*border-radius: var(--br);*/
 }
 .item:hover > .it-i > img {
   transform: translate(-50%, -50%) scale(1.01);
@@ -86,8 +87,8 @@ const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[
 
 .it-n {
   /*grid-column: 1 / -1;*/
-  margin: 0;
-  font-size: 1.1rem;
+  margin: 0 0 0 1rem;
+  font-size: 1rem;
   line-height: 1.2em;
 
   display: -webkit-box;
@@ -95,6 +96,11 @@ const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.it-pr {
+  margin: 0 1rem 0 0;
+  font-weight: 400;
+  font-size: 1.4rem;
 }
 
 @media (max-width: 480px) {

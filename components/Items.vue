@@ -31,9 +31,9 @@ more();
   /*padding: .2rem 0;*/
   padding: .2rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   /*grid-auto-rows: 21.5rem;*/
-  grid-gap: .5rem;
+  grid-gap: 2rem;
   grid-auto-flow: dense;
   align-self: flex-start;
   position: relative;

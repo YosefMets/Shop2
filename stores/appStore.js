@@ -35,8 +35,8 @@ export const useAppStore = defineStore('app', () => {
 
   const dbArray = computed( () => db.value ? Object.values( db.value ) : null );
   const dbSlug = computed( () => db.value ? Object.values( db.value ).reduce( (res, en) => (en.S ? {...res, [en.S]: en.I} : res), {} ) : null );
-  const items = computed( () => dbArray.value?.filter( ({ I }) => (/^01/).test( I ) ) || null);
-  const dirs = computed( () => dbArray.value?.filter( ({ I }) => (/^02/).test( I ) ) || null);
+  const items = computed( () => dbArray.value?.filter( ({ I }) => (/^I/).test( I ) ) || null);
+  const dirs = computed( () => dbArray.value?.filter( ({ I }) => (/^D/).test( I ) ) || null);
   const brands = computed( () => dbArray.value?.filter( ({ I }) => (/^03/).test( I ) ) || null);
   const brandsSlugs = computed( () => brands.value?.reduce( (res, brand) => {res[brand.S] = brand; return res}, {}));
   const scopedItems = computed( () => {
@@ -60,9 +60,9 @@ export const useAppStore = defineStore('app', () => {
     return res.sort( ( a, b ) => sortsFunctions[activeSort.value]( a, b ) );
   });
   const itemsMinMax = computed( () => {
-    return { min: 0, max: 1000 }
-    // const a = displayedItems.value?.map( ({price}) => price).sort( ( a, b ) => a-b );
-    // return { min: a[0], max: a[a.length-1] };
+    // return { min: 0, max: 1000 }
+    const a = displayedItems.value?.map( ({price}) => price).sort( ( a, b ) => a-b );
+    return { min: a[0], max: a[a.length-1] };
   } );
 
   const country = computed( () => countries.value?.[user.value.country]);
@@ -71,7 +71,8 @@ export const useAppStore = defineStore('app', () => {
 
   watch( () => currency.value, (n) => {
     items.value?.forEach( item => {
-      const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[n.ISO]?.K || 1 );
+      console.log(db.value?.currencies, n.ISO, db.value?.currencies?.[n.ISO])
+      const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[n.ISO] || 1 );
       item.price = Math.round(( price ) * 100) / 100;
     });
   });

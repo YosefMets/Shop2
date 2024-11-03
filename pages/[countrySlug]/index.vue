@@ -4,7 +4,7 @@ const { db, dbSlug, dirs } = storeToRefs( useAppStore() )
 
 <template>
   <div class="landing">
-    {{ dirs }}
+    {{ db }}
   </div>
 </template>
 

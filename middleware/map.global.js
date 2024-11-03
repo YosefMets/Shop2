@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const { meta, params, query } = to;
   const appStore = useAppStore();
-  const { entityId, db, brandsSlugs, countries, currencies, filters } = storeToRefs( appStore );
+  const { entityId, db, dirs, items, brandsSlugs, countries, currencies, filters } = storeToRefs( appStore );
   const { user } = storeToRefs( useUserStore() );
 
   const { $i18n, $direction } = useNuxtApp();
@@ -42,7 +42,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const t = Date.now()
     db.value = await $fetch(`/api/db/${locale}`);
-    console.log('Fetching DB:', Date.now() - t, 'ms')
+    console.log('Fetching DB:', Date.now() - t, 'ms');
     prepareDB();
   }
   const nuxtApp = useNuxtApp();

@@ -123,7 +123,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   /*background-color: var(--hover-bg-dark);*/
 }
 .cat-back:hover > .cat-back-ic {
-  transform: rotate(180deg) translateX(.3rem);
+  transform: rotate(180deg) translateX(.2rem);
 }
 
 .cat-subtitle {
@@ -161,8 +161,8 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   background-color: var(--hover-bg-dark);
 }
 .cat-link-curr {
-  background-color: var(--bg2);
-  /*color: var(--active-hover);*/
+  /*background-color: var(--bg2);*/
+  color: #fd0;
 }
 
 
