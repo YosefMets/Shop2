@@ -36,7 +36,7 @@ export const useAppStore = defineStore('app', () => {
   const dbArray = computed( () => db.value ? Object.values( db.value ) : null );
   const dbSlug = computed( () => db.value ? Object.values( db.value ).reduce( (res, en) => (en.S ? {...res, [en.S]: en.I} : res), {} ) : null );
   const items = computed( () => dbArray.value?.filter( ({ I }) => (/^I/).test( I ) ) || null);
-  const dirs = computed( () => dbArray.value?.filter( ({ I }) => (/^D/).test( I ) ) || null);
+  const dirs = computed( () => dbArray.value?.filter( ({ W }) => W === 'D' ) || null);
   const brands = computed( () => dbArray.value?.filter( ({ I }) => (/^03/).test( I ) ) || null);
   const brandsSlugs = computed( () => brands.value?.reduce( (res, brand) => {res[brand.S] = brand; return res}, {}));
   const scopedItems = computed( () => {
@@ -71,7 +71,6 @@ export const useAppStore = defineStore('app', () => {
 
   watch( () => currency.value, (n) => {
     items.value?.forEach( item => {
-      console.log(db.value?.currencies, n.ISO, db.value?.currencies?.[n.ISO])
       const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[n.ISO] || 1 );
       item.price = Math.round(( price ) * 100) / 100;
     });

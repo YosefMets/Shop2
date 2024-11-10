@@ -1,4 +1,24 @@
 export default {
+  cart: 'Cart',
+
+  allRights: 'All right reserved',
+  terms: 'Terms and conditions',
+  privacy: 'Privacy policy',
+  addToCart: 'Add to cart',
+
+  home: 'Home',
+
+  g: 'g.',
+  kg: 'kg.',
+  ml: 'ml.',
+  l: 'l.',
+
+  language: 'Language',
+  country: 'Country',
+  currency: 'Currency',
+  chooseLanguage: 'Choose language',
+  chooseCountry: 'Choose country',
+  chooseCurrency: 'Choose currency',
   mainMenu: 'All categories',
   shopAll: 'Shop all',
   all: 'All',

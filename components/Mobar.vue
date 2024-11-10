@@ -32,7 +32,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
   height: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: var(--mobar-el-size) var(--mobar-el-size) var(--mobar-el-size) 1fr var(--mobar-el-size);
+  grid-template-rows: var(--mobar-el-size) var(--mobar-el-size) var(--mobar-el-size) 1fr auto;
   grid-template-areas:
       "logo cart"
       "user user"
@@ -55,6 +55,11 @@ const { activeGroup } = storeToRefs( useAppStore() );
 }
 .mb-settings {
   grid-area: sett;
+  margin: 0 -.3rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+  grid-gap: .3rem;
 }
 .mb-user {
   grid-area: user;

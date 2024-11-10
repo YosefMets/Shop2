@@ -55,7 +55,7 @@ a {
   /*font-weight: 500;*/
 }
 a:hover {
-  color: var(--active);
+  /*color: var(--active);*/
 }
 .arr {
   width: .6rem;

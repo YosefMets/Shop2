@@ -38,6 +38,8 @@ const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
   z-index: 10;
   overflow: hidden;
   border-radius: var(--Br);
+  border: .1rem solid #ddd;
+  box-shadow: 0 0 10rem 0 #00000011;
 }
 
 .it-i {

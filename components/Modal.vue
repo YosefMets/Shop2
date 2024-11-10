@@ -12,6 +12,7 @@ const props = defineProps({
 
 const slots = useSlots();
 const header = ref(!!slots.header);
+const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
 const emit = defineEmits(['close']);
@@ -29,11 +30,17 @@ useHead({
 
       <div class="fog" v-if="show">
 
-        <div :class="[ 'modal-container', width ? 'mc-w-'+width : undefined, height ? 'mc-h-'+height : undefined ]" >
+        <div :class="['modal-container', width ? 'mc-w-'+width : undefined, height ? 'mc-h-'+height : undefined ]" >
+
           <h2 v-if="header" :class="['mdl-ttl', { 'mdl-ttl-x': x }]"><slot name="header" /></h2>
+          <h3 v-if="title" :class="['mdl-ttl-min', { 'mdl-ttl-x': x }]"><slot name="title" /></h3>
+
           <svg-x v-if="x" class="mdlx" @click="emit('close')" />
+
           <slot/>
+
           <div v-if="footer" class="mdx-footer"><slot name="footer" /></div>
+
         </div>
 
         <div v-if="closeout" class="fog-x" @click="emit('close')" />
@@ -76,11 +83,11 @@ useHead({
 }
 .modal-container {
   position: relative;
-  /*background-color: var(--bg);*/
-  background-color: #fff;
+  background-color: var(--bg);
+  /*background-color: #fff;*/
   padding: 3rem;
-  border-radius: var(--br);
-  width: 45rem;
+  border-radius: var(--Br);
+  width: v-bind(width);
   /*max-width: 40rem;*/
   z-index: 10;
   max-height: 100vh;
@@ -108,17 +115,29 @@ useHead({
   grid-gap: 1rem;
   position: relative;
 }
+.mdl-ttl-min {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 1rem;
+  position: relative;
+}
 
 .mdl-ttl-x {
   margin-right: 2rem;
 }
-.mdlx {
+svg.mdlx {
   position: absolute;
-  right: 2rem;
-  top: 2rem;
+  right: 1.5rem;
+  top: 1.5rem;
   cursor: pointer;
   z-index: 1;
   display: block;
+  width: 1rem;
+  height: 1rem;
 }
 .fog-x {
   position: absolute;

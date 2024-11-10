@@ -186,6 +186,8 @@ const swipeEnd = (e) => {
   /*border-radius: var(--border-radius);*/
   overflow: hidden;
   border-radius: var(--Br);
+  border: .1rem solid #ddd;
+  box-shadow: 0 0 10rem 0 #00000011;
 }
 .slider:before {
   content: '';
@@ -277,8 +279,7 @@ const swipeEnd = (e) => {
   background-repeat: no-repeat;
   transition: transform .2s;
   position: relative;
-  border: .2rem solid transparent;
-  /*border-radius: var(--border-radius);*/
+  /*border: .2rem solid transparent;*/
   overflow: hidden;
   cursor: pointer;
   border-radius: var(--br);

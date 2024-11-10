@@ -3,7 +3,9 @@ const { currency, activeGroup } = storeToRefs( useAppStore() );
 </script>
 
 <template>
-  <NuxtLayout>{{ currency }}
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+<!--  <Countries />-->
 </template>

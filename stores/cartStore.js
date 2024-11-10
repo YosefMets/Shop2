@@ -1,7 +1,7 @@
-import {useAppStore} from "~/stores/appStore";
+// import {useAppStore} from "~/stores/appStore";
 
 export const useCartStore = defineStore('cart', () => {
-  const appStore = useAppStore();
+  // const appStore = useAppStore();
   // const { db } = storeToRefs( appStore );
 
   const items = ref([]); // { item, size, qty }

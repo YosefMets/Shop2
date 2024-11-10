@@ -36,7 +36,7 @@ const { currency } = storeToRefs( useAppStore() );
 }
 .price > b {
   font-weight: inherit;
-  display: flex;
+  display: block;
   align-items: flex-start;
 }
 .prc-disc {
@@ -50,10 +50,11 @@ i {font-style: normal}
 
 .pc-f {
   font-size: .5em;
-  font-weight: inherit;
+  font-weight: 500;
   line-height: 1em;
   margin-left: .1em;
-  margin-top: .15em;
+  margin-top: .1em;
+  vertical-align: super;
 }
 .literal { /*display: none;*/ }
 

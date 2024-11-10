@@ -107,7 +107,7 @@ const isInChain = computed( () => {
 */
 .active > .cat-link,
 .cat-link:active {
-  color: #fd0;
+  color: var(--active);
 }
 .cat-link > svg {
   width: 1rem;
@@ -123,7 +123,7 @@ const isInChain = computed( () => {
   /*padding-left: .5rem;*/
   /*padding-right: .5rem;*/
   /*background-color: var(--active-bg-dark);*/
-  color: #fd0;
+  color: var(--active);
 }
 
 .sub-menu-enter-active,

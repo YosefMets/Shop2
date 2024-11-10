@@ -1,10 +1,9 @@
 <script setup>
 import SvgCheck from "~/components/imgs/svg-check.vue";
-import NMiniButton from "~/components/controls/NMiniButton.vue";
 
 const { locale, locales, setLocale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
-const route = useRoute();
+const router = useRouter();
 const { $direction } = useNuxtApp()
 const appStore = useAppStore();
 const { db, dbArray, activeItem, activeGroup, activeBrand, activePage, dirs } = storeToRefs( appStore );
@@ -28,42 +27,21 @@ watch( locale, async n => {
 </script>
 
 <template>
+  <ul class="lngs">
+    <li v-for="lcl in locales" class="lng-wr">
 
-  <Modal :show="route.query?.['choose-language'] !== undefined"
-         :width="'16rem'"
-         @close="navigateTo({ query: {...route.query, ['choose-language']: undefined} })">
+      <NuxtLink v-if="locale !== lcl.code"
+                :to="switchLocalePath( lcl.code )"
+                :class="['lng', { 'curr-locale': locale === lcl.code }]">
+        {{ lcl.N }}
+      </NuxtLink>
 
-    <template #title>{{ $t('language') }}:</template>
+      <span v-else class="lng-curr">
+        {{ lcl.N }}
+      </span>
 
-    <div class="lngs">
-      <NMiniButton v-for="lcl in locales"
-                   :current="locale === lcl.code">
-
-        <NuxtLink :to="switchLocalePath( lcl.code )"
-                  :class="['lng', { 'curr-locale': locale === lcl.code }]">
-          {{ lcl.N }}
-        </NuxtLink>
-
-      </NMiniButton>
-    </div>
-
-<!--    <ul class="lngs">-->
-<!--      <li v-for="lcl in locales" class="lng-wr">-->
-
-<!--        <NuxtLink v-if="locale !== lcl.code"-->
-<!--                  :to="switchLocalePath( lcl.code )"-->
-<!--                  :class="['lng', { 'curr-locale': locale === lcl.code }]">-->
-<!--          {{ lcl.N }}-->
-<!--        </NuxtLink>-->
-
-<!--        <span v-else class="lng-curr">-->
-<!--          {{ lcl.N }}-->
-<!--        </span>-->
-
-<!--      </li>-->
-<!--    </ul>-->
-
-  </Modal>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -71,13 +49,11 @@ watch( locale, async n => {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  grid-gap: .5rem;
-  /*border: .1rem solid var(--contr);*/
-  /*border-radius: var(--border-radius);*/
-  /*height: var(--search-height);*/
-  /*overflow: hidden;*/
+  display: inline-flex;
+  border: .1rem solid var(--contr);
+  border-radius: var(--border-radius);
+  height: var(--search-height);
+  overflow: hidden;
 }
 .lng-wr {
   margin: 0;
@@ -88,9 +64,9 @@ watch( locale, async n => {
 
 .lng,
 .lng-curr {
-  color: inherit;
+  color: #000;
   text-decoration: none;
-  /*padding: .2rem 1rem;*/
+  padding: .2rem 1rem;
   display: flex;
   align-items: center;
 }

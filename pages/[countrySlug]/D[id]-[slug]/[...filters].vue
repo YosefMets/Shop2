@@ -6,7 +6,7 @@ const { params } = useRoute();
 const appStore = useAppStore();
 const { db, activeGroup: dir, activeBrand, displayedItems, filters, priceMin, priceMax } = storeToRefs( appStore );
 
-const entity = db.value?.['D' + params.id];
+const entity = db.value?.['D'+params.id];
 if (entity && entity.I !== dir.value?.I) {
   console.log('activateGroup', entity.I, dir.value?.I);
   appStore.activateGroup(entity);
@@ -27,7 +27,7 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
 
 <template>
   <div v-if="dir" class="dir">
-    <Crumbs :entity="dir" class="crumbs" />
+    <Crumbs :entity="dir" class="dir-crumbs" />
 
     <h1 class="d-ttl">{{ dir?.N }}</h1>
 
@@ -44,11 +44,12 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
 
 <style scoped>
 .dir {
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 2rem;
 }
-.crumbs {
+.dir-crumbs {
   /*height: var(--mobar-el-size);*/
   /*height: 2rem;*/
+  margin-bottom: 1rem;
 }
 .d-ttl {
   font-size: 2.6rem;

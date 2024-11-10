@@ -1,9 +1,8 @@
 <script setup>
+// import {storeToRefs} from "pinia";
 import {useAppStore} from "~/stores/appStore";
 import {useUserStore} from "~/stores/userStore";
-import NMiniButton from "~/components/controls/NMiniButton.vue";
 
-const route = useRoute();
 const { currencies, userCurrency } = storeToRefs( useAppStore() );
 const { user } = storeToRefs( useUserStore() );
 
@@ -14,23 +13,16 @@ const set = (iso) => {
 </script>
 
 <template>
+  <ul class="crncs">
+    <li v-for="currency in currencies" class="crnc-wr">
+      <div @click="set(currency.ISO)"
+           :class="['crnc', { 'crnc-curr': user.currency === currency.ISO }]">
 
-  <Modal :show="route.query?.['choose-currency'] !== undefined"
-         :width="'15rem'"
-         @close="navigateTo({ query: {...route.query, ['choose-currency']: undefined} })">
+        {{ currencies[currency.ISO]?.S }} {{ $t(`currencies.${currency.ISO}`) }}
 
-    <template #title>{{ $t('currency') }}:</template>
-
-    <div class="crncs">
-      <NMiniButton v-for="currency in currencies"
-                   :current="user.currency === currency.ISO"
-                   @click="set(currency.ISO)">
-        <template #icon>{{ currencies[currency.ISO]?.S }}</template>
-        {{ $t(`currencies.${currency.ISO}`) }}
-      </NMiniButton>
-    </div>
-
-  </Modal>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -38,13 +30,11 @@ const set = (iso) => {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  grid-gap: .5rem;
-  /*border: .1rem solid var(--contr);*/
-  /*border-radius: var(--border-radius);*/
-  /*height: var(--search-height);*/
-  /*overflow: hidden;*/
+  display: inline-flex;
+  border: .1rem solid var(--contr);
+  border-radius: var(--border-radius);
+  height: var(--search-height);
+  overflow: hidden;
 }
 .crnc-wr {
   margin: 0;

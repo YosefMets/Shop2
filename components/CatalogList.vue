@@ -34,7 +34,10 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
       <NLink :to="dir"
              :min="null"
              :max="null"
-             :class="['cat-link', { 'cat-link-curr': dir === group }]">{{ $t('shopAll')}}</NLink>
+             :class="['cat-link', { 'cat-link-curr': dir === group }]">
+        <i class="cat-ic">{{ dir.IC }}</i>
+        {{ $t('shopAll')}}
+      </NLink>
     </li>
 
     <CatalogItem v-for="dr in dirs_"
@@ -143,8 +146,8 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 }
 .cat-link {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-gap: 2rem;
+  grid-template-columns: auto 1fr;
+  grid-gap: .5rem;
   padding: .5em 0;
   text-decoration: none;
   color: #fff;
@@ -160,9 +163,15 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   padding-right: .3rem;
   background-color: var(--hover-bg-dark);
 }
+.cat-ic {
+  font-style: normal;
+  width: 1.6rem;
+  text-align: center;
+  /*aspect-ratio: 1 / 1;*/
+}
 .cat-link-curr {
   /*background-color: var(--bg2);*/
-  color: #fd0;
+  color: var(--active);
 }
 
 

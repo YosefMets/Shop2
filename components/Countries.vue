@@ -1,4 +1,6 @@
 <script setup>
+import NMiniButton from "~/components/controls/NMiniButton.vue";
+
 const { t } = useI18n()
 const route = useRoute();
 const { db, countries, country, userCountry, userCurrency } = storeToRefs( useAppStore() );
@@ -6,7 +8,7 @@ const { user } = storeToRefs( useUserStore() );
 
 const hints = computed(() =>
     Object.keys(countries.value)
-        .filter( iso => countries.value[iso].M )
+        .filter( iso => countries.value[iso]?.M )
         .map( iso => ({ iso, n: t(`countries.${iso}`) }) )
         .sort((a,b) => b.n - a.n)
 )
@@ -21,15 +23,42 @@ const set = (iso) => {
 </script>
 
 <template>
-  <div v-if="hints.length" class="main-cntrs">
-    <NuxtLink v-for="cntry in hints"
-              @click="set(cntry.iso)"
-              :to="{ path: getNewCountryInURL(cntry.iso), query: route.query }"
-              :class="['main-cntr', { 'main-cntr-curr': cntry.iso === country?.ISO }]">
-      <img :src="`/flags/${cntry.iso}.svg`" loading="lazy" class="main-cntr-flag" alt="" />
-      {{ cntry.n }}
-    </NuxtLink>
-  </div>
+
+  <Modal :show="route.query?.['choose-country'] !== undefined"
+         :width="'15rem'"
+         @close="navigateTo({ query: {...route.query, ['choose-country']: undefined} })">
+
+    <template #title>{{ $t('country') }}:</template>
+
+
+
+    <div v-if="hints.length" class="main-cntrs">
+
+      <NMiniButton v-for="cntry in hints"
+                   :current="cntry.iso === country?.ISO">
+
+        <template #icon>
+          <NuxtImg :src="`/${cntry.iso}.svg`" loading="lazy" class="main-cntr-flag" alt="" />
+        </template>
+
+        <NuxtLink :to="{ path: getNewCountryInURL(cntry.iso), query: route.query }"
+                  :class="['main-cntr']"
+                  @click="set(cntry.iso)">
+          {{ cntry.n }}
+        </NuxtLink>
+
+      </NMiniButton>
+
+<!--      <NuxtLink v-for="cntry in hints"-->
+<!--                @click="set(cntry.iso)"-->
+<!--                :to="{ path: getNewCountryInURL(cntry.iso), query: route.query }"-->
+<!--                :class="['main-cntr', { 'main-cntr-curr': cntry.iso === country?.ISO }]">-->
+<!--        <img :src="`/flags/${cntry.iso}.svg`" loading="lazy" class="main-cntr-flag" alt="" />-->
+<!--        {{ cntry.n }}-->
+<!--      </NuxtLink>-->
+    </div>
+
+  </Modal>
 </template>
 
 <style scoped>
@@ -37,12 +66,15 @@ const set = (iso) => {
   list-style: none;
   margin: 0;
   padding: 0;
-  columns: 2;
-  column-gap: 1rem;
+  /*columns: 2;*/
+  /*column-gap: 1rem;*/
+  gap: .5rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 .main-cntr {
   margin: 0;
-  padding: .6rem;
+  /*padding: .6rem;*/
   display: flex;
   align-items: center;
   grid-gap: .4rem;
@@ -51,10 +83,10 @@ const set = (iso) => {
   border-radius: var(--br);
   cursor: pointer;
   text-decoration: none;
-  color: #000;
+  color: inherit;
 }
 .main-cntr:hover {
-  color: var(--active);
+  color: inherit;
 }
 .main-cntr-curr {
   cursor: default;
@@ -63,8 +95,8 @@ const set = (iso) => {
   color: var(--active);
 }
 .main-cntr-flag {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
 }
 .chs-cntr-or {

@@ -2,6 +2,7 @@
 const props = defineProps({ item: Object });
 
 const { db } = storeToRefs( useAppStore() );
+const { t } = useI18n();
 
 const dir = computed( () => props.item?.P ? db.value[props.item.P] : null );
 const chars = computed( () => Object.keys(dir.value?.X || {})
@@ -11,6 +12,16 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
                                       return r }, {}
                                     ));
 
+
+const unit = computed( () => {
+  const wKg = props.item.w ? !(props.item.w < 500) : null
+  const vL = props.item.v ? !(props.item.v < 500) : null
+  return wKg !== null
+      ? (wKg ? props.item.w / 1000 + ' ' + t('kg') : props.item.w + ' ' + t('g'))
+      : vL !== null
+          ? (wKg ? props.item.v / 1000 + ' ' + t('l') : props.item.v + ' ' + t('ml'))
+          : null
+})
 </script>
 
 <template>
@@ -19,6 +30,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
       <template v-if="val && val.length" class="char">
         <b class="attr">{{ db[attr]?.N }}:</b>
         <b :class="['val', { img: attr === 'co' }]">
+          <NuxtImg v-if="attr === 'co'" :src="`/${db[val[0]]?.Iso?.toLowerCase()}.svg`" :alt="db[val[0]].N" />
           <!--        <img v-if="attr === 'ctry'" :src="'/flags/' + db[val[0]].iso.toLowerCase() + '.svg'" :alt="db[val[0]].N" />-->
 
           <template v-for="(subval, i) in val">
@@ -30,6 +42,10 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 
             <template v-else-if="typeof subval === 'boolean'">
               <span>{{ subval ? '✅' : '❌' }}</span>
+            </template>
+
+            <template v-else-if="attr === 'w' || attr === 'v'">
+              <span>{{ unit }}</span>
             </template>
 
             <template v-else>
@@ -68,7 +84,10 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
   font-weight: 500;
 }
 
-.val.img {display: flex}
+.val.img {
+  display: flex;
+  align-items: center;
+}
 
 .char-link {
   text-decoration: none;
@@ -76,7 +95,9 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 
 img {
   display: inline-block;
+  width: 1rem;
   height: 1rem;
   margin-right: .5rem;
+  border-radius: 50%;
 }
 </style>

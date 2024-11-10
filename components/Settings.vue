@@ -6,26 +6,30 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 </script>
 
 <template>
-  <NuxtLink :to="{ query: {...route.query, settings: null} }" class="ccs-call">
-    <img :src="`/flags/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />
+  <NuxtLink :to="{ query: {...route.query, ['choose-country']: null} }" class="ccs-call">
+    <NuxtImg :src="`/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />
     <span class="ccs-current-settings">
-      {{ $t(`countries.${country.ISO}`) }},
-      {{ locales.find( ({ code }) => code === locale )?.N }},
-      {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}
+      {{ $t(`countries.${country.ISO}`) }}
     </span>
   </NuxtLink>
+  <NuxtLink :to="{ query: {...route.query, ['choose-currency']: null} }" class="ccs-call">
+    {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}
+  </NuxtLink>
+  <NuxtLink :to="{ query: {...route.query, ['choose-language']: null} }" class="ccs-call">
+    {{ locales.find( ({ code }) => code === locale )?.N }}
+  </NuxtLink>
+    <!--  <NuxtLink :to="{ query: {...route.query, settings: null} }" class="ccs-call">-->
+<!--    <img :src="`/flags/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />-->
+<!--    <span class="ccs-current-settings">-->
+<!--      {{ $t(`countries.${country.ISO}`) }} &bull;-->
+<!--      {{ locales.find( ({ code }) => code === locale )?.N }} &bull;-->
+<!--      {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}-->
+<!--    </span>-->
+<!--  </NuxtLink>-->
 
-  <Modal :show="route.query?.settings !== undefined"
-         :width="'40rem'"
-         @close="navigateTo({ query: {...route.query, settings: undefined} })">
-
-    <Langs />
-
-    <Currencies />
-
-    <Countries />
-
-  </Modal>
+  <Langs />
+  <Currencies />
+  <Countries />
 </template>
 
 <style scoped>
@@ -34,32 +38,40 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   grid-gap: .5rem;
   align-items: center;
   cursor: pointer;
-  padding: 0 1rem;
-  height: 100%;
-  transition: background-color .1s linear;
-  color: #000;
+  padding: .4rem .3rem;
+  /*height: 100%;*/
+  color: #fff;
   text-decoration: none;
+  transition: all .2s;
+  border-radius: var(--br);
+  /*white-space: nowrap;*/
+  overflow: hidden;
+  /*text-overflow: ellipsis;*/
 }
 .ccs-call:hover {
   /*color: var(--active);*/
-  background-color: var(--active-light);
+  background-color: var(--hover-bg-dark);
+  /*padding-left: .3rem;*/
+  /*padding-right: .3rem;*/
 }
 .ccs-flag {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
+  box-shadow: 0 0 0 0.15rem #fff;
 }
 .ccs-current-settings {
-  /*text-overflow: ellipsis;*/
-  /*white-space: nowrap;*/
-  /*overflow: hidden;*/
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  /*width: 100%;*/
+
+  /*display: -webkit-box;*/
+  /*-webkit-line-clamp: 2;*/
+  /*-webkit-box-orient: vertical;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+  /*line-height: 1.2em;*/
 }
 
 .ccs-ttl {

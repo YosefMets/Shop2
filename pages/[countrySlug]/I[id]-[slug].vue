@@ -6,6 +6,8 @@ import SvgLove from "~/components/imgs/svg-love.vue";
 const { params } = useRoute();
 const localePath = useLocalePath();
 
+const { t } = useI18n()
+
 const appStore = useAppStore();
 const { db, activeItem: item, country } = storeToRefs( appStore );
 const cartStore = useCartStore();
@@ -27,17 +29,29 @@ if (item.value?.S !== params.slug) {
 const brand = computed( () => db.value[item.value?.B] );
 const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${brand.value?.l}` : null )
 
+const kashruts = computed( () => [item.value?.k].flat().map( id => db.value[id] ))
+
+const unit = computed( () => {
+  const wKg = item.value.w ? !(item.value.w < 500) : null
+  const vL = item.value.v ? !(item.value.v < 500) : null
+  return wKg !== null
+        ? (wKg ? item.value.w / 1000 + ' ' + t('kg') : item.value.w + ' ' + t('g'))
+        : vL !== null
+          ? (wKg ? item.value.v / 1000 + ' ' + t('l') : item.value.v + ' ' + t('ml'))
+          : null
+})
+
 // onUnmounted( () => { appStore.activateItem( null ) })
 </script>
 
 <template>
   <div class="ai">
+    <Crumbs :entity="item" class="ai-crumbs" />
 
 <!--    <Gallery :item="item" class="ai-imgs" />-->
-    <ItemGallery :item="item" class="ai-imgs" />
+    <div><ItemGallery v-if="item.M" :item="item" class="ai-imgs" /></div>
 
     <div class="ai-info">
-      <Crumbs :entity="item" class="ai-crumbs" />
 
       <div class="ai-info-wr">
 <!--        <NLink :to="brand" class="ai-brand">-->
@@ -47,26 +61,33 @@ const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${bran
 
         <h1 class="ai-ttl">{{ item?.N }}</h1>
 
+        <ul v-if="kashruts.length" class="ai-kashruts">
+          <li v-for="kashtut in kashruts" class="ai-kashrut">
+            <NuxtImg :src="`/${kashtut.I}.avif`" class="ai-kashrut-sign" />
+          </li>
+        </ul>
+
         <div class="ai-price-wr">
           <Price v-if="item?.price" :amount="item?.price" class="ai-price" />
+          <span v-if="unit">&#160;/ {{ unit }}</span>
         </div>
 
         <div class="ai-acts">
           <NButton @click="cartStore.add(item)">{{ $t('addToCart') }}</NButton>
-          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">
-            <SvgLove :class="['ai-heart', { love: item?.$f }]" />
-            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>
-          </NButton>
+<!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
+<!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
+<!--            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>-->
+<!--          </NButton>-->
         </div>
 
-        <Chars :item="item" />
+        <Chars :item="item" class="ai-chars" />
 
       </div>
     </div>
 
     <div class="ai-descr">
-      <div style="height: 1000px">qwe</div>
-      {{ cartStore.items }}
+<!--      <div style="height: 1000px">{{ item }}</div>-->
+<!--      {{ cartStore.items }}-->
     </div>
 
   </div>
@@ -78,7 +99,7 @@ const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${bran
   grid-template-columns: 30rem 1fr;
   /*grid-template-rows: auto auto 1fr;*/
   grid-column-gap: 2rem;
-  padding: .5rem 2rem;
+  padding: 1rem 2rem;
 }
 .ai-crumbs {
   /*height: var(--mobar-el-size);*/
@@ -89,25 +110,47 @@ const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${bran
 .ai-imgs {
 }
 .ai-info {
-  padding-top: .5rem;
+  /*padding-top: .5rem;*/
 }
 .ai-ttl {
-  font-size: 2.6rem;
+  /*font-size: 2.6rem;*/
+  font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.2em;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
+  min-height: 4rem;
+}
+.ai-kashruts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: .5rem;
+  height: 3.6rem;
+}
+.ai-kashrut {
+  height: 100%;
+  max-width: 5rem;
+}
+.ai-kashrut-sign {
+  object-fit: contain;
+  object-position: 50% 50%;
+  width: 100%;
+  height: 100%;
 }
 .ai-price-wr {
-  margin: 1rem 0;
+  margin: 2rem 0;
 }
 .ai-price {
-  font-size: 2rem;
+  font-size: 2.4rem;
 }
 .ai-acts {
   margin: 1rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+.ai-chars {
+  margin-top: 2rem;
 }
 .ai-descr {
   grid-column: 1 / -1;
@@ -118,6 +161,7 @@ const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${bran
 .ai-info-wr {
   position: sticky;
   top: 3rem;
+  width: 20rem;
 }
 
 .ai-brand {

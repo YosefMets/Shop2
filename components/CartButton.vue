@@ -76,7 +76,8 @@ watch(quantity, (newVal, oldVal) => {
   /*height: 100%;*/
   /*background-color: #fff;*/
   border-radius: var(--br);
-  height: 4rem;
+  width: 100%;
+  height: 100%;
 }
 @container cart-but (max-width: 10rem) {
   .cart-but {
@@ -86,7 +87,7 @@ watch(quantity, (newVal, oldVal) => {
     display: none;
   }
 }
-.cart-but.cart-but-full { background-color: #000; }
+.cart-but.cart-but-full { background-color: var(--active); }
 
 .cart-but.cart-but-full:after {
   /*content: '';*/
@@ -106,8 +107,9 @@ watch(quantity, (newVal, oldVal) => {
   position: relative;
   display: flex;
   transition: transform .1s;
+  margin-bottom: -0.5rem;
 }
-/*.cart-but:hover > .cart-but-ic-el { transform: translateX(.1rem) }*/
+.cart-but:hover > .cart-but-ic-el { transform: translateX(.1rem) }
 
 .cart-but-ic {
   width: 2rem;
@@ -116,7 +118,7 @@ watch(quantity, (newVal, oldVal) => {
   position: relative;
   z-index: 1;
 }
-.cart-but.cart-but-full .cart-but-ic { stroke: #fff; }
+.cart-but.cart-but-full .cart-but-ic { stroke: #000; }
 
 .cart-but-qty {
   position: absolute;
@@ -132,12 +134,12 @@ watch(quantity, (newVal, oldVal) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.8rem;
-  font-weight: 400;
+  font-size: 0.9rem;
+  font-weight: 500;
   z-index: 1;
   /*color: #fff;*/
 }
-.cart-but.cart-but-full .cart-but-qty { color: #fff; }
+.cart-but.cart-but-full .cart-but-qty { color: #000; }
 
 .cart-count-enter-active {
   transition: all .3s;

@@ -9,15 +9,13 @@
   --bg2: #eee;
   --bg3: #d3d3d3;
   --bg4: #FFF8AB;
-  --bg-j: #000033;
-  --bg-j-: #000033cc;
   --hover-bg-dark: #ffffff11;
   --active-bg-dark: #00000022;
   --accent: #fc0;
   --contr: #aaa;
   --note: #ffffd1;
   /*--active: #0023d3;*/
-  --active: #0000cc;
+  --active: #fd0;
   --active-hover: #f00;
   --active-light: #0066FF22;
   --dark: #333;
@@ -86,7 +84,8 @@ html, body {
 body {
   padding: 0;
   margin: 0;
-  background-color: var(--bg);
+  background-color: #fff;
+  /*background-color: var(--bg);*/
   /*background-image:*/
   /*        linear-gradient(to bottom right, #ff009b33, #99ff0033),*/
   /*        linear-gradient(to top right, #00bfff33, #ff800033),*/
