@@ -46,7 +46,7 @@ const isInChain = computed( () => {
 
     <div v-if="dir.children"
          :class="['cat-link', { 'cat-link-curr': dir === group }]"
-         @click="activeDir = dir">
+         @click="activeDir=dir">
       <i class="cat-ic">{{ dir.IC }}</i>
       {{ dir.N }}
       <svg-v v-if="dir.children" />

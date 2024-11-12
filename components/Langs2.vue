@@ -51,7 +51,7 @@ watch( locale, async n => {
   padding: 0;
   display: inline-flex;
   border: .1rem solid var(--contr);
-  border-radius: var(--border-radius);
+  border-radius: var(--br);
   height: var(--search-height);
   overflow: hidden;
 }

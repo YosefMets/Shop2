@@ -32,7 +32,7 @@ export default function () {
     if (!dir.items) dir.items = [];
 
     if (dir.P && db.value?.[dir.P]) {
-      db.value?.[dir.P].children = db.value?.[dir.P].children || [];
+      db.value[dir.P].children = db.value?.[dir.P].children || [];
       db.value?.[dir.P].children.push( dir.I )
     }
 

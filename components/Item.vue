@@ -160,7 +160,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
     text-align: center;
     background-color: var(--active-light);
     color: var(--active);
-    border-radius: var(--border-radius);
+    border-radius: var(--br);
     padding: 1rem 0.4rem;
     line-height: 1.2em;
   }

@@ -4,7 +4,7 @@ const props = defineProps({ item: Object });
 const { db } = storeToRefs( useAppStore() );
 const { t } = useI18n();
 
-const dir = computed( () => props.item?.P ? db.value?.props.item.P] : null );
+const dir = computed( () => props.item?.P ? db.value?.[props.item.P] : null );
 const chars = computed( () => Object.keys(dir.value?.X || {})
                                     .filter( char => char in props.item )
                                     .reduce( (r, char) => {
