@@ -15,6 +15,8 @@ const props = defineProps({
 
 const emit = defineEmits(['x', 'activate', 'deactivate']);
 
+const actDir = ref( props.activeDir );
+
 const activate = (actDir) => {
   emit('activate', actDir);
 }
@@ -46,7 +48,7 @@ const isInChain = computed( () => {
 
     <div v-if="dir.children"
          :class="['cat-link', { 'cat-link-curr': dir === group }]"
-         @click="activeDir=dir">
+         @click="() => actDir.value = props.dir">
       <i class="cat-ic">{{ dir.IC }}</i>
       {{ dir.N }}
       <svg-v v-if="dir.children" />
@@ -64,7 +66,7 @@ const isInChain = computed( () => {
     <Transition name="sub-menu">
       <CatalogList v-if="dir.children && isInChain"
                    :dir="dir"
-                   :activeDir="activeDir"
+                   :activeDir="actDir"
                    :depth="depth+1"
                    @x="$emit('x')"
                    @activate="activate"
