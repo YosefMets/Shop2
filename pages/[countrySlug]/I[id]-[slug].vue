@@ -37,7 +37,7 @@ const unit = computed( () => {
   return wKg !== null
         ? (wKg ? item.value.w / 1000 + ' ' + t('kg') : item.value.w + ' ' + t('g'))
         : vL !== null
-          ? (wKg ? item.value.v / 1000 + ' ' + t('l') : item.value.v + ' ' + t('ml'))
+          ? (vL ? item.value.v / 1000 + ' ' + t('l') : item.value.v + ' ' + t('ml'))
           : null
 })
 
@@ -59,17 +59,17 @@ const unit = computed( () => {
 <!--          {{ brand?.N }}-->
 <!--        </NLink>-->
 
-        <h1 class="ai-ttl">{{ item?.N }}</h1>
+        <h1 class="ai-ttl">{{ item?.N }} {{ brand?.N }}</h1>
 
         <ul v-if="kashruts.length" class="ai-kashruts">
-          <li v-for="kashtut in kashruts" class="ai-kashrut">
-            <NuxtImg :src="`/${kashtut.I}.avif`" class="ai-kashrut-sign" />
+          <li v-for="kashrut in kashruts" class="ai-kashrut">
+            <NuxtImg :src="`/${kashrut.I}.${kashrut.LG || 'avif'}`" class="ai-kashrut-sign" />
           </li>
         </ul>
 
         <div class="ai-price-wr">
           <Price v-if="item?.price" :amount="item?.price" class="ai-price" />
-          <span v-if="unit">&#160;/ {{ unit }}</span>
+          <span v-if="item.J"> /{{ $t(item.J) }}</span>{{}}
         </div>
 
         <div class="ai-acts">

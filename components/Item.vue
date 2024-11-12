@@ -1,11 +1,13 @@
 <script setup>
 import NLink from "~/components/controls/NLink.vue";
-// const image = useImage();
+
+const { db } = storeToRefs( useAppStore() );
 
 const props = defineProps({ item: Object });
 
-// const img = computed( () => props.item.M ? `/i/${props.item.I}-0.${props.item.M[0]}` : null );
 const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
+
+const brand = computed( () => props.item.B ? db.value[props.item.B] : null );
 </script>
 
 <template>
@@ -16,9 +18,12 @@ const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
 <!--      <img :src="img" :alt="item.N" :key="item.I" loading="lazy" />-->
     </i>
 
-    <p class="it-n" :title="item.N">{{ item.N }}</p>
+    <p class="it-n" :title="item.N">{{ item.N }} {{ brand?.N }}</p>
 
-    <Price class="it-pr" :amount="item?.price" />
+    <div class="it-pr-wr">
+      <Price :amount="item?.price" class="it-pr" />
+      <span v-if="item.J" class="it-unt"> /{{ $t(item.J) }}</span>
+    </div>
 
   </NLink>
 </template>
@@ -38,10 +43,22 @@ const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
   z-index: 10;
   overflow: hidden;
   border-radius: var(--Br);
-  border: .1rem solid #ddd;
-  box-shadow: 0 0 10rem 0 #00000011;
+  /*border: .1rem solid #ddd;*/
+  /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
-
+/*
+.item:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #0000000b;
+  z-index: 1;
+}
+*/
 .it-i {
   grid-column: 1 / -1;
   display: block;
@@ -91,7 +108,7 @@ const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
   /*grid-column: 1 / -1;*/
   margin: 0 0 0 1rem;
   font-size: 1rem;
-  line-height: 1.2em;
+  line-height: 1.5em;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -99,10 +116,14 @@ const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.it-pr {
+.it-pr-wr {
   margin: 0 1rem 0 0;
-  font-weight: 400;
+}
+.it-pr {
   font-size: 1.4rem;
+}
+.it-unt {
+  color: #666;
 }
 
 @media (max-width: 480px) {

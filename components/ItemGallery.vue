@@ -186,14 +186,17 @@ const swipeEnd = (e) => {
   /*border-radius: var(--border-radius);*/
   overflow: hidden;
   border-radius: var(--Br);
-  border: .1rem solid #ddd;
-  box-shadow: 0 0 10rem 0 #00000011;
+  /*border: .1rem solid #ddd;*/
+  /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
 .slider:before {
   content: '';
+  position: relative;
   width: 100%;
   padding-top: 100%;
   display: block;
+  /*background-color: #0000000b;*/
+  z-index: 5;
 }
 .slider > .slides {
   list-style: none;

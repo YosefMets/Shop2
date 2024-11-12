@@ -1,85 +1,95 @@
 <script setup>
-import {useCartStore} from "~/stores/cartStore";
-import {useAppStore} from "~/stores/appStore";
-
-const p = defineProps({
+const props = defineProps({
   cartItem: Object,
   small: Boolean
 });
-const qty = ref(p.cartItem.qty);
+const { t } = useI18n();
+const qty = ref( props.cartItem.qty );
+const unit = ref( props.cartItem.item?.J ? t(props.cartItem.item?.J) : null );
 
 const { storage } = storeToRefs( useAppStore() );
 const storageQty = computed( () => {
-  const qtys = p.cartItem.item.Q?.[storage.value?.I]
-  return p.cartItem.size ? qtys.find( q => q[0] === p.cartItem.size)?.[1] : qtys
+  const qtys = props.cartItem.item.Q?.[storage.value?.I]
+  return props.cartItem.size ? qtys.find( q => q[0] === props.cartItem.size)?.[1] : qtys
 } )
 
 const cartStore = useCartStore();
 
-// watch(qty, (newVal) => { p.cartItem.qty = newVal; });
-watch(p.cartItem, (newVal) => {
-  // console.log('storageQty', storageQty.value, 'p.cartItem', newVal);
+watch(props.cartItem, (newVal) => {
   if (newVal.qty <= 0) cartStore.remove(newVal.item, newVal.size);
   else if (newVal.qty > storageQty.value) qty.value = newVal.qty = storageQty.value;
   else qty.value = newVal.qty;
 }, { deep: true });
 
-const minus = () => { --p.cartItem.qty }
-const plus = () => { ++p.cartItem.qty }
+const minus = () => { --props.cartItem.qty }
+const plus = () => { ++props.cartItem.qty }
 const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
 </script>
 
 <template>
-  <div :class="{ 'qty-cntr-s': p.small }">
-    <button @click="minus">&minus;</button>
+  <div :class="['iq', { 'qty-cntr-s': small }]">
+    <button @click="minus" class="iq-btn iq-dec">&minus;</button>
     <input v-model="qty"
+           class="iq-in"
            @input="format"
-           @change="p.cartItem.qty = qty"
+           @change="cartItem.qty = qty"
            @keypress.enter="$event.target.blur()" />
-    <button @click="plus">&plus;</button>
+    <button @click="plus" class="iq-btn iq-inc">&plus;</button>
   </div>
 </template>
 
 <style scoped>
-div {
+.iq {
   display: inline-grid;
   grid-template-columns: auto 1fr auto;
   align-items: stretch;
-  width: 8rem;
-  background-color: #fff;
-  /*border-radius: var(--border-radius);*/
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  width: 9rem;
+  /*background-color: var(--active-bg-dark);*/
+  /*background-color: var(--hover-bg-dark);*/
+  /*background-color: var(--bg);*/
+  border-radius: var(--br);
   color: #000;
-  font-weight: 600;
+  font-weight: 400;
   /*box-shadow: 0 0.05rem 0.1rem 0 #000000c7;*/
-  border: 0.1rem solid var(--contr);
+  /*border: 0.1rem solid var(--contr);*/
+  overflow: hidden;
+  border: .1rem solid var(--active-bg-dark);
 }
 
-button {
-  width: 3rem;
-  min-height: 3rem;
+.iq-btn {
+  width: 2.4rem;
+  height: 2.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
-  border-radius: 50%;
-  background-color: transparent;
+  /*border-radius: 50%;*/
+  /*border-radius: var(--br);*/
+  /*background-color: transparent;*/
   color: inherit;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
+  background-color: var(--active-bg-dark);
 }
+.iq-btn.iq-inc {
+  /*background-color: var(--active-bg-dark);*/
+}
+
 .qty-cntr-s button {
   width: 2.2rem;
   height: 2.2rem;
 }
 
-input {
+.iq-in {
   border: none;
-  background-color: transparent;
+  background-color: #fff;
   width: 100%;
   padding: 0;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 @media (max-width: 480px) {

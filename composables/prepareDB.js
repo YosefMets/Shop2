@@ -22,6 +22,10 @@ export default function () {
     const brand = db.value[item.B];
     if (!brand.items) brand.items = [];
     brand.items.push( item );
+
+    const wKg = item.w ? !(item.w < 800) : null
+    const vL = item.v ? !(item.v < 800) : null
+    item.unit = wKg !== null ? (wKg ? 'kg' : 'g') : vL !== null ? (vL ? 'l' : 'ml') : null
   });
 
   dirs.value?.forEach( dir => {

@@ -1,24 +1,16 @@
 <script setup>
-import {storeToRefs} from "pinia";
-import {useAppStore} from "@/stores/appStore";
-
-const { currency } = storeToRefs(useAppStore())
-const p = defineProps({
-  price: {
+const props = defineProps({
+  amount: {
     type: Number,
-    required: true,
+    required: true
   },
-  convert: {
-    type: Boolean,
-    default: true
-  }
-})
+});
 
-const currentCurrencyPrice = computed( () => p.convert ? usePriceInCurrentCurrency(p.price) : p.price);
+const { currency } = storeToRefs( useAppStore() );
 </script>
 
 <template>
-  <i18n-n :value="currentCurrencyPrice" format="currency" tag="b" class="prc-out" :scope="'global'">
+  <i18n-n :value="amount" format="currency" tag="b" class="prc-out" :scope="'global'">
     <template v-slot:currency="slotProps">{{ currency.S }}</template>
   </i18n-n>
 </template>

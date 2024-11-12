@@ -1,7 +1,5 @@
 <script setup>
-import {useAppStore} from "~/stores/appStore.js";
-
-const params = defineProps({
+const props = defineProps({
   amount: {
     type: Number,
     required: true

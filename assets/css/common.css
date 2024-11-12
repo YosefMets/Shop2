@@ -10,7 +10,7 @@
   --bg3: #d3d3d3;
   --bg4: #FFF8AB;
   --hover-bg-dark: #ffffff11;
-  --active-bg-dark: #00000022;
+  --active-bg-dark: #00000011;
   --accent: #fc0;
   --contr: #aaa;
   --note: #ffffd1;
@@ -84,8 +84,8 @@ html, body {
 body {
   padding: 0;
   margin: 0;
-  background-color: #fff;
-  /*background-color: var(--bg);*/
+  /*background-color: #fff;*/
+  background-color: var(--bg);
   /*background-image:*/
   /*        linear-gradient(to bottom right, #ff009b33, #99ff0033),*/
   /*        linear-gradient(to top right, #00bfff33, #ff800033),*/

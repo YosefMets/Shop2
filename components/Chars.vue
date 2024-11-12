@@ -11,17 +11,6 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
                                       if (props.item[char]) r[char] = [props.item[char]].flat();
                                       return r }, {}
                                     ));
-
-
-const unit = computed( () => {
-  const wKg = props.item.w ? !(props.item.w < 500) : null
-  const vL = props.item.v ? !(props.item.v < 500) : null
-  return wKg !== null
-      ? (wKg ? props.item.w / 1000 + ' ' + t('kg') : props.item.w + ' ' + t('g'))
-      : vL !== null
-          ? (wKg ? props.item.v / 1000 + ' ' + t('l') : props.item.v + ' ' + t('ml'))
-          : null
-})
 </script>
 
 <template>
@@ -44,8 +33,8 @@ const unit = computed( () => {
               <span>{{ subval ? '✅' : '❌' }}</span>
             </template>
 
-            <template v-else-if="attr === 'w' || attr === 'v'">
-              <span>{{ unit }}</span>
+            <template v-else-if="item.unit">
+              <span>{{ item.w ? (item.unit === 'kg' ? item.w / 1000 : item.w) : item.v ? (item.unit === 'l' ? item.v / 1000 : item.v) : '' }} {{ $t(item.unit) }}</span>
             </template>
 
             <template v-else>

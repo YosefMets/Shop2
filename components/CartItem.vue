@@ -8,22 +8,28 @@ const props = defineProps({ cartItem: Object });
 const appStore = useAppStore();
 const { db, country } = storeToRefs( appStore );
 
-const cartStore = useCartStore()
+const cartStore = useCartStore();
 
-const item = ref(props.cartItem.item);
-const size = ref(props.cartItem.size);
+const item = ref( props.cartItem.item );
+const size = ref( props.cartItem.size );
 // const images = useImageURL(item.value, { preview: true });
-const brandName = computed(()=> db.value[item.value.B]?.N )
+const brandName = computed( () => db.value[item.value.B]?.N );
 </script>
 
 <template>
-  <div class="cart-item" :title="item.N">
-    {{ item.N }}
-    <CartItemQuantity :cart-item="cartItem" />
-    <Price :amount="item.price" />
-    <div class="ci-det">
-      {{ item.N }}
-    </div>
+  <div class="ci" :title="item?.N">
+    <i class="ci-i-wr">
+      <NuxtImg :src="`/p-${item?.I}-0.avif`" class="ci-i" />
+    </i>
+
+    <div class="ci-ttl">{{ item?.N }}</div>
+
+<!--    <div class="ci-price-cont">-->
+<!--      <PriceRegular :amount="item.price" />-->
+<!--      <span v-if="item.J" class="it-unt"> /{{ $t(item.J) }}</span>-->
+<!--    </div>-->
+    <CartItemQuantity :cart-item="cartItem" class="ci-qty" />
+    <PriceRegular :amount="item.price * cartItem.qty" class="ci-total" />
 <!--    <div class="cart-item-acts">-->
 <!--      <ControlQuantity :cartItem="cartItem" class="calc"/>-->
 <!--    </div>-->
@@ -31,40 +37,30 @@ const brandName = computed(()=> db.value[item.value.B]?.N )
 </template>
 
 <style scoped>
-.cart-item {
-  padding: .6rem;
-  /*background-color: var(--bg);*/
-  display: flex;
-  flex-direction: column;
-  grid-gap: .3rem;
-  position: relative;
-  transition: all .3s;
-  z-index: 10;
-  width: 100%;
-  /*border-radius: var(--border-radius);*/
-  color: #000;
-  /*box-shadow: 0 .1rem .1rem -.1rem #000;*/
-  border-bottom: 0.1rem solid var(--contr);
+.ci {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto 5.2rem;
+  /*grid-template-rows: 1fr auto;*/
+  column-gap: .5rem;
+  row-gap: .5rem;
+  background-color: var(--active-bg-dark);
+  padding: .5rem 1rem .5rem .5rem;
+  border-radius: var(--br);
 }
-
 .ci-i-wr {
-  /*grid-area: img;*/
+  /*grid-row: 1 / -1;*/
   display: block;
+  width: 100%;
   position: relative;
-  /*border-radius: var(--border-radius);*/
+  aspect-ratio: 1 / 1;
+  border-radius: var(--br);
+  /*border: .1rem solid #ddd;*/
+  /*box-shadow: 0 0 10rem 0 #00000011;*/
+  background-color: #fff;
   overflow: hidden;
-  /*background-color: #fff;*/
-}
-.ci-i-wr:before {
-  content: '';
-  display: block;
-  padding-top: 100%;
-  position: relative;
-  /*background-color: #00000008;*/
-  z-index: 1;
-}
+ }
 .ci-i {
-  object-fit: scale-down;
+  object-fit: cover;
   object-position: 50% 50%;
   position: absolute;
   left: 50%;
@@ -72,94 +68,24 @@ const brandName = computed(()=> db.value[item.value.B]?.N )
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%);
-  font-size: .7rem;
-  line-height: 1.2em;
+  transition: transform .1s linear;
 }
-
-.ci-lbl {
-  text-align: center;
-  font-weight: 500;
-}
-
-.ci-price {
-  /*grid-area: price;*/
-  font-size: 1rem;
-  /*align-self: self-end;*/
+.ci-ttl {
+  /*grid-column: 2 / -1;*/
   align-self: center;
-  /*position: absolute;*/
-  /*left: 0;*/
-  /*bottom: 0;*/
-  color: #000;
 }
-
-.ci-size {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: .2rem .5rem;
-  line-height: 1em;
-  background-color: #fff;
-  z-index: 2;
-  color: #000;
-  font-weight: 500;
+.ci-price-cont {
+  align-self: center;
 }
-
-.ci-det {
-  display: none;
-  position: absolute;
-  right: 100%;
-  width: 20rem;
-  height: 100%;
-  background-color: #fff;
-  border: solid var(--contr) .1rem;
-  border-right-width: 0;
+.ci-qty {
+  align-self: center;
 }
-
-.cart-item:hover > .ci-det {
-  display: block;
-}
-
-.cart-item-acts {
-  display: grid;
-  /*grid-template-columns: 1fr auto;*/
-  grid-gap: .3rem;
-  align-items: center;
-}
-.calc {
-  /*grid-area: calc;*/
-  width: 100%;
-}
-.cart-item-del {
-  width: 1.2rem;
-  height: 1.2rem;
-  cursor: pointer;
+.ci-total {
+  justify-self: flex-end;
+  align-self: center;
 }
 
 
 @media (max-width: 480px) {
-  .cart-item {
-    grid-template-columns: 10rem 1fr 1fr;
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-      "img name name"
-      "img calc price";
-    grid-gap: .8rem;
-  }
-  .cart-item-name {
-    font-size: 1.1rem;
-    line-height: 1.4em;
-    /*font-weight: 500;*/
-    /*padding-right: 2rem;*/
-    text-overflow: unset;
-    white-space: unset;
-  }
-  .image {
-    height: auto;
-    min-height: 8rem;
-  }
-  .price {
-    font-size: 1.4rem;
-    justify-self: flex-end;
-  }
 }
 </style>
