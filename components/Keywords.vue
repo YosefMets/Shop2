@@ -14,14 +14,14 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
            :to="activeGroup"
            :brand="activeBrand"
            :filters="keyword"
-           :class="['keyword', { curr: filters[keyword.char]?.includes(keyword.value), ava: db[keyword.value]?.ISO || db[keyword.value]?.A }]">
+           :class="['keyword', { curr: filters[keyword.char]?.includes(keyword.value), ava: db?.[keyword.value]?.ISO || db?.[keyword.value]?.A }]">
 
-      <i v-if="db[keyword.value]?.ISO || db[keyword.value]?.A" :class="['kw-a', { flag: db[keyword.value]?.ISO }]">
-        <img :src="db[keyword.value]?.ISO ? `/flags/${db[keyword.value]?.ISO}.svg` :  db[keyword.value]?.A ? `/i/${db[keyword.value]?.I}.${db[keyword.value]?.A}` : ''"
+      <i v-if="db?.[keyword.value]?.ISO || db?.[keyword.value]?.A" :class="['kw-a', { flag: db?.[keyword.value]?.ISO }]">
+        <img :src="db?.[keyword.value]?.ISO ? `/flags/${db?.[keyword.value]?.ISO}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''"
              alt="" />
       </i>
 
-      {{ db[keyword.value]?.N || keyword.value }}
+      {{ db?.[keyword.value]?.N || keyword.value }}
 
     </NLink>
 

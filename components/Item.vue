@@ -7,7 +7,7 @@ const props = defineProps({ item: Object });
 
 const img = computed( () => props.item.M ? `/${props.item.I}-0.avif` : null );
 
-const brand = computed( () => props.item.B ? db.value[props.item.B] : null );
+const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
 </script>
 
 <template>

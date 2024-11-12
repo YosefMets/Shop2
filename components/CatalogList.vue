@@ -16,7 +16,7 @@ const props = defineProps({
 
 const emit = defineEmits(['x', 'activate', 'deactivate', 'back'])
 
-const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value[id] ) : dirs.value.filter( dir => !dir.P ))
+const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value?.[id] ) : dirs.value.filter( dir => !dir.P ))
 
 </script>
 
@@ -25,7 +25,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 
     <li v-if="dir" class="cat-back" @click.stop="$emit('back')">
       <svg-arr class="cat-back-ic" />
-      {{ dir.P && db[dir.P] ? db[dir.P].N : $t('mainMenu') }}
+      {{ dir.P && db?.[dir.P] ? db?.[dir.P].N : $t('mainMenu') }}
     </li>
 
     <li v-if="dir" class="cat-subtitle">{{ dir?.N }}</li>

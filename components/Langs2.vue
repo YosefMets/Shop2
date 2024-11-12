@@ -16,7 +16,7 @@ watch( locale, async n => {
   prepareDB();
   // await new Promise( resolve => setTimeout( resolve, 10))
   if (activeItemId) appStore.activateItem( db.value?.[activeItemId] );
-  if (activeGroup.value) appStore.activateGroup( db.value[ activeGroupId ] );
+  if (activeGroup.value) appStore.activateGroup( db.value?.[ activeGroupId ] );
 
   useHead({
     htmlAttrs: {

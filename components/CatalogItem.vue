@@ -23,14 +23,14 @@ const deactivate = (actDir) => {
 }
 
 const back = () => {
-  emit('activate', props.dir.P ? db.value[props.dir.P] : null);
+  emit('activate', props.dir.P ? db.value?.[props.dir.P] : null);
 }
 
 const chain = computed( () => {
   let dir = props.activeDir
   const chain = [ dir?.I ]
   while (dir?.P) {
-    dir = db.value[dir.P];
+    dir = db.value?.[dir.P];
     chain.push( dir?.I );
   }
   return chain

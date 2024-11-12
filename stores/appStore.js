@@ -83,7 +83,7 @@ export const useAppStore = defineStore('app', () => {
       const [ c, v ] = val.split('=');
       return { char: c, value: v }
     });
-    // return Array.from( new Set( res.map( val => db.value[val]?.N || val ) ) );
+    // return Array.from( new Set( res.map( val => db.value?.[val]?.N || val ) ) );
     return res;
   });
   */
@@ -91,19 +91,19 @@ export const useAppStore = defineStore('app', () => {
   const filtersQuery = computed( () => {
     return Object.values( filters.value )
       .flat()
-      .map( value => db.value[value]?.I + '-' + db.value[value]?.S)
+      .map( value => db.value?.[value]?.I + '-' + db.value?.[value]?.S)
       .reduce( (res, query) => { res[query] = null; return res }, {});
   })
   const filterSlug = computed( () => {
     return Object.values( filters.value )
       .flat()
-      .map( value => db.value[value]?.I + '-' + db.value[value]?.S)
+      .map( value => db.value?.[value]?.I + '-' + db.value?.[value]?.S)
       .join('&');
   })
   const filterStrings = computed( () => {
     return Object.values( filters.value )
       .flat()
-      .map( value => db.value[value]?.I + '-' + db.value[value]?.S);
+      .map( value => db.value?.[value]?.I + '-' + db.value?.[value]?.S);
   })
   */
 

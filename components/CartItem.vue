@@ -13,7 +13,7 @@ const cartStore = useCartStore();
 const item = ref( props.cartItem.item );
 const size = ref( props.cartItem.size );
 // const images = useImageURL(item.value, { preview: true });
-const brandName = computed( () => db.value[item.value.B]?.N );
+const brandName = computed( () => db.value?.[item.value.B]?.N );
 </script>
 
 <template>

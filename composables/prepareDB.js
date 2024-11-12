@@ -12,14 +12,14 @@ export default function () {
     // console.log(1);
     item.price = Math.round(( price ) * 100) / 100;
 
-    let dir = db.value[item.P];
+    let dir = db.value?.[item.P];
     while (dir) {
       dir.items = dir.items || [];
       dir.items.push( item );
-      dir = db.value[dir.P];
+      dir = db.value?.[dir.P];
     }
 
-    const brand = db.value[item.B];
+    const brand = db.value?.[item.B];
     if (!brand.items) brand.items = [];
     brand.items.push( item );
 
@@ -31,9 +31,9 @@ export default function () {
   dirs.value?.forEach( dir => {
     if (!dir.items) dir.items = [];
 
-    if (dir.P && db.value[dir.P]) {
-      db.value[dir.P].children = db.value[dir.P].children || [];
-      db.value[dir.P].children.push( dir.I )
+    if (dir.P && db.value?.[dir.P]) {
+      db.value?.[dir.P].children = db.value?.[dir.P].children || [];
+      db.value?.[dir.P].children.push( dir.I )
     }
 
     dir.keywords = getKeywords( dir );
@@ -42,7 +42,7 @@ export default function () {
   brands.value?.forEach( brand => {
     if (brand.items?.length) {
       brand.dirs = Array.from( new Set( brand.items?.map( ({ P }) => P ) ) )
-                        ?.map( dirId => db.value[dirId] )
+                        ?.map( dirId => db.value?.[dirId] )
     }
   });
 

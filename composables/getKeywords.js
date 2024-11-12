@@ -19,5 +19,5 @@ export default (dir) => {
 
   return allKeywords
       .filter( ({ char }) => !(allKeywords.filter( charValue => charValue.char === char ).length === 1))
-      .sort( (a, b) => (db.value[b.value]?.U || 0) - (db.value[a.value]?.U || 0) );
+      .sort( (a, b) => (db.value?.[b.value]?.U || 0) - (db.value?.[a.value]?.U || 0) );
 }

@@ -35,7 +35,7 @@ const filtersQuery1 = computed( () => {
 
   return ( Object.keys( dblFilters ) || [] ).flatMap( key => {
     return dblFilters[key]?.map( value => {
-      const dbValue = db.value[value];
+      const dbValue = db.value?.[value];
       const res = dbValue?.P
           ? [ dbValue.I, dbValue.S ]
           : [ key, value ]
@@ -43,7 +43,7 @@ const filtersQuery1 = computed( () => {
     })
   }).join('/')
   // if (!Object.keys( dblFilters ).length) return undefined
-  // return Object.values( dblFilters ).flat().map( value => `${db.value[value]?.I}-${db.value[value]?.S}` ).join('/');
+  // return Object.values( dblFilters ).flat().map( value => `${db.value?.[value]?.I}-${db.value?.[value]?.S}` ).join('/');
 });
 
 const brandUrl = computed( () => props.brand?.I ? `/${props.brand.S}/${props.brand.I}` : '');

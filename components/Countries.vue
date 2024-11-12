@@ -16,7 +16,7 @@ const hints = computed(() =>
 const set = (iso) => {
   userCountry.value = iso;
   user.value.country = iso;
-  const countryCurrency = countries.value?.[country.value.ISO].C
+  const countryCurrency = countries.value?.[country.value?.ISO].C
   if (!userCurrency.value && db.value?.currencies[countryCurrency])
     user.value.currency = countryCurrency
 }

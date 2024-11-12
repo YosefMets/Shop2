@@ -13,7 +13,7 @@ const { db, activeItem: item, country } = storeToRefs( appStore );
 const cartStore = useCartStore();
 const { viewed } = storeToRefs( useUserStore() );
 
-const entity = db.value['I' + params.id];
+const entity = db.value?.['I' + params.id];
 if (entity) appStore.activateItem( entity );
 
 // Add to viewed
@@ -26,10 +26,10 @@ if (item.value?.S !== params.slug) {
   showError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true });
 }
 
-const brand = computed( () => db.value[item.value?.B] );
+const brand = computed( () => db.value?.[item.value?.B] );
 const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${brand.value?.l}` : null )
 
-const kashruts = computed( () => [item.value?.k].flat().map( id => db.value[id] ))
+const kashruts = computed( () => [item.value?.k].flat().map( id => db.value?.[id] ))
 
 const unit = computed( () => {
   const wKg = item.value.w ? !(item.value.w < 500) : null

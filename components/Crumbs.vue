@@ -10,9 +10,9 @@ const Entity = computed( () => props.entity || item.value || group.value );
 const crumbs = computed( () => {
   if (!props.entity?.P) return []
 
-  let res = [ db.value[props.entity.P] ]
+  let res = [ db.value?.[props.entity.P] ]
   while (res[0]?.P) {
-    res.unshift(db.value[res[0].P]);
+    res.unshift(db.value?.[res[0].P]);
   }
   return res
 });

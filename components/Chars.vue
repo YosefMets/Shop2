@@ -4,7 +4,7 @@ const props = defineProps({ item: Object });
 const { db } = storeToRefs( useAppStore() );
 const { t } = useI18n();
 
-const dir = computed( () => props.item?.P ? db.value[props.item.P] : null );
+const dir = computed( () => props.item?.P ? db.value?.props.item.P] : null );
 const chars = computed( () => Object.keys(dir.value?.X || {})
                                     .filter( char => char in props.item )
                                     .reduce( (r, char) => {
@@ -17,16 +17,16 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
   <div v-if="item && Object.keys(chars).length" class="chars">
     <template v-for="(val, attr) in chars">
       <template v-if="val && val.length" class="char">
-        <b class="attr">{{ db[attr]?.N }}:</b>
+        <b class="attr">{{ db?.[attr]?.N }}:</b>
         <b :class="['val', { img: attr === 'co' }]">
-          <NuxtImg v-if="attr === 'co'" :src="`/${db[val[0]]?.Iso?.toLowerCase()}.svg`" :alt="db[val[0]].N" />
-          <!--        <img v-if="attr === 'ctry'" :src="'/flags/' + db[val[0]].iso.toLowerCase() + '.svg'" :alt="db[val[0]].N" />-->
+          <NuxtImg v-if="attr === 'co'" :src="`/${db?.[val[0]]?.Iso?.toLowerCase()}.svg`" :alt="db?.[val[0]].N" />
+          <!--        <img v-if="attr === 'ctry'" :src="'/flags/' + db?.[val[0]].iso.toLowerCase() + '.svg'" :alt="db?.[val[0]].N" />-->
 
           <template v-for="(subval, i) in val">
 
-            <template v-if="db[subval]">
-              <!--              <NLink2 :to="db[subval]" class="char-link">{{ db[subval].N }}{{db[attr].J}}</NLink2>{{ i[id] !== val.length-1 ? ', ' : '' }}-->
-              <span class="char-link">{{ db[subval]?.N }}{{db[attr]?.J}}</span>{{ i !== val.length-1 ? ', ' : '' }}
+            <template v-if="db?.[subval]">
+              <!--              <NLink2 :to="db?.[subval]" class="char-link">{{ db?.[subval].N }}{{db?.[attr].J}}</NLink2>{{ i[id] !== val.length-1 ? ', ' : '' }}-->
+              <span class="char-link">{{ db?.[subval]?.N }}{{db?.[attr]?.J}}</span>{{ i !== val.length-1 ? ', ' : '' }}
             </template>
 
             <template v-else-if="typeof subval === 'boolean'">
@@ -38,7 +38,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
             </template>
 
             <template v-else>
-              <span>{{ subval }}{{ db[attr]?.J }}</span>{{ i !== val.length-1 ? ', ' : '' }}
+              <span>{{ subval }}{{ db?.[attr]?.J }}</span>{{ i !== val.length-1 ? ', ' : '' }}
             </template>
 
           </template>
