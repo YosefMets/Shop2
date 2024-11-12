@@ -1,6 +1,6 @@
 <script setup>
 import NLink from "~/components/controls/NLink.vue";
-import NDropDown from "~/components/controls/NDropDown.vue";
+import NDropDown from "~/components/controls/NDropdown.vue";
 const { t } = useI18n();
 
 const { db, activeGroup, activeBrand, currency, priceMin, priceMax } = storeToRefs( useAppStore() );
