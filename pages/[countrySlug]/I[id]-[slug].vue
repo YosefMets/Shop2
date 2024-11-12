@@ -49,7 +49,8 @@ const unit = computed( () => {
     <Crumbs :entity="item" class="ai-crumbs" />
 
 <!--    <Gallery :item="item" class="ai-imgs" />-->
-    <div><ItemGallery v-if="item.M" :item="item" class="ai-imgs" /></div>
+    <div><ItemGallery v-if="item.M" :item="item" class="ai-imgs" />
+    </div>
 
     <div class="ai-info">
 
