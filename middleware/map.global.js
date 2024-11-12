@@ -48,11 +48,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const nuxtApp = useNuxtApp();
   const firstClientSide = process.client && nuxtApp.isHydrating && nuxtApp.payload.serverRendered;
 
-  const entity = db.value[entityId.value];
+  const entity = db.value?.[entityId.value];
   // if ( !(entity?.S === params.slug) ) throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
 
-  const brand = brandsSlugs.value[params.brandSlug] || null;
-  appStore.activateBrand(brand || null);
+  // const brand = brandsSlugs.value[params.brandSlug] || null;
+  // appStore.activateBrand(brand || null);
 
   /*
   if (meta.prefix === 'i') {

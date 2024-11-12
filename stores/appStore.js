@@ -62,7 +62,7 @@ export const useAppStore = defineStore('app', () => {
   const itemsMinMax = computed( () => {
     return { min: 0, max: 1000 }
     // const a = displayedItems.value?.map( ({price}) => price).sort( ( a, b ) => a-b );
-    // return { min: a[0], max: a[a.length-1] };
+    // return { min: a?.[0], max: a?.[a.length-1] };
   } );
 
   const country = computed( () => countries.value?.[user.value.country]);
