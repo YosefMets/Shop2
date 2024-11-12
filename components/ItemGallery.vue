@@ -2,11 +2,11 @@
   <div class="gallery" :class="{ alone: images_.length <= 1 }">
     <div class="slider" :style="{ backgroundColor: '#'+(item.H || 'fff') }">
       <ul class="slides" @touchstart="swipeStart" @mousedown="swipeStart">
-        <li v-for="(media, i) in (images_.length > 1 ? images : images_)" class="slide" :style="slidesData[i]">
+        <li v-for="(media, i) in (images_.length > 1 ? images : images_)" class="slide" :style="slidesData?.[i]">
 
           <div class="video" v-if="p.item?.M?.[i]?.search(/^\w{2,4}$/) === -1">
             <iframe width="560" height="315"
-                    :src="`https://www.youtube.com/embed/${p.item.M[i]}?controls=1&autoplay=1&loop=1&&playlist=${p.item.M[i]}&showinfo=0&modestbranding=1&fs=0&&mute=1`"
+                    :src="`https://www.youtube.com/embed/${p.item.M?.[i]}?controls=1&autoplay=1&loop=1&&playlist=${p.item.M?.[i]}&showinfo=0&modestbranding=1&fs=0&&mute=1`"
                     :title="p.item.N"
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
           </div>
@@ -18,7 +18,7 @@
                      :key="item.I"
                      loading="lazy" />
 <!--            <img :src="media" class="image" :alt="p.item.N" />-->
-<!--            <zoom-image2 :url="zoomImages[i]" />-->
+<!--            <zoom-image2 :url="zoomImages?.[i]" />-->
           </template>
 
         </li>
@@ -93,7 +93,7 @@ const positionData = computed(()=>{
       else if (I.value === 1 && i === last.value)
         res.transform = 'translateX('+last.value*100+'%)';
       else
-        res.transform = 'translateX('+transitionData.value[i]+'%)';
+        res.transform = 'translateX('+transitionData.value?.[i]+'%)';
 
     if (direction.value === -1)
       if (I.value === last.value && i !== 0 && i !== last.value)
@@ -103,7 +103,7 @@ const positionData = computed(()=>{
       else if (I.value === last.value-1 && i === 0)
         res.transform = 'translateX('+((last.value-i)*-100)+'%)';
       else
-        res.transform = 'translateX('+transitionData.value[i]+'%)';
+        res.transform = 'translateX('+transitionData.value?.[i]+'%)';
 
       return res;
   })
@@ -140,7 +140,7 @@ watch(II, async (newI, oldI) => {
 });
 
 const swipeStart = (e) => {
-  startX.value = (e.touches && e.touches.length === 1) ? e.touches[0].clientX : e.clientX;
+  startX.value = (e.touches && e.touches.length === 1) ? e.touches?.[0].clientX : e.clientX;
   if (startX.value) {
     document.body.addEventListener('touchmove', swipeMove)
     document.body.addEventListener('touchend', swipeEnd)
@@ -149,12 +149,12 @@ const swipeStart = (e) => {
   }
 }
 const swipeMove = (e) => {
-  const currentX = (e.touches && e.touches.length === 1) ? e.touches[0].clientX : e.clientX;
+  const currentX = (e.touches && e.touches.length === 1) ? e.touches?.[0].clientX : e.clientX;
   swipeX.value = -100 * (startX.value - currentX) / e.target.offsetWidth
 }
 const swipeEnd = (e) => {
   swipeX.value = 0;
-  const finishX = (e.changedTouches && e.changedTouches.length === 1) ? e.changedTouches[0].clientX : e.clientX;
+  const finishX = (e.changedTouches && e.changedTouches.length === 1) ? e.changedTouches?.[0].clientX : e.clientX;
   if (startX.value < (finishX - swipeLimit.value))
     --I.value
   else if (startX.value > (finishX + swipeLimit.value))

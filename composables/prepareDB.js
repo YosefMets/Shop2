@@ -6,9 +6,9 @@ export default function () {
   const { user } = storeToRefs( useUserStore() );
 
   items.value?.forEach( item => {
-    if (item['%']) item['$%'] = Math.floor( item.$ * (100 - item['%']) ) / 100;
+    if (item?.['%']) item['$%'] = Math.floor( item.$ * (100 - item?.['%']) ) / 100;
 
-    const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[user.value.currency] || 1 );
+    const price = ( item?.['$%'] || item.$ ) * ( db.value?.currencies?.[user.value.currency] || 1 );
     // console.log(1);
     item.price = Math.round(( price ) * 100) / 100;
 

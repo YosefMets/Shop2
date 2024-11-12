@@ -65,7 +65,7 @@ const setMonth = (month) => {
         {{ d.toLocaleDateString(locale, { weekday: "short" }) }}
       </div>
       <div v-for="(d, i) in new Array(7)">
-        {{ dates[i].toLocaleDateString(locale, { weekday: "short" }) }}
+        {{ dates?.[i].toLocaleDateString(locale, { weekday: "short" }) }}
       </div>
       <div v-for="(d, i) in dates"
            class="date"

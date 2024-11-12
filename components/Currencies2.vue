@@ -18,7 +18,7 @@ const set = (iso) => {
       <div @click="set(currency.ISO)"
            :class="['crnc', { 'crnc-curr': user.currency === currency.ISO }]">
 
-        {{ currencies[currency.ISO]?.S }} {{ $t(`currencies.${currency.ISO}`) }}
+        {{ currencies?.[currency.ISO]?.S }} {{ $t(`currencies.${currency.ISO}`) }}
 
       </div>
     </li>

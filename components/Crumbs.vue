@@ -11,8 +11,8 @@ const crumbs = computed( () => {
   if (!props.entity?.P) return []
 
   let res = [ db.value?.[props.entity.P] ]
-  while (res[0]?.P) {
-    res.unshift(db.value?.[res[0].P]);
+  while (res?.[0]?.P) {
+    res.unshift(db.value?.[res?.[0].P]);
   }
   return res
 });

@@ -1,3 +1,3 @@
 export default (item) => {
-  return getCurrentPrice( item['$%'] || item.$ );
+  return getCurrentPrice( item?.['$%'] || item.$ );
 }

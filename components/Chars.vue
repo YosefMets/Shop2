@@ -8,7 +8,7 @@ const dir = computed( () => props.item?.P ? db.value?.[props.item.P] : null );
 const chars = computed( () => Object.keys(dir.value?.X || {})
                                     .filter( char => char in props.item )
                                     .reduce( (r, char) => {
-                                      if (props.item[char]) r[char] = [props.item[char]].flat();
+                                      if (props.item?.[char]) r[char] = [props.item?.[char]].flat();
                                       return r }, {}
                                     ));
 </script>
@@ -19,13 +19,13 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
       <template v-if="val && val.length" class="char">
         <b class="attr">{{ db?.[attr]?.N }}:</b>
         <b :class="['val', { img: attr === 'co' }]">
-          <NuxtImg v-if="attr === 'co'" :src="`/${db?.[val[0]]?.Iso?.toLowerCase()}.svg`" :alt="db?.[val[0]].N" />
-          <!--        <img v-if="attr === 'ctry'" :src="'/flags/' + db?.[val[0]].iso.toLowerCase() + '.svg'" :alt="db?.[val[0]].N" />-->
+          <NuxtImg v-if="attr === 'co'" :src="`/${db?.[val?.[0]]?.Iso?.toLowerCase()}.svg`" :alt="db?.[val?.[0]].N" />
+          <!--        <img v-if="attr === 'ctry'" :src="'/flags/' + db?.[val?.[0]].iso.toLowerCase() + '.svg'" :alt="db?.[val?.[0]].N" />-->
 
           <template v-for="(subval, i) in val">
 
             <template v-if="db?.[subval]">
-              <!--              <NLink2 :to="db?.[subval]" class="char-link">{{ db?.[subval].N }}{{db?.[attr].J}}</NLink2>{{ i[id] !== val.length-1 ? ', ' : '' }}-->
+              <!--              <NLink2 :to="db?.[subval]" class="char-link">{{ db?.[subval].N }}{{db?.[attr].J}}</NLink2>{{ i?.[id] !== val.length-1 ? ', ' : '' }}-->
               <span class="char-link">{{ db?.[subval]?.N }}{{db?.[attr]?.J}}</span>{{ i !== val.length-1 ? ', ' : '' }}
             </template>
 

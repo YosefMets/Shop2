@@ -22,19 +22,19 @@ const filtersQuery1 = computed( () => {
   const _filters = props.filters === true ? [] : [props.filters];
 
   _filters.flat().forEach( ({ char, value }) => {
-    if (dblFilters[char]?.includes(value)) {
-      dblFilters[char].splice(dblFilters[char].indexOf(value), 1);
-      if (!dblFilters[char].length || value === undefined)
-        delete dblFilters[char]
+    if (dblFilters?.[char]?.includes(value)) {
+      dblFilters?.[char].splice(dblFilters?.[char].indexOf(value), 1);
+      if (!dblFilters?.[char].length || value === undefined)
+        delete dblFilters?.[char]
     }
     else {
-      if (!dblFilters[char]) dblFilters[char] = [];
-      dblFilters[char].push(value);
+      if (!dblFilters?.[char]) dblFilters[char] = [];
+      dblFilters?.[char].push(value);
     }
   })
 
   return ( Object.keys( dblFilters ) || [] ).flatMap( key => {
-    return dblFilters[key]?.map( value => {
+    return dblFilters?.[key]?.map( value => {
       const dbValue = db.value?.[value];
       const res = dbValue?.P
           ? [ dbValue.I, dbValue.S ]

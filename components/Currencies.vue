@@ -25,7 +25,7 @@ const set = (iso) => {
       <NMiniButton v-for="currency in currencies"
                    :current="user.currency === currency.ISO"
                    @click="set(currency.ISO)">
-        <template #icon>{{ currencies[currency.ISO]?.S }}</template>
+        <template #icon>{{ currencies?.[currency.ISO]?.S }}</template>
         {{ $t(`currencies.${currency.ISO}`) }}
       </NMiniButton>
     </div>

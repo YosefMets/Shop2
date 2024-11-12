@@ -30,7 +30,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (country) {
       user.value.country = country.ISO;
       const countryCurrency = countries.value?.[country.ISO]?.C
-      if (db.value?.currencies[countryCurrency]) {
+      if (db.value?.currencies?.[countryCurrency]) {
         user.value.currency = countryCurrency
       }
     } else if (params.countrySlug) {
@@ -51,7 +51,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const entity = db.value?.[entityId.value];
   // if ( !(entity?.S === params.slug) ) throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
 
-  // const brand = brandsSlugs.value[params.brandSlug] || null;
+  // const brand = brandsSlugs.value?.[params.brandSlug] || null;
   // appStore.activateBrand(brand || null);
 
   /*

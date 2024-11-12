@@ -13,12 +13,12 @@ export default (paramsFilters) => {
         const res = (key?.P)
             ? [ db.value?.[key.P]?.I, key?.I || id ]
             : [ key?.I || id, value ]
-        return (res[0] && res[0] !== 'min' && res[0] !== 'max' && res[1]) ? res : null
+        return (res?.[0] && res?.[0] !== 'min' && res?.[0] !== 'max' && res?.[1]) ? res : null
       })
       .filter( pair => pair )
       .reduce( (f, [ char, value ]) => {
-        if (!f[char]) f[char] = [];
-        f[char].push(value);
+        if (!f?.[char]) f[char] = [];
+        f?.[char].push(value);
         return f
       }, {});
 }

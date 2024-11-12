@@ -5,11 +5,11 @@ export default () => {
 
   return scopedItems.value.filter( function (item) {
     return Object.keys(this).reduce( (res, filter) => {
-        return res && [item[filter]]
+        return res && [item?.[filter]]
           .flat()
           .reduce( (rres, ffilter) => {
-              // console.log( this[filter], ffilter );
-            return rres || this[filter].includes(ffilter+'')
+              // console.log( this?.[filter], ffilter );
+            return rres || this?.[filter].includes(ffilter+'')
           }, false)
       }, true)
       && (priceMin.value ? priceMin.value <= item.price : true)

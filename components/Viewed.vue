@@ -14,7 +14,7 @@ const items = computed( () => {
 <template>
   <div class="viewed">
     <NLink v-for="item in items" :min="null" :max="null" :to="item" class="viewed-item">
-      <img :src="item.M?.[0] ? `/i/${item.I}-0.${item.M[0]}` : ''" class="vd-img" alt="">
+      <img :src="item.M?.[0] ? `/i/${item.I}-0.${item.M?.[0]}` : ''" class="vd-img" alt="">
     </NLink>
   </div>
 </template>

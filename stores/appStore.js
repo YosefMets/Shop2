@@ -57,7 +57,7 @@ export const useAppStore = defineStore('app', () => {
       const second = scopedItems.value.filter((item) => item.N.toLowerCase().indexOf(qry) > 0)
       res = first.concat(second);
     }
-    return res.sort( ( a, b ) => sortsFunctions[activeSort.value]( a, b ) );
+    return res.sort( ( a, b ) => sortsFunctions?.[activeSort.value]( a, b ) );
   });
   const itemsMinMax = computed( () => {
     return { min: 0, max: 1000 }
@@ -71,14 +71,14 @@ export const useAppStore = defineStore('app', () => {
 
   watch( () => currency.value, (n) => {
     items.value?.forEach( item => {
-      const price = ( item['$%'] || item.$ ) * ( db.value?.currencies?.[n.ISO] || 1 );
+      const price = ( item?.['$%'] || item.$ ) * ( db.value?.currencies?.[n.ISO] || 1 );
       item.price = Math.round(( price ) * 100) / 100;
     });
   });
   /*
   const keywords = computed( () => {
     if (!activeGroup.value?.X) return null
-    let res = scopedItems.value.flatMap( item => Object.keys( activeGroup.value.X ).map( char => char+'='+item[char] ) );
+    let res = scopedItems.value.flatMap( item => Object.keys( activeGroup.value.X ).map( char => char+'='+item?.[char] ) );
     res = Array.from( new Set( res ) ).map( val => {
       const [ c, v ] = val.split('=');
       return { char: c, value: v }
@@ -124,7 +124,7 @@ export const useAppStore = defineStore('app', () => {
   }
   /*
   const applyFilter = ({ char, value }) => {
-    if (filters.value[char]?.includes(value))
+    if (filters.value?.[char]?.includes(value))
       removeFilter({ char, value });
     else
       addFilter({ char, value });
@@ -132,15 +132,15 @@ export const useAppStore = defineStore('app', () => {
     console.log(filtersQuery.value);
   }
   const addFilter = ({ char, value }) => {
-    console.log(filters.value[char])
+    console.log(filters.value?.[char])
     if (!filters.value[char]) filters.value[char] = [];
-    filters.value[char].push(value);
+    filters.value?.[char].push(value);
   }
   const removeFilter = ({ char, value }) => {
     console.log('???')
-    filters.value[char].splice(filters.value[char].indexOf(value), 1);
-    if (!filters.value[char].length || value === undefined)
-      delete filters.value[char]
+    filters.value?.[char].splice(filters.value?.[char].indexOf(value), 1);
+    if (!filters.value?.[char].length || value === undefined)
+      delete filters.value?.[char]
   }
   */
 

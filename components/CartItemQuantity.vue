@@ -10,7 +10,7 @@ const unit = ref( props.cartItem.item?.J ? t(props.cartItem.item?.J) : null );
 const { storage } = storeToRefs( useAppStore() );
 const storageQty = computed( () => {
   const qtys = props.cartItem.item.Q?.[storage.value?.I]
-  return props.cartItem.size ? qtys.find( q => q[0] === props.cartItem.size)?.[1] : qtys
+  return props.cartItem.size ? qtys.find( q => q?.[0] === props.cartItem.size)?.[1] : qtys
 } )
 
 const cartStore = useCartStore();

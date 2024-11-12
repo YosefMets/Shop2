@@ -9,7 +9,7 @@ export default (dir) => {
   if (!dir?.X) return null;
 
   let allKeywords = items.flatMap( item => {
-    return Object.keys(dir.X)?.map(char => dir.X[char]?.K ? char + '=' + item[char] : null).filter( a => a );
+    return Object.keys(dir.X)?.map(char => dir.X?.[char]?.K ? char + '=' + item?.[char] : null).filter( a => a );
   });
 
   allKeywords = Array.from( new Set( allKeywords ) )?.map( val => {

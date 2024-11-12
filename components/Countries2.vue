@@ -6,7 +6,7 @@ const { user } = storeToRefs( useUserStore() );
 
 const hints = computed(() =>
     Object.keys(countries.value)
-        .filter( iso => countries.value[iso].M )
+        .filter( iso => countries.value?.[iso].M )
         .map( iso => ({ iso, n: t(`countries.${iso}`) }) )
         .sort((a,b) => b.n - a.n)
 )
@@ -15,7 +15,7 @@ const set = (iso) => {
   userCountry.value = iso;
   user.value.country = iso;
   const countryCurrency = countries.value?.[country.value.ISO].C
-  if (!userCurrency.value && db.value?.currencies[countryCurrency])
+  if (!userCurrency.value && db.value?.currencies?.[countryCurrency])
     user.value.currency = countryCurrency
 }
 </script>
