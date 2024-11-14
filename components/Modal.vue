@@ -8,6 +8,7 @@ const props = defineProps({
   closeout: { type: Boolean, default: true },
   width: String,
   height: String,
+  side: String,
 });
 
 const slots = useSlots();
@@ -15,11 +16,14 @@ const header = ref(!!slots.header);
 const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
+const sideClass = computed( () => props.side ? `modal-side-${props.side}` : null );
+const width = ref( props.width || '30%' );
+
 const emit = defineEmits(['close']);
 
 useHead({
   bodyAttrs: {
-    // class: computed( () => 'modal-mode' ),
+    class: computed( () => props.show ? 'modal-mode' : undefined ),
   },
 });
 </script>
@@ -28,16 +32,15 @@ useHead({
   <Teleport to="body">
     <Transition name="modal">
 
-      <div class="fog" v-if="show">
+      <div :class="['fog', sideClass]" v-if="show">
 
-        <div :class="['modal-container', width ? 'mc-w-'+width : undefined, height ? 'mc-h-'+height : undefined ]" >
+        <div class="modal-container scroll">
 
-          <h2 v-if="header" :class="['mdl-ttl', { 'mdl-ttl-x': x }]"><slot name="header" /></h2>
-          <h3 v-if="title" :class="['mdl-ttl-min', { 'mdl-ttl-x': x }]"><slot name="title" /></h3>
+          <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
 
           <svg-x v-if="x" class="mdlx" @click="emit('close')" />
 
-          <slot/>
+          <div><slot/></div>
 
           <div v-if="footer" class="mdx-footer"><slot name="footer" /></div>
 
@@ -56,21 +59,18 @@ useHead({
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  justify-items: center;
+  justify-items: end;
   align-items: center;
   overflow-y: auto;
   position: fixed;
   left: 0;
   right: 0;
-  /*top: 0;*/
   bottom: 0;
-  /*width: 100%;*/
-  height: 100vh;
-  /*background-color: #00000099;*/
-  /*backdrop-filter: blur(.2rem);*/
-  /*z-index: 1500;*/
+  height: 100dvh;
   z-index: 1000;
 }
+.fog.modal-side-left { justify-items: start; }
+
 .fog:after {
   content: '';
   background-color: var(--fog);
@@ -84,25 +84,22 @@ useHead({
 .modal-container {
   position: relative;
   background-color: var(--bg);
-  /*background-color: #fff;*/
   padding: 3rem;
-  border-radius: var(--Br);
-  width: v-bind(width);
-  /*max-width: 40rem;*/
+  width: v-bind( width );
+  height: 100%;
   z-index: 10;
   max-height: 100vh;
   overflow: auto;
   box-shadow: 0 .2rem 1rem -.7rem #000000;
-
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
-
+/*
 .mc-w-s { width: 30rem; }
 .mc-w-m { width: 45rem; }
 .mc-w-l { width: 60rem; }
 .mc-w-full { width: 100%; }
-
+*/
 .mc-h-full { height: 100%; }
 
 .mdl-ttl {
@@ -115,6 +112,7 @@ useHead({
   grid-gap: 1rem;
   position: relative;
 }
+.mdl-ttl.empty { height: 0; overflow: hidden; margin: 0; }
 .mdl-ttl-min {
   font-size: 1.2rem;
   font-weight: 500;
@@ -195,8 +193,11 @@ svg.mdlx {
 }
 .modal-enter-from .modal-container,
 .modal-leave-to .modal-container {
-  transform: translateY(1rem);
-  opacity: 0;
+  transform: translateX(100%);
+}
+.modal-enter-from.modal-side-left .modal-container,
+.modal-leave-to.modal-side-left .modal-container {
+  transform: translateX(-100%);
 }
 
 @media (max-width: 480px) {
@@ -213,7 +214,7 @@ svg.mdlx {
     width: 100%;
     /*min-height: 100vh;*/
     /*border-radius: 0;*/
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    border-radius: var(--br) var(--br) 0 0;
     position: absolute;
     left: 0;
     right: 0;

@@ -78,29 +78,41 @@ const isInChain = computed( () => {
 
 <style scoped>
 .cat-link {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-gap: .5rem;
-  padding: .4em 0;
+  padding: .4em .4rem .4em 1rem;
   text-decoration: none;
-  color: #fff;
+  color: #000;
   align-items: center;
   line-height: 1.2em;
   font-size: 1.1rem;
   cursor: pointer;
-  border-radius: var(--br);
+  transition: all .2s;
+  background-color: #fff;
+}
+.cat-link:after {
+  /*content: '';*/
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: -25% -50%;
+  rotate: 45deg;
+  height: 70.71%;
+  aspect-ratio: 1 /  1;
+  background-color: #fff;
+  opacity: 0;
   transition: all .2s;
 }
 .cat-item:hover > .cat-link {
-  padding-left: .3rem;
-  padding-right: .3rem;
-  background-color: var(--hover-bg-dark);
+  background-color: var(--bg);
 }
 .cat-ic {
   font-style: normal;
   width: 1.6rem;
   text-align: center;
-  /*aspect-ratio: 1 / 1;*/
 }
 /*
 .cat-item:hover > .cat-link:not(.cat-link-curr) {
@@ -115,17 +127,19 @@ const isInChain = computed( () => {
   width: 1rem;
   height: .5rem;
   transform: rotateZ(-90deg);
-  stroke: #fff;
+  stroke-width: .08rem;
 }
-.cat-link-curr {
-  /*background-color: var(--active-light);*/
-  /*color: var(--active-hover);*/
+.cat-link-curr {}
+
+.cat-link.router-link-exact-active,
+.cat-link.router-link-exact-active:hover {
+  background-color: var(--active-bg);
 }
-.cat-link.router-link-exact-active {
-  /*padding-left: .5rem;*/
-  /*padding-right: .5rem;*/
-  /*background-color: var(--active-bg-dark);*/
-  color: var(--active);
+
+.cat-link.router-link-exact-active:after {
+  translate: 20% -50%;
+  background-color: var(--active-bg);
+  opacity: 1;
 }
 
 .sub-menu-enter-active,

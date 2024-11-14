@@ -143,7 +143,7 @@ const unit = computed( () => {
   margin: 2rem 0;
 }
 .ai-price {
-  font-size: 2.4rem;
+  font-size: 2rem;
 }
 .ai-acts {
   margin: 1rem 0;

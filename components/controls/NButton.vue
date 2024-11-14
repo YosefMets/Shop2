@@ -33,7 +33,7 @@ const styles = computed( () => ({
   border-style: solid;
   border-width: .2rem;
   border-color: transparent;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
   padding: .6rem 1rem;
   cursor: pointer;
   font-size: 1.1rem;

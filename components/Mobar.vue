@@ -40,9 +40,11 @@ const { activeGroup } = storeToRefs( useAppStore() );
       "cat  cat"
       "sett sett";
   /*box-shadow: .2rem 0 1rem -.7rem #000000;*/
-  border-radius: var(--Br);
-  background-color: var(--dark);
-  color: #fff;
+  /*border-radius: var(--Br);*/
+  /*background-color: var(--dark);*/
+  background-color: #fff;
+  /*color: #fff;*/
+  color: #000;
   padding: 1rem;
   grid-gap: .5rem;
 }
@@ -55,11 +57,11 @@ const { activeGroup } = storeToRefs( useAppStore() );
 }
 .mb-settings {
   grid-area: sett;
-  margin: 0 -.3rem;
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  grid-template-rows: auto;
-  grid-gap: .3rem;
+  /*margin: 0 -.3rem;*/
+  /*display: grid;*/
+  /*grid-template-columns: 1fr auto auto;*/
+  /*grid-template-rows: auto;*/
+  /*grid-gap: .3rem;*/
 }
 .mb-user {
   grid-area: user;

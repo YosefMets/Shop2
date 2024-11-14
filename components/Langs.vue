@@ -1,5 +1,4 @@
 <script setup>
-import SvgCheck from "~/components/imgs/svg-check.vue";
 import NMiniButton from "~/components/controls/NMiniButton.vue";
 
 const { locale, locales, setLocale } = useI18n();
@@ -29,11 +28,11 @@ watch( locale, async n => {
 
 <template>
 
-  <Modal :show="route.query?.['choose-language'] !== undefined"
-         :width="'16rem'"
-         @close="navigateTo({ query: {...route.query, ['choose-language']: undefined} })">
+<!--  <Modal :show="route.query?.['choose-language'] !== undefined"-->
+<!--         :width="'16rem'"-->
+<!--         @close="navigateTo({ query: {...route.query, ['choose-language']: undefined} })">-->
 
-    <template #title>{{ $t('language') }}:</template>
+    <h2 class="lcl-ttl">{{ $t('language') }}:</h2>
 
     <div class="lngs">
       <NMiniButton v-for="lcl in locales"
@@ -47,26 +46,14 @@ watch( locale, async n => {
       </NMiniButton>
     </div>
 
-<!--    <ul class="lngs">-->
-<!--      <li v-for="lcl in locales" class="lng-wr">-->
-
-<!--        <NuxtLink v-if="locale !== lcl.code"-->
-<!--                  :to="switchLocalePath( lcl.code )"-->
-<!--                  :class="['lng', { 'curr-locale': locale === lcl.code }]">-->
-<!--          {{ lcl.N }}-->
-<!--        </NuxtLink>-->
-
-<!--        <span v-else class="lng-curr">-->
-<!--          {{ lcl.N }}-->
-<!--        </span>-->
-
-<!--      </li>-->
-<!--    </ul>-->
-
-  </Modal>
+<!--  </Modal>-->
 </template>
 
 <style scoped>
+.lcl-ttl {
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+}
 .lngs {
   list-style: none;
   margin: 0;

@@ -24,11 +24,11 @@ const set = (iso) => {
 
 <template>
 
-  <Modal :show="route.query?.['choose-country'] !== undefined"
-         :width="'15rem'"
-         @close="navigateTo({ query: {...route.query, ['choose-country']: undefined} })">
+<!--  <Modal :show="route.query?.['choose-country'] !== undefined"-->
+<!--         :width="'15rem'"-->
+<!--         @close="navigateTo({ query: {...route.query, ['choose-country']: undefined} })">-->
 
-    <template #title>{{ $t('country') }}:</template>
+    <h2 class="lcl-ttl">{{ $t('country') }}:</h2>
 
 
 
@@ -49,19 +49,16 @@ const set = (iso) => {
 
       </NMiniButton>
 
-<!--      <NuxtLink v-for="cntry in hints"-->
-<!--                @click="set(cntry.iso)"-->
-<!--                :to="{ path: getNewCountryInURL(cntry.iso), query: route.query }"-->
-<!--                :class="['main-cntr', { 'main-cntr-curr': cntry.iso === country?.ISO }]">-->
-<!--        <img :src="`/flags/${cntry.iso}.svg`" loading="lazy" class="main-cntr-flag" alt="" />-->
-<!--        {{ cntry.n }}-->
-<!--      </NuxtLink>-->
     </div>
 
-  </Modal>
+<!--  </Modal>-->
 </template>
 
 <style scoped>
+.lcl-ttl {
+  margin: 2rem 0 1rem 0;
+  font-weight: 400;
+}
 .main-cntrs {
   list-style: none;
   margin: 0;
@@ -70,7 +67,8 @@ const set = (iso) => {
   /*column-gap: 1rem;*/
   gap: .5rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /*align-items: flex-start;*/
 }
 .main-cntr {
   margin: 0;

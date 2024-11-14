@@ -43,7 +43,7 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   /*grid-template-rows: 1fr auto;*/
   column-gap: .5rem;
   row-gap: .5rem;
-  background-color: var(--active-bg-dark);
+  background-color: var(--active-bg);
   padding: .5rem 1rem .5rem .5rem;
   border-radius: var(--br);
 }

@@ -1,5 +1,4 @@
 <script setup>
-import SvgCart from "~/components/imgs/svg-cart.vue";
 import SvgCart1 from "~/components/imgs/svg-cart1.vue";
 import NLink from "~/components/controls/NLink.vue";
 // import PriceRegular from "~/components/items/PriceRegular.vue";
@@ -57,11 +56,11 @@ watch(quantity, (newVal, oldVal) => {
   justify-content: center;
   align-items: center;
   /*border: .1rem solid var(--hover-bg-dark);*/
-  /*background-color: var(--hover-bg-dark);*/
-  border-radius: var(--br);
+  /*background-color: var(--bg);*/
+  /*border-radius: var(--br);*/
   transition: background-color .2s;
 }
-.cart-but-wr:hover { background-color: var(--hover-bg-dark) }
+.cart-but-wr:hover { background-color: var(--hover-bg) }
 .cart-but {
   display: flex;
   /*flex-direction: row;*/
@@ -74,8 +73,8 @@ watch(quantity, (newVal, oldVal) => {
   text-decoration: none;
   /*width: 100%;*/
   /*height: 100%;*/
-  /*background-color: #fff;*/
-  border-radius: var(--br);
+  background-color: var(--bg);
+  /*border-radius: var(--br);*/
   width: 100%;
   height: 100%;
 }
@@ -114,11 +113,12 @@ watch(quantity, (newVal, oldVal) => {
 .cart-but-ic {
   width: 2rem;
   stroke-width: .15rem;
-  stroke: #fff;
+  /*stroke: #fff;*/
   position: relative;
   z-index: 1;
+  transition: stroke .2s;
 }
-.cart-but.cart-but-full .cart-but-ic { stroke: #000; }
+.cart-but.cart-but-full .cart-but-ic { stroke: #fff; }
 
 .cart-but-qty {
   position: absolute;
@@ -127,7 +127,7 @@ watch(quantity, (newVal, oldVal) => {
   transform: translate(-50%, -50%);
   margin: -.8rem 0 0 .1rem;
   /*background-color: var(--accent);*/
-  color: #fff;
+  color: var(--bg);
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 50%;
@@ -139,7 +139,7 @@ watch(quantity, (newVal, oldVal) => {
   z-index: 1;
   /*color: #fff;*/
 }
-.cart-but.cart-but-full .cart-but-qty { color: #000; }
+.cart-but.cart-but-full .cart-but-qty { color: #fff; }
 
 .cart-count-enter-active {
   transition: all .3s;

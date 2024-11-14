@@ -46,7 +46,7 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   grid-auto-columns: auto;
   grid-auto-flow: column;
   width: 9rem;
-  /*background-color: var(--active-bg-dark);*/
+  /*background-color: var(--active-bg);*/
   /*background-color: var(--hover-bg-dark);*/
   /*background-color: var(--bg);*/
   border-radius: var(--br);
@@ -55,7 +55,7 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   /*box-shadow: 0 0.05rem 0.1rem 0 #000000c7;*/
   /*border: 0.1rem solid var(--contr);*/
   overflow: hidden;
-  border: .1rem solid var(--active-bg-dark);
+  border: .1rem solid var(--active-bg);
 }
 
 .iq-btn {
@@ -72,10 +72,10 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  background-color: var(--active-bg-dark);
+  background-color: var(--active-bg);
 }
 .iq-btn.iq-inc {
-  /*background-color: var(--active-bg-dark);*/
+  /*background-color: var(--active-bg);*/
 }
 
 .qty-cntr-s button {

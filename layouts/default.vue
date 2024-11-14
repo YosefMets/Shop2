@@ -32,7 +32,7 @@
   top: 0;
   height: 100vh;
   z-index: 200;
-  padding: .5rem 0 .5rem .5rem;
+  /*padding: 0;*/
 }
 .vd-store-layout { grid-area: vd; }
 .body-store-layout { grid-area: body; }

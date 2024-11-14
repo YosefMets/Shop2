@@ -6,17 +6,19 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 </script>
 
 <template>
-  <NuxtLink :to="{ query: {...route.query, ['choose-country']: null} }" class="ccs-call">
-    <NuxtImg :src="`/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />
-    <span class="ccs-current-settings">
-      {{ $t(`countries.${country.ISO}`) }}
-    </span>
-  </NuxtLink>
-  <NuxtLink :to="{ query: {...route.query, ['choose-currency']: null} }" class="ccs-call">
-    {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}
-  </NuxtLink>
-  <NuxtLink :to="{ query: {...route.query, ['choose-language']: null} }" class="ccs-call">
-    {{ locales.find( ({ code }) => code === locale )?.N }}
+  <NuxtLink :to="{ query: {...route.query, ['settings']: null} }" class="ccs-call-wr">
+    <div class="ccs-call">
+      <NuxtImg :src="`/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />
+      <span class="ccs-current-settings">
+        {{ $t(`countries.${country.ISO}`) }}
+      </span>
+    </div>
+    <div class="ccs-call">
+      {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}
+    </div>
+    <div class="ccs-call">
+      {{ locales.find( ({ code }) => code === locale )?.N }}
+    </div>
   </NuxtLink>
     <!--  <NuxtLink :to="{ query: {...route.query, settings: null} }" class="ccs-call">-->
 <!--    <img :src="`/flags/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />-->
@@ -27,12 +29,31 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 <!--    </span>-->
 <!--  </NuxtLink>-->
 
-  <Langs />
-  <Currencies />
-  <Countries />
+  <Modal :show="route.query?.['settings'] !== undefined"
+         :width="'var(--mobar-size)'"
+         :side="'left'"
+         @close="navigateTo({ query: {...route.query, ['settings']: undefined} })">
+
+    <Langs />
+    <Countries />
+    <Currencies />
+
+  </Modal>
 </template>
 
 <style scoped>
+.ccs-call-wr {
+  margin-left: -1rem;
+  padding: 0 .5rem 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+  grid-gap: .3rem;
+}
+.ccs-call-wr:hover {
+  color: #000;
+  background-color: var(--hover-bg-dark);
+}
 .ccs-call {
   display: flex;
   grid-gap: .5rem;
@@ -40,19 +61,12 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   cursor: pointer;
   padding: .4rem .3rem;
   /*height: 100%;*/
-  color: #fff;
   text-decoration: none;
   transition: all .2s;
   border-radius: var(--br);
   /*white-space: nowrap;*/
   overflow: hidden;
   /*text-overflow: ellipsis;*/
-}
-.ccs-call:hover {
-  /*color: var(--active);*/
-  background-color: var(--hover-bg-dark);
-  /*padding-left: .3rem;*/
-  /*padding-right: .3rem;*/
 }
 .ccs-flag {
   width: 1.4rem;

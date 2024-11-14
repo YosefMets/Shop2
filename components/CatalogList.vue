@@ -1,5 +1,4 @@
 <script setup>
-import SvgV from "~/components/imgs/svg-v.vue";
 import SvgArr from "~/components/imgs/svg-arr.vue";
 import NLink from "~/components/controls/NLink.vue";
 
@@ -60,11 +59,12 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 .cat-list {
   list-style: none;
   margin: 0;
-  padding: .5rem 1rem;
+  padding: .5rem 1rem .5rem 0;
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  /*background-color: #fff;*/
+  background-color: #fff;
+  /*background-color: var(--dark);*/
   z-index: 910;
 
   position: absolute;
@@ -73,7 +73,6 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   /*transform: translateX(100%);*/
   /*transition: transform .2s;*/
   height: 100%;
-  background-color: var(--dark);
 }
 .cat-item.in-chain > .cat-list {
   opacity: 1;
@@ -98,47 +97,35 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   display: flex;
   align-items: center;
   grid-gap: .5rem;
-  padding: .5rem 0;
+  padding: .5rem 0 .5rem 1rem;
   margin: -.5rem 0 0;
   font-size: .9rem;
   font-weight: 300;
-  /*text-transform: uppercase;*/
-  /*background-color: var(--bg2);*/
   cursor: pointer;
-  /*background-color: #fff;*/
-  /*transition: background-color .2s;*/
   border-radius: var(--br);
-  transition: opacity .2s;
-  opacity: .6;
-}
-.cat-back:hover { opacity: 1 }
-.cat-back-ic {
-  /*width: 2rem;*/
-  /*height: 1.2rem;*/
-  /*stroke-width: .15rem;*/
-  stroke: #fff;
-  transform: rotate(180deg);
-  transition: transform .2s;
+  transition: all .2s;
+  /*opacity: .7;*/
+  color: var(--dark);
 }
 .cat-back:hover {
-  /*padding-left: .5rem;*/
-  /*padding-right: .5rem;*/
-  /*background-color: var(--hover-bg-dark);*/
+  color: #000;
+  background-color: var(--bg);
+}
+.cat-back-ic {
+  transform: rotate(180deg);
+  transition: transform .2s;
 }
 .cat-back:hover > .cat-back-ic {
   transform: rotate(180deg) translateX(.2rem);
 }
 
 .cat-subtitle {
-  padding: .3rem 0 1rem;
+  padding: .3rem 0 1rem 1rem;
   margin: 0 0 .5rem;
   font-size: 1.8rem;
   line-height: 1.2em;
-  border-bottom: .1rem solid var(--hover-bg-dark);
-  background-color: var(--dark);
-}
-.cat-back:hover {
-
+  border-bottom: .1rem solid var(--active-bg);
+  background-color: #fff;
 }
 
 .cat-item {
@@ -148,10 +135,10 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: .5rem;
-  padding: .5em 0;
+  padding: .4em 0 .4em 1rem;
   text-decoration: none;
-  color: #fff;
-  border-radius: var(--br);
+  color: #111;
+  /*border-radius: var(--br);*/
   align-items: center;
   line-height: 1.2em;
   font-size: 1.1rem;
@@ -159,9 +146,9 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   transition: all .2s;
 }
 .cat-item:hover > .cat-link {
-  padding-left: .3rem;
-  padding-right: .3rem;
-  background-color: var(--hover-bg-dark);
+  /*padding-left: 1.1rem;*/
+  /*padding-right: .3rem;*/
+  background-color: var(--bg);
 }
 .cat-ic {
   font-style: normal;
@@ -169,9 +156,9 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   text-align: center;
   /*aspect-ratio: 1 / 1;*/
 }
-.cat-link-curr {
-  /*background-color: var(--bg2);*/
-  color: var(--active);
+.cat-link.router-link-exact-active,
+.cat-link.router-link-exact-active:hover {
+  background-color: var(--active-bg);
 }
 
 

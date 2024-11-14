@@ -15,9 +15,9 @@ const icon = ref(!!slots.icon);
 
 <style scoped>
 .mini-btn {
-  border-radius: 10rem;
+  /*border-radius: 10rem;*/
   /*border-radius: var(--br);*/
-  background-color: #fff;
+  /*background-color: #fff;*/
   padding: .5rem 1rem;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@ const icon = ref(!!slots.icon);
   transition: background-color .2s;
   line-height: 1em;
 }
-.mini-btn:hover { background-color: var(--active-bg-dark) }
+.mini-btn:hover { background-color: #fff; }
 .mini-btn-ic {
   display: inline-flex;
   justify-content: center;
@@ -36,7 +36,7 @@ const icon = ref(!!slots.icon);
   /*border-radius: var(--br);*/
   width: 1.6rem;
   aspect-ratio: 1 / 1;
-  background-color: var(--bg);
+  background-color: #fff;
   color: #000;
   margin: -.3rem 0 -.3rem -.8rem;
 }

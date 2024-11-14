@@ -185,7 +185,7 @@ const swipeEnd = (e) => {
   /*box-shadow: 0 0 1.4rem -0.8rem #000;*/
   /*border-radius: var(--border-radius);*/
   overflow: hidden;
-  border-radius: var(--Br);
+  /*border-radius: var(--Br);*/
   /*border: .1rem solid #ddd;*/
   /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
@@ -285,7 +285,7 @@ const swipeEnd = (e) => {
   /*border: .2rem solid transparent;*/
   overflow: hidden;
   cursor: pointer;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
 }
 /*ol > li:last-child {margin-right: 0;}*/
 .ig-pgng > li:before {

@@ -42,7 +42,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   text-decoration: none;
   z-index: 10;
   overflow: hidden;
-  border-radius: var(--Br);
+  /*border-radius: var(--Br);*/
   /*border: .1rem solid #ddd;*/
   /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
