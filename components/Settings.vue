@@ -7,35 +7,32 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 
 <template>
   <NuxtLink :to="{ query: {...route.query, ['settings']: null} }" class="ccs-call-wr">
-    <div class="ccs-call">
+    <div class="ccs-call cntr-call">
       <NuxtImg :src="`/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />
-      <span class="ccs-current-settings">
+      <span class="ccs-cntr-name">
         {{ $t(`countries.${country.ISO}`) }}
       </span>
     </div>
-    <div class="ccs-call">
+    <div class="ccs-call curr-call">
       {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}
     </div>
-    <div class="ccs-call">
+    <div class="ccs-call lang-call">
       {{ locales.find( ({ code }) => code === locale )?.N }}
     </div>
   </NuxtLink>
-    <!--  <NuxtLink :to="{ query: {...route.query, settings: null} }" class="ccs-call">-->
-<!--    <img :src="`/flags/${country.ISO}.svg`" loading="lazy" class="ccs-flag" :alt="country.ISO" />-->
-<!--    <span class="ccs-current-settings">-->
-<!--      {{ $t(`countries.${country.ISO}`) }} &bull;-->
-<!--      {{ locales.find( ({ code }) => code === locale )?.N }} &bull;-->
-<!--      {{ currency?.S }}&nbsp;{{ $t(`currencies.${currency.ISO}`) }}-->
-<!--    </span>-->
-<!--  </NuxtLink>-->
 
   <Modal :show="route.query?.['settings'] !== undefined"
          :width="'var(--mobar-size)'"
          :side="'left'"
          @close="navigateTo({ query: {...route.query, ['settings']: undefined} })">
 
+    <h2 class="ccs-ttl">{{ $t('language') }}:</h2>
     <Langs />
+
+    <h2 class="ccs-ttl">{{ $t('country') }}:</h2>
     <Countries />
+
+    <h2 class="ccs-ttl">{{ $t('currency') }}:</h2>
     <Currencies />
 
   </Modal>
@@ -43,6 +40,7 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 
 <style scoped>
 .ccs-call-wr {
+  /*container: ccs-call-wr / size;*/
   margin-left: -1rem;
   padding: 0 .5rem 0 1rem;
   display: grid;
@@ -54,6 +52,12 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   color: #000;
   background-color: var(--hover-bg-dark);
 }
+@container ccs-call-wr (max-width: 6rem) {
+  .ccs-call.curr-call {
+    display: none;
+  }
+}
+
 .ccs-call {
   display: flex;
   grid-gap: .5rem;
@@ -63,7 +67,7 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   /*height: 100%;*/
   text-decoration: none;
   transition: all .2s;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
   /*white-space: nowrap;*/
   overflow: hidden;
   /*text-overflow: ellipsis;*/
@@ -89,25 +93,38 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
 }
 
 .ccs-ttl {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  font-size: 1.6rem;
-  line-height: 1em;
+  margin: 2rem 0 1rem 0;
   font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
 }
 .ccs-ttl:first-of-type { margin-top: 0; }
 
 
 
 @media (max-width: 480px) {
-  .ccs-call {
+  .ccs-call-wr {
+    margin: 0;
+    height: 100%;
     padding: 0;
+    display: flex;
+  }
+  .ccs-call.cntr-call {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
     justify-content: center;
+    align-items: center;
+  }
+  .ccs-call.curr-call,
+  .ccs-call.lang-call {
+    display: none;
   }
   .ccs-flag {
     width: 2rem;
     height: 2rem;
   }
-  .ccs-current-settings { display: none; }
+  .ccs-cntr-name { display: none; }
 }
 </style>

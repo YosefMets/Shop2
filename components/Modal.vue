@@ -17,7 +17,7 @@ const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
 const sideClass = computed( () => props.side ? `modal-side-${props.side}` : null );
-const width = ref( props.width || '30%' );
+const selfWidth = ref( props.width || '30%' );
 
 const emit = defineEmits(['close']);
 
@@ -34,7 +34,7 @@ useHead({
 
       <div :class="['fog', sideClass]" v-if="show">
 
-        <div class="modal-container scroll">
+        <div class="modal-container scroll" :style="`--modal-width: ${width || '100%'}`">
 
           <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
 
@@ -85,10 +85,10 @@ useHead({
   position: relative;
   background-color: var(--bg);
   padding: 3rem;
-  width: v-bind( width );
+  width: var(--modal-width);
   height: 100%;
   z-index: 10;
-  max-height: 100vh;
+  /*max-height: 100vh;*/
   overflow: auto;
   box-shadow: 0 .2rem 1rem -.7rem #000000;
   display: grid;
@@ -203,8 +203,8 @@ svg.mdlx {
 @media (max-width: 480px) {
   .fog {
     width: unset;
-    height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100dvh; /* Fallback for browsers that do not support Custom Properties */
+    /*height: calc(var(--vh, 1vh) * 100);*/
     /*height: 100dvh;*/
     right: 0;
     top: unset;
@@ -212,7 +212,8 @@ svg.mdlx {
   .modal-container {
     padding: 1.5rem;
     width: 100%;
-    /*min-height: 100vh;*/
+    height: unset;
+    max-height: 100vh;
     /*border-radius: 0;*/
     border-radius: var(--br) var(--br) 0 0;
     position: absolute;
@@ -254,12 +255,15 @@ svg.mdlx {
 
   .modal-enter-active .modal-container,
   .modal-leave-active .modal-container {
-    transition: transform .4s;
+    transition: transform .2s;
   }
   .modal-enter-from .modal-container,
   .modal-leave-to .modal-container {
     transform: translateY(100%);
-    opacity: 1;
+  }
+  .modal-enter-from.modal-side-left .modal-container,
+  .modal-leave-to.modal-side-left .modal-container {
+    transform: translateY(100%);
   }
 }
 </style>

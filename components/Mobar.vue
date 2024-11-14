@@ -39,11 +39,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
       "srch srch"
       "cat  cat"
       "sett sett";
-  /*box-shadow: .2rem 0 1rem -.7rem #000000;*/
-  /*border-radius: var(--Br);*/
-  /*background-color: var(--dark);*/
   background-color: #fff;
-  /*color: #fff;*/
   color: #000;
   padding: 1rem;
   grid-gap: .5rem;
@@ -115,12 +111,13 @@ const { activeGroup } = storeToRefs( useAppStore() );
     right: 0;
     bottom: unset;
     width: unset;
-    height: var(--mobar-size);
+    height: unset;
     grid-template-columns: var(--mobar-el-size) var(--mobar-el-size) 1fr var(--mobar-el-size) var(--mobar-el-size);
     grid-template-rows: 1fr;
     grid-template-areas:
       "cat logo user sett cart";
     border-width: 0 0 var(--line) 0;
+    padding: 0;
   }
   .mb-logo {
     height: unset;
@@ -136,6 +133,10 @@ const { activeGroup } = storeToRefs( useAppStore() );
     position: relative;
     display: flex;
   }
+  .mb-cat {
+    margin: 0;
+  }
   .mb-progress { display: none; }
+  .user-component { display: none }
 }
 </style>

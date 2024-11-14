@@ -28,7 +28,7 @@ const set = (iso) => {
 <!--         :width="'15rem'"-->
 <!--         @close="navigateTo({ query: {...route.query, ['choose-country']: undefined} })">-->
 
-    <h2 class="lcl-ttl">{{ $t('country') }}:</h2>
+<!--    <h2 class="lcl-ttl">{{ $t('country') }}:</h2>-->
 
 
 
@@ -55,17 +55,13 @@ const set = (iso) => {
 </template>
 
 <style scoped>
-.lcl-ttl {
-  margin: 2rem 0 1rem 0;
-  font-weight: 400;
-}
 .main-cntrs {
   list-style: none;
   margin: 0;
   padding: 0;
   /*columns: 2;*/
   /*column-gap: 1rem;*/
-  gap: .5rem;
+  /*gap: .5rem;*/
   display: flex;
   flex-direction: column;
   /*align-items: flex-start;*/

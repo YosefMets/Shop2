@@ -43,9 +43,9 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   /*grid-template-rows: 1fr auto;*/
   column-gap: .5rem;
   row-gap: .5rem;
-  background-color: var(--active-bg);
+  background-color: #fff;
   padding: .5rem 1rem .5rem .5rem;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
 }
 .ci-i-wr {
   /*grid-row: 1 / -1;*/
@@ -53,7 +53,7 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   width: 100%;
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
   /*border: .1rem solid #ddd;*/
   /*box-shadow: 0 0 10rem 0 #00000011;*/
   background-color: #fff;

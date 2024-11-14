@@ -41,7 +41,7 @@ const { total } = storeToRefs( useCartStore() );
 }
 .cart-layout {
   display: grid;
-  grid-template-columns: 30rem 1fr;
+  grid-template-columns: 35rem 1fr;
   column-gap: 2rem;
 }
 .cart-items {

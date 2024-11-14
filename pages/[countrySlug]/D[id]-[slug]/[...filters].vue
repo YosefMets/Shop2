@@ -71,4 +71,10 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
   background-position: 50% 50%;
   display: none;
 }
+
+@media (max-width: 480px) {
+  .dir {
+    padding: 1rem;
+  }
+}
 </style>

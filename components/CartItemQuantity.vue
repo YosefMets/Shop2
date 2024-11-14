@@ -49,7 +49,7 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   /*background-color: var(--active-bg);*/
   /*background-color: var(--hover-bg-dark);*/
   /*background-color: var(--bg);*/
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
   color: #000;
   font-weight: 400;
   /*box-shadow: 0 0.05rem 0.1rem 0 #000000c7;*/
@@ -72,7 +72,7 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  background-color: var(--active-bg);
+  background-color: #fff;
 }
 .iq-btn.iq-inc {
   /*background-color: var(--active-bg);*/

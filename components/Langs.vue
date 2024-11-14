@@ -32,7 +32,7 @@ watch( locale, async n => {
 <!--         :width="'16rem'"-->
 <!--         @close="navigateTo({ query: {...route.query, ['choose-language']: undefined} })">-->
 
-    <h2 class="lcl-ttl">{{ $t('language') }}:</h2>
+<!--    <h2 class="lcl-ttl">{{ $t('language') }}:</h2>-->
 
     <div class="lngs">
       <NMiniButton v-for="lcl in locales"
@@ -50,17 +50,13 @@ watch( locale, async n => {
 </template>
 
 <style scoped>
-.lcl-ttl {
-  margin: 0 0 1rem 0;
-  font-weight: 400;
-}
 .lngs {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  grid-gap: .5rem;
+  /*grid-gap: .5rem;*/
   /*border: .1rem solid var(--contr);*/
   /*border-radius: var(--border-radius);*/
   /*height: var(--search-height);*/

@@ -23,11 +23,11 @@
   grid-template-columns: var(--mobar-size) 1fr;
   grid-template-rows: 1fr auto;
   grid-template-areas:
-      "mr body"
-      "mr footer";
+      "mbr body"
+      "mbr footer";
 }
 .mr-store-layout {
-  grid-area: mr;
+  grid-area: mbr;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -36,5 +36,19 @@
 }
 .vd-store-layout { grid-area: vd; }
 .body-store-layout { grid-area: body; }
-.ooter-store-layout { grid-area: footer; }
+.footer-store-layout { grid-area: footer; }
+
+@media (max-width: 480px) {
+  .store-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--mobar-size) 1fr auto;
+    grid-template-areas:
+      "mbr"
+      "body"
+      "footer";
+  }
+  .mr-store-layout {
+    height: unset;
+  }
+}
 </style>

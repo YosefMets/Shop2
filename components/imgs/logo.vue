@@ -17,7 +17,7 @@
   background-color: #fff;
   border-radius: var(--br);
   /*box-shadow: 0 0 .5rem -.2rem #000;*/
-  box-shadow: 0 0 0 .1rem #000;
+  /*box-shadow: 0 0 0 .1rem #000;*/
 }
 .lg {
   width: 2rem;

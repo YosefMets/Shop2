@@ -20,7 +20,7 @@ const set = (iso) => {
 <!--         :side="'left'"-->
 <!--         @close="navigateTo({ query: {...route.query, ['choose-currency']: undefined} })">-->
 
-    <h2 class="lcl-ttl">{{ $t('currency') }}:</h2>
+<!--    <h2 class="lcl-ttl">{{ $t('currency') }}:</h2>-->
 
     <div class="crncs">
       <NMiniButton v-for="currency in currencies"
@@ -35,10 +35,6 @@ const set = (iso) => {
 </template>
 
 <style scoped>
-.lcl-ttl {
-  margin: 2rem 0 1rem 0;
-  font-weight: 400;
-}
 .crncs {
   list-style: none;
   margin: 0;
@@ -46,7 +42,7 @@ const set = (iso) => {
   display: flex;
   flex-direction: column;
   /*align-items: flex-start;*/
-  grid-gap: .5rem;
+  /*grid-gap: .5rem;*/
   /*border: .1rem solid var(--contr);*/
   /*border-radius: var(--border-radius);*/
   /*height: var(--search-height);*/

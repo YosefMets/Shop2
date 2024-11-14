@@ -48,8 +48,8 @@ const unit = computed( () => {
   <div class="ai">
     <Crumbs :entity="item" class="ai-crumbs" />
 
-<!--    <Gallery :item="item" class="ai-imgs" />-->
-    <div><ItemGallery v-if="item.M" :item="item" class="ai-imgs" />
+    <div class="ai-gal-wr">
+      <ItemGallery v-if="item.M" :item="item" class="ai-imgs" />
     </div>
 
     <div class="ai-info">
@@ -107,6 +107,9 @@ const unit = computed( () => {
   /*height: 2rem;*/
   grid-column: 1 / -1;
   margin-bottom: 1rem;
+}
+.ai-gal-wr {
+
 }
 .ai-imgs {
 }
@@ -182,5 +185,27 @@ const unit = computed( () => {
 .ai-heart.love { fill: #000; }
 @container fav (max-width: 10rem) {
   .ai-fav-lbl { display: none; }
+}
+
+
+@media (max-width: 480px) {
+  .ai {
+    padding: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "cumb"
+        "gal"
+        "info";
+  }
+  .ai-crumbs {
+    grid-area: cumb;
+  }
+  .ai-gal-wr {
+    grid-area: gal;
+    aspect-ratio: 1 / 1;
+  }
+  .ai-gal-info {
+    grid-area: info;
+  }
 }
 </style>
