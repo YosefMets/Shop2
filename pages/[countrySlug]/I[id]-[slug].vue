@@ -190,11 +190,11 @@ const unit = computed( () => {
 
 @media (max-width: 480px) {
   .ai {
-    padding: 1rem;
+    padding: 0 1rem 1rem;
     grid-template-columns: 1fr;
     grid-template-areas:
-        "cumb"
         "gal"
+        "cumb"
         "info";
   }
   .ai-crumbs {
@@ -203,6 +203,7 @@ const unit = computed( () => {
   .ai-gal-wr {
     grid-area: gal;
     aspect-ratio: 1 / 1;
+    margin: 0 -1rem;
   }
   .ai-gal-info {
     grid-area: info;

@@ -22,7 +22,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
 
     <div class="it-pr-wr">
       <Price :amount="item?.price" class="it-pr" />
-      <span v-if="item.J" class="it-unt"> /{{ $t(item.J) }}</span>
+      <span v-if="item.J" class="it-unt">/{{ $t(item.J) }}</span>
     </div>
 
   </NLink>

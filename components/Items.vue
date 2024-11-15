@@ -91,9 +91,10 @@ more();
 
 @media (max-width: 480px) {
   .items {
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-auto-rows: auto;
-    padding: .5rem;
+    grid-gap: 1rem;
+    /*padding: .5rem;*/
   }
   .items.justify-right {
     transform: scaleX(1);

@@ -118,12 +118,14 @@ const { activeGroup } = storeToRefs( useAppStore() );
       "cat logo user sett cart";
     border-width: 0 0 var(--line) 0;
     padding: 0;
+    grid-gap: 0;
   }
   .mb-logo {
     height: unset;
     justify-content: center;
     align-items: center;
     padding: 0;
+    /*margin: 0 -2rem;*/
   }
   .mb-search {
     display: none;

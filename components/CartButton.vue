@@ -152,7 +152,7 @@ watch(quantity, (newVal, oldVal) => {
 }
 
 @media (max-width: 480px) {
-  .cart-but { padding: 0; }
+  .cart-but { padding: 0; background-color: transparent; }
   .cart-but-lbl { display: none; }
   .cart-but.cart-but-full:after { content: none; }
 }
