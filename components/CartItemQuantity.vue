@@ -55,12 +55,13 @@ const format = () => { qty.value = (qty.value.replace(/[\D]/g, '') * 1 || 1) }
   /*box-shadow: 0 0.05rem 0.1rem 0 #000000c7;*/
   /*border: 0.1rem solid var(--contr);*/
   overflow: hidden;
-  border: .1rem solid var(--active-bg);
+  border: .1rem solid #000;
+  min-height: var(--cntl-h);
 }
 
 .iq-btn {
-  width: 2.4rem;
-  height: 2.4rem;
+  height: 100%;
+  aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
   align-items: center;

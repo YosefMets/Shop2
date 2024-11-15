@@ -1,5 +1,6 @@
 <script setup>
 import { NuxtLink } from '#components'
+import NLink from "~/components/controls/NLink.vue";
 
 const props = defineProps({
   to: Object,
@@ -15,7 +16,7 @@ const styles = computed( () => ({
 </script>
 
 <template>
-  <Component :is="to ? NuxtLink : 'button'"
+  <Component :is="to ? NLink : 'button'"
              :to="to || undefined"
              :class="['nst-btn', styles]">
     <slot />
@@ -31,7 +32,7 @@ const styles = computed( () => ({
   color: #fff;
   /*box-shadow: inset 0 0 0 .2rem var(--active);*/
   border-style: solid;
-  border-width: .2rem;
+  border-width: .1rem;
   border-color: transparent;
   /*border-radius: var(--br);*/
   padding: .6rem 1rem;
@@ -48,7 +49,7 @@ const styles = computed( () => ({
   text-decoration: none;
   /*width: -webkit-fill-available;*/
   min-height: var(--cntl-h);
-  transition: background-image .2s;
+  transition: all .2s;
 }
 .nst-btn:hover {
   background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+Cg==');

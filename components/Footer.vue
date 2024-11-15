@@ -24,4 +24,11 @@ import NLink from "~/components/controls/NLink.vue";
 .copy-group > .copy-group-link {
   color: #000;
 }
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 1rem;
+    background-color: var(--bg);
+  }
+}
 </style>

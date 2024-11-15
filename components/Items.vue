@@ -93,7 +93,7 @@ more();
   .items {
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-auto-rows: auto;
-    grid-gap: 1rem;
+    grid-gap: .5rem;
     /*padding: .5rem;*/
   }
   .items.justify-right {

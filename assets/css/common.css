@@ -48,17 +48,6 @@
 
   --prc-font: 'Marmelad', sans-serif;
 }
-@media (max-width: 480px) {
-  :root {
-    --mobar-size: 4.6rem;
-    --mobar-el-size: 4.6rem;
-    --line: .05rem;
-
-    --menu-height: 3rem;
-    --panel-width: 25rem;
-    /*--cntl-height: 5rem;*/
-  }
-}
 
 html {
   font: var(--base-font);
@@ -249,4 +238,14 @@ a:hover {
   h1, .h1 {
     font-size: 1.8rem;
   }
+  :root {
+    --mobar-size: 4.6rem;
+    --mobar-el-size: 4.6rem;
+    --line: .05rem;
+
+    --menu-height: 3rem;
+    --panel-width: 25rem;
+    --cntl-h: 4rem;
+  }
+  body { background-color: #fff; }
 }

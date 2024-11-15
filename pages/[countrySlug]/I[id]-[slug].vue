@@ -2,6 +2,7 @@
 import NLink from "~/components/controls/NLink.vue";
 import NButton from "~/components/controls/NButton.vue";
 import SvgLove from "~/components/imgs/svg-love.vue";
+import SvgCart1 from "~/components/imgs/svg-cart1.vue";
 
 const { params } = useRoute();
 const localePath = useLocalePath();
@@ -11,6 +12,7 @@ const { t } = useI18n()
 const appStore = useAppStore();
 const { db, activeItem: item, country } = storeToRefs( appStore );
 const cartStore = useCartStore();
+const { items: cartItems } = storeToRefs( cartStore );
 const { viewed } = storeToRefs( useUserStore() );
 
 const entity = db.value?.['I' + params.id];
@@ -30,6 +32,8 @@ const brand = computed( () => db.value?.[item.value?.B] );
 const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${brand.value?.l}` : null )
 
 const kashruts = computed( () => [item.value?.k].flat().map( id => db.value?.[id] ))
+
+const thisItemInCard = computed( () => cartItems.value?.find( ({ item: itm }) => itm === item.value ) )
 
 const unit = computed( () => {
   const wKg = item.value.w ? !(item.value.w < 500) : null
@@ -74,7 +78,21 @@ const unit = computed( () => {
         </div>
 
         <div class="ai-acts">
-          <NButton @click="cartStore.add(item)">{{ $t('addToCart') }}</NButton>
+          <transition name="ai-qty">
+            <div v-if="thisItemInCard" class="ai-qty-wr">
+              <div class="ai-qty-anim-wr">
+                <CartItemQuantity :cart-item="thisItemInCard" class="ai-qty" />
+              </div>
+            </div>
+          </transition>
+          <template v-if="!thisItemInCard">
+            <NButton @click="cartStore.add(item)" class="ai-cart-btn">
+              {{ $t('addToCart') }}
+            </NButton>
+          </template>
+          <template v-else>
+            <NButton :to="'/cart'" :style="'style3'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
+          </template>
 <!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
 <!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
 <!--            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>-->
@@ -143,16 +161,53 @@ const unit = computed( () => {
   height: 100%;
 }
 .ai-price-wr {
-  margin: 2rem 0;
+  margin: 2rem 0 1rem;
 }
 .ai-price {
   font-size: 2rem;
 }
 .ai-acts {
   margin: 1rem 0;
-  display: grid;
-  gap: 1rem;
+  display: flex;
+  /*gap: .5rem;*/
 }
+.ai-qty-wr {
+  width: 8rem;
+}
+.ai-qty-anim-wr {
+  width: 100%;
+  padding-right: .5rem;
+}
+.ai-qty {
+  width: 100%;
+}
+.ai-cart-btn {
+  flex-grow:1;
+}
+.ai-cart-wr {
+  width: calc( var(--cntl-h) + .5rem );
+  height: var(--cntl-h);
+}
+.ai-cart-anim-wr {
+  width: 100%;
+  height: 100%;
+  padding-left: .5rem;
+}
+.ai-cart {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ai-cart-ic {
+  width: 2rem;
+  stroke: #fff;
+  stroke-width: .15rem;
+}
+
+
 .ai-chars {
   margin-top: 2rem;
 }
@@ -183,8 +238,19 @@ const unit = computed( () => {
 }
 .ai-heart { stroke-width: .2rem; }
 .ai-heart.love { fill: #000; }
+
 @container fav (max-width: 10rem) {
   .ai-fav-lbl { display: none; }
+}
+
+.ai-qty-enter-active,
+.ai-qty-leave-active {
+  transition: width .2s;
+}
+
+.ai-qty-enter-from,
+.ai-qty-leave-to {
+  width: 0;
 }
 
 

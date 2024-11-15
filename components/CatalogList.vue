@@ -33,7 +33,8 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
       <NLink :to="dir"
              :min="null"
              :max="null"
-             :class="['cat-link', { 'cat-link-curr': dir === group }]">
+             :class="['cat-link', { 'cat-link-curr': dir === group }]"
+             @click="emit('x')">
         <i class="cat-ic">{{ dir.IC }}</i>
         {{ $t('shopAll')}}
       </NLink>

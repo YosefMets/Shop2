@@ -46,19 +46,6 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   /*border: .1rem solid #ddd;*/
   /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
-/*
-.item:after {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #0000000b;
-  z-index: 1;
-}
-*/
 .it-i {
   grid-column: 1 / -1;
   display: block;
@@ -128,16 +115,17 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
 
 @media (max-width: 480px) {
   .item {
-    /*padding: 2rem 1rem 1rem;*/
-    /*display: grid;*/
-    /*grid-template-columns: 1fr;*/
-    /*grid-template-rows: 16rem auto auto;*/
-    /*grid-template-areas:*/
-    /*    "img"*/
-    /*    "price"*/
-    /*    "acts"*/
-    /*    "name";*/
-    /*height: auto;*/
+  }
+  .item:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #0000000b;
+    z-index: 1;
   }
   .itimgs {
   }

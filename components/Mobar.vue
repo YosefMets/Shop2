@@ -119,6 +119,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
     border-width: 0 0 var(--line) 0;
     padding: 0;
     grid-gap: 0;
+    box-shadow: 0 .1rem 0 var(--hover-bg);
   }
   .mb-logo {
     height: unset;

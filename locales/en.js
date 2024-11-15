@@ -1,9 +1,11 @@
 export default {
+  toCart: 'View cart',
   cart: 'Cart',
 
   allRights: 'All right reserved',
   terms: 'Terms and conditions',
   privacy: 'Privacy policy',
+  add: 'Add',
   addToCart: 'Add to cart',
 
   home: 'Home',

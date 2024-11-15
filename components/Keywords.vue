@@ -38,7 +38,7 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   display: flex;
   align-items: stretch;
   grid-gap: .5rem;
-  height: var(--cntl-h);
+  height: 2.4rem;
 }
 .keyword {
   position: relative;
@@ -46,9 +46,9 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   background-color: var(--bg2);
   display: flex;
   align-items: center;
-  border-radius: var(--br);
+  /*border-radius: var(--br);*/
+  border-radius: 10rem;
   color: #000;
-  height: var(--cntl-h);
   padding: 0 1rem;
   /*box-shadow: inset 0 0 0 .05rem #000000;*/
   overflow: hidden;
