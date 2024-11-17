@@ -3,7 +3,7 @@ const props = defineProps({
   items: Array,
   increment: {
     type: Number,
-    default: 50
+    default: 150
   }
 })
 

@@ -60,27 +60,27 @@ const unit = computed( () => {
       <div class="ai-info-top">
 
         <h1 class="ai-ttl">
-          {{ item?.N }} {{ brand?.N }}
+          <span>{{ item?.N }}</span>
           <div v-if="brand" class="ai-brand">
             <NuxtImg :src="`/${brand.I}.avif`" class="ai-brand-logo" />
           </div>
+          <CharsMain :item="item" class="ai-chars-main" />
         </h1>
       </div>
+
       <div class="ai-info-bottom">
 
-        <CharsMain :item="item" class="ai-chars-main" />
-
-        <ul v-if="kashruts.length" class="ai-kashruts">
-          <li v-for="kashrut in kashruts" class="ai-kashrut">
-            <NuxtImg :src="`/${kashrut.I}.${kashrut.LG || 'avif'}`" class="ai-kashrut-sign" />
-          </li>
-        </ul>
-
         <div class="ai-price-acts">
+          <ul v-if="kashruts.length" class="ai-kashruts">
+            <li v-for="kashrut in kashruts" class="ai-kashrut">
+              <NuxtImg :src="`/${kashrut.I}.${kashrut.LG || 'avif'}`" class="ai-kashrut-sign" />
+            </li>
+          </ul>
           <div class="ai-price-wr">
             <Price v-if="item?.price" :amount="item?.price" class="ai-price" />
             <span v-if="item.J">&#160;{{ $t(item.J) }}</span>{{}}
           </div>
+        </div>
 
           <div class="ai-acts">
             <transition name="ai-qty">
@@ -103,7 +103,6 @@ const unit = computed( () => {
             <!--            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>-->
             <!--          </NButton>-->
           </div>
-        </div>
       </div>
 
 <!--      <div class="ai-info-wr">-->
@@ -160,14 +159,17 @@ const unit = computed( () => {
   margin: 0 0 1rem 0;
   min-height: 4rem;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-columns: auto;
-  grid-auto-flow: column;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  /*grid-auto-columns: auto;*/
+  /*grid-auto-flow: column;*/
   align-items: flex-start;
-  gap: 1rem;
+  column-gap: 2rem;
+  row-gap: .5rem;
 }
 .ai-chars-main {
-  margin: 2rem 0;
+  /*margin: 2rem 0;*/
+  grid-column: 1 / -1;
 }
 .ai-kashruts {
   list-style: none;
@@ -312,7 +314,7 @@ const unit = computed( () => {
     margin-top: -1.5rem;
   }
   .ai-chars-main {
-    margin: 0 0 1rem 0;
+    margin: 0;
   }
   .ai-price-acts {
     display: grid;
@@ -320,19 +322,21 @@ const unit = computed( () => {
     grid-template-areas: "acts price";
     align-items: center;
     gap: 1rem;
-    margin: 1rem 0 0;
-    position: sticky;
-    bottom: 0;
-    padding: 1rem 0;
-    background-color: #fff;
+    margin: 0;
+    /*padding: 1rem 0;*/
   }
   .ai-acts {
     grid-area: acts;
     margin: 0;
+    padding: 1rem 0;
+    background-color: #fff;
+    position: sticky;
+    bottom: 0;
   }
   .ai-price-wr {
     grid-area: price;
     margin: 0;
+    line-height: 1em;
   }
 }
 </style>

@@ -20,11 +20,12 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
         <template v-for="v in val">
           <NuxtImg v-if="attr === 'co'" :src="`/${v}.svg`" />
           <b v-else class="mch">
-            <i class="mch-dig">
+            <i class="mch-dig" v-if="attr !== 'mev'">
               {{ parseFloat(v).toLocaleString(locale) }}{{ attr === 'al' ? '%' : '' }}
             </i>
             <i class="mch-abc">
               {{ attr === 'v' ? $t( v < 1000 ? 'ml' : 'l' ) : '' }}
+              {{ attr === 'mev' ? $t( v === 1 ? 'mevushal' : 'lomevushal') : '' }}
             </i>
           </b>
         </template>
@@ -48,7 +49,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 .mch-dig {
   font-style: normal;
   font-family: 'Stint Ultra Condensed', 'Six Caps', 'Rubik', sans-serif;
-  font-size: 3rem;
+  font-size: 2.4rem;
   line-height: 1em;
 }
 .mch-abc {
@@ -57,11 +58,11 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 img {
   display: inline-block;
   align-self: center;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
   margin-right: .5rem;
   border-radius: 50%;
-  border: .2rem solid #fff;
+  border: .1rem solid #fff;
   box-shadow: 0 0 0 .1rem var(--dark);
 }
 </style>
