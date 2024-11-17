@@ -199,7 +199,7 @@ const unit = computed( () => {
   /*gap: .5rem;*/
 }
 .ai-qty-wr {
-  width: 8rem;
+  width: 9rem;
 }
 .ai-qty-anim-wr {
   width: 100%;
@@ -312,19 +312,26 @@ const unit = computed( () => {
     margin-top: -1.5rem;
   }
   .ai-chars-main {
-    margin: 1rem 0;
+    margin: 0 0 1rem 0;
   }
   .ai-price-acts {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "acts price";
     align-items: center;
     gap: 1rem;
-    margin: 2rem 0 1rem;
+    margin: 1rem 0 0;
+    position: sticky;
+    bottom: 0;
+    padding: 1rem 0;
+    background-color: #fff;
   }
   .ai-acts {
+    grid-area: acts;
     margin: 0;
   }
   .ai-price-wr {
+    grid-area: price;
     margin: 0;
   }
 }
