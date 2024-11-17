@@ -22,7 +22,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
 
     <div class="it-pr-wr">
       <Price :amount="item?.price" class="it-pr" />
-      <span v-if="item.J" class="it-unt">/{{ $t(item.J) }}</span>
+      <span v-if="item.J" class="it-unt">&#160;{{ $t(item.J) }}</span>
     </div>
 
   </NLink>
@@ -36,7 +36,8 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
-  grid-gap: 1rem;
+  grid-column-gap: 1rem;
+  grid-row-gap: .8rem;
   position: relative;
   color: #000;
   text-decoration: none;
@@ -46,6 +47,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   /*border: .1rem solid #ddd;*/
   /*box-shadow: 0 0 10rem 0 #00000011;*/
 }
+
 .it-i {
   grid-column: 1 / -1;
   display: block;
@@ -54,18 +56,18 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   /*margin-bottom: -2rem;*/
   aspect-ratio: 1 / 1;
 }
-/*.it-i:before {*/
-/*  content: '';*/
-/*  display: block;*/
-/*  padding-top: 100%;*/
-/*  position: relative;*/
-/*  z-index: 1;*/
-/*  border-radius: var(--border-radius);*/
-/*  transition: background-color .1s linear;*/
-/*}*/
-/*.item:hover > .it-i:before {*/
-/*  background-color: transparent;*/
-/*}*/
+.it-i:before {
+  content: '';
+  display: block;
+  padding-top: 100%;
+  position: relative;
+  z-index: 1;
+  transition: background-color .1s linear;
+  background-color: #0000000a;
+}
+.item:hover > .it-i:before {
+  /*background-color: transparent;*/
+}
 .it-i > img {
   object-fit: cover;
   object-position: 50% 50%;
@@ -79,7 +81,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   /*border-radius: var(--br);*/
 }
 .item:hover > .it-i > img {
-  transform: translate(-50%, -50%) scale(1.01);
+  transform: translate(-50%, -50%) scale(1.02);
 }
 
 .it-r,
@@ -93,7 +95,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
 
 .it-n {
   /*grid-column: 1 / -1;*/
-  margin: 0 0 0 1rem;
+  margin: 0;
   font-size: 1rem;
   line-height: 1.5em;
 
@@ -104,7 +106,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   text-overflow: ellipsis;
 }
 .it-pr-wr {
-  margin: 0 1rem 0 0;
+  /*margin: 0 1rem 0 0;*/
 }
 .it-pr {
   font-size: 1.4rem;
@@ -124,7 +126,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #0000000b;
+    /*background-color: #0000000b;*/
     z-index: 1;
   }
   .itimgs {

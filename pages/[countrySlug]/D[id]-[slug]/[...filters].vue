@@ -28,7 +28,7 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
   <div v-if="dir" class="dir">
     <Crumbs :entity="dir" class="dir-crumbs" />
 
-    <h1 class="d-ttl">{{ dir?.N }} {{ displayedItems?.length }}</h1>
+    <h1 class="d-ttl">{{ dir?.N }}</h1>
 
     <div class="d-filters-bar">
       <Keywords />
@@ -47,7 +47,7 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
 }
 .dir-crumbs {
   /*height: var(--mobar-el-size);*/
-  /*height: 2rem;*/
+  height: 1rem;
   margin-bottom: 1rem;
 }
 .d-ttl {

@@ -57,14 +57,18 @@ const unit = computed( () => {
     </div>
 
     <div class="ai-info">
+      <div class="ai-info-top">
 
-      <div class="ai-info-wr">
-<!--        <NLink :to="brand" class="ai-brand">-->
-<!--          <img v-if="brandLogo" :src="brandLogo" :alt="brand?.N" class="ai-brand-logo" />-->
-<!--          {{ brand?.N }}-->
-<!--        </NLink>-->
+        <h1 class="ai-ttl">
+          {{ item?.N }} {{ brand?.N }}
+          <div v-if="brand" class="ai-brand">
+            <NuxtImg :src="`/${brand.I}.avif`" class="ai-brand-logo" />
+          </div>
+        </h1>
+      </div>
+      <div class="ai-info-bottom">
 
-        <h1 class="ai-ttl">{{ item?.N }} {{ brand?.N }}</h1>
+        <CharsMain :item="item" class="ai-chars-main" />
 
         <ul v-if="kashruts.length" class="ai-kashruts">
           <li v-for="kashrut in kashruts" class="ai-kashrut">
@@ -72,36 +76,47 @@ const unit = computed( () => {
           </li>
         </ul>
 
-        <div class="ai-price-wr">
-          <Price v-if="item?.price" :amount="item?.price" class="ai-price" />
-          <span v-if="item.J"> /{{ $t(item.J) }}</span>{{}}
-        </div>
+        <div class="ai-price-acts">
+          <div class="ai-price-wr">
+            <Price v-if="item?.price" :amount="item?.price" class="ai-price" />
+            <span v-if="item.J">&#160;{{ $t(item.J) }}</span>{{}}
+          </div>
 
-        <div class="ai-acts">
-          <transition name="ai-qty">
-            <div v-if="thisItemInCard" class="ai-qty-wr">
-              <div class="ai-qty-anim-wr">
-                <CartItemQuantity :cart-item="thisItemInCard" class="ai-qty" />
+          <div class="ai-acts">
+            <transition name="ai-qty">
+              <div v-if="thisItemInCard" class="ai-qty-wr">
+                <div class="ai-qty-anim-wr">
+                  <CartItemQuantity :cart-item="thisItemInCard" class="ai-qty" />
+                </div>
               </div>
-            </div>
-          </transition>
-          <template v-if="!thisItemInCard">
-            <NButton @click="cartStore.add(item)" class="ai-cart-btn">
-              {{ $t('addToCart') }}
-            </NButton>
-          </template>
-          <template v-else>
-            <NButton :to="'/cart'" :style="'style3'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
-          </template>
-<!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
-<!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
-<!--            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>-->
-<!--          </NButton>-->
+            </transition>
+            <template v-if="!thisItemInCard">
+              <NButton @click="cartStore.add(item)" :style="'style3'" class="ai-cart-btn">
+                {{ $t('addToCart') }}
+              </NButton>
+            </template>
+            <template v-else>
+              <NButton :to="'/cart'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
+            </template>
+            <!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
+            <!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
+            <!--            <span class="ai-fav-lbl">{{ item?.$f ? $t('savedForLater') : $t('saveForLater') }}</span>-->
+            <!--          </NButton>-->
+          </div>
         </div>
-
-        <Chars :item="item" class="ai-chars" />
-
       </div>
+
+<!--      <div class="ai-info-wr">-->
+<!--        <NLink :to="brand" class="ai-brand">-->
+<!--          <img v-if="brandLogo" :src="brandLogo" :alt="brand?.N" class="ai-brand-logo" />-->
+<!--          {{ brand?.N }}-->
+<!--        </NLink>-->
+
+
+
+<!--        <Chars :item="item" class="ai-chars" />-->
+
+<!--      </div>-->
     </div>
 
     <div class="ai-descr">
@@ -115,14 +130,14 @@ const unit = computed( () => {
 <style scoped>
 .ai {
   display: grid;
-  grid-template-columns: 30rem 1fr;
+  grid-template-columns: 30rem 25rem;
   /*grid-template-rows: auto auto 1fr;*/
   grid-column-gap: 2rem;
   padding: 1rem 2rem;
 }
 .ai-crumbs {
   /*height: var(--mobar-el-size);*/
-  /*height: 2rem;*/
+  height: 1rem;
   grid-column: 1 / -1;
   margin-bottom: 1rem;
 }
@@ -133,6 +148,9 @@ const unit = computed( () => {
 }
 .ai-info {
   /*padding-top: .5rem;*/
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
 }
 .ai-ttl {
   /*font-size: 2.6rem;*/
@@ -141,6 +159,15 @@ const unit = computed( () => {
   line-height: 1.2em;
   margin: 0 0 1rem 0;
   min-height: 4rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.ai-chars-main {
+  margin: 2rem 0;
 }
 .ai-kashruts {
   list-style: none;
@@ -167,7 +194,7 @@ const unit = computed( () => {
   font-size: 2rem;
 }
 .ai-acts {
-  margin: 1rem 0;
+  margin: 1rem 0 0;
   display: flex;
   /*gap: .5rem;*/
 }
@@ -224,13 +251,14 @@ const unit = computed( () => {
 }
 
 .ai-brand {
-  display: flex;
-  align-items: center;
-  color: #000;
-  gap: 1rem;
+  width: 5rem;
+  height: 5rem;
 }
 .ai-brand-logo {
-  height: 3rem;
+  object-fit: contain;
+  object-position: 100% 0;
+  width: 100%;
+  height: 100%;
 }
 
 .ai-fav {
@@ -265,6 +293,8 @@ const unit = computed( () => {
   }
   .ai-crumbs {
     grid-area: cumb;
+    margin-top: 1rem;
+    /*display: none;*/
   }
   .ai-gal-wr {
     grid-area: gal;
@@ -273,6 +303,29 @@ const unit = computed( () => {
   }
   .ai-gal-info {
     grid-area: info;
+  }
+  .ai-ttl {
+    margin: 0 0 1rem 0;
+    /*align-items: center;*/
+  }
+  .ai-brand {
+    margin-top: -1.5rem;
+  }
+  .ai-chars-main {
+    margin: 1rem 0;
+  }
+  .ai-price-acts {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+  }
+  .ai-acts {
+    margin: 0;
+  }
+  .ai-price-wr {
+    margin: 0;
   }
 }
 </style>

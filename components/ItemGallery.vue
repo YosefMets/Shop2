@@ -196,6 +196,7 @@ const swipeEnd = (e) => {
   padding-top: 100%;
   display: block;
   z-index: 5;
+  background-color: #0000000a;
 }
 .slider > .slides {
   list-style: none;
@@ -354,7 +355,7 @@ ol > li.curr > .image {
   .slider {
     border-radius: 0;
   }
-  .slider:before { background-color: #0000000b; }
+  /*.slider:before { background-color: #0000000b; }*/
   .slider .slide {
     padding: 1rem 1rem 0;
   }

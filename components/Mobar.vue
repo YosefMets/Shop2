@@ -43,6 +43,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
   color: #000;
   padding: 1rem;
   grid-gap: .5rem;
+  box-shadow: 0 0 0 .05rem var(--active-bg);
 }
 .mb-logo {
   grid-area: logo;
@@ -127,6 +128,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
     align-items: center;
     padding: 0;
     /*margin: 0 -2rem;*/
+    translate: -1rem 0;
   }
   .mb-search {
     display: none;

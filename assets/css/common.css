@@ -75,8 +75,8 @@ html, body {
 body {
   padding: 0;
   margin: 0;
-  /*background-color: #fff;*/
-  background-color: var(--bg);
+  background-color: #fff;
+  /*background-color: var(--bg);*/
   /*background-image:*/
   /*        linear-gradient(to bottom right, #ff009b33, #99ff0033),*/
   /*        linear-gradient(to top right, #00bfff33, #ff800033),*/
