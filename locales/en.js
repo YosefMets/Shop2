@@ -1,8 +1,10 @@
 export default {
   mevushal: 'Mevushal',
   lomevushal: 'Lo mevushal',
+
   toCart: 'View cart',
   cart: 'Cart',
+  checkout: 'Checkout',
 
   allRights: 'All right reserved',
   terms: 'Terms and conditions',

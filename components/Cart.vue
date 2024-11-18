@@ -19,8 +19,11 @@ const { total } = storeToRefs( useCartStore() );
         <CartItem  v-for="item in items" :key="item" :cartItem="item" />
 
         <NButton>
-          <PriceRegular :amount="total" />
-          {{ $t('checkout') }}
+          <div class="chck-btn-cont">
+            <i></i>
+            {{ $t('checkout') }}
+            <PriceRegular :amount="total" class="chck-btn-price" />
+          </div>
         </NButton>
       </TransitionGroup>
     </div>
@@ -37,5 +40,13 @@ const { total } = storeToRefs( useCartStore() );
   display: flex;
   flex-direction: column;
   gap: .5rem;
+}
+.chck-btn-cont {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 5rem 1fr 5rem;
+}
+.chck-btn-price {
+  justify-self: end;
 }
 </style>

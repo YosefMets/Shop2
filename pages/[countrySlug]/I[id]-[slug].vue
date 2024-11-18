@@ -259,13 +259,15 @@ const unit = computed( () => {
   height: 5rem;
 }
 .ai-brand-logo {
-  object-fit: contain;
-  object-position: 100% 0;
-  width: 100%;
-  height: 100%;
+  /*object-fit: contain;*/
+  /*object-position: 100% 0;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
   max-width: 5rem;
+  max-height: 5rem;
   float: right;
   margin: 0 0 1rem 1rem;
+  translate: 0 -1.5rem;
 }
 
 .ai-fav {
@@ -322,7 +324,7 @@ const unit = computed( () => {
     margin-top: -1.5rem;
   }
   .ai-chars-main {
-    margin: 0;
+    /*margin: 0;*/
   }
   .ai-price-acts {
     display: grid;
@@ -340,6 +342,9 @@ const unit = computed( () => {
     background-color: #fff;
     position: sticky;
     bottom: 0;
+  }
+  .ai-qty-wr {
+    width: 12rem;
   }
   .ai-price-wr {
     grid-area: price;

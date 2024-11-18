@@ -120,16 +120,19 @@ watch(quantity, (newVal, oldVal) => {
   /*stroke: #fff;*/
   position: relative;
   z-index: 1;
-  transition: stroke .2s;
+  transition: all .2s;
 }
-.cart-but.cart-but-full .cart-but-ic { stroke: #fff; }
+.cart-but.cart-but-full .cart-but-ic {
+  stroke: #fff;
+  translate: 0 .2rem;
+}
 
 .cart-but-qty {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  margin: -.8rem 0 0 .1rem;
+  margin: -1rem 0 0 .1rem;
   /*background-color: var(--accent);*/
   color: var(--bg);
   width: 1.6rem;

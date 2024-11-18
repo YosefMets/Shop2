@@ -70,6 +70,17 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   transform: translate(-50%, -50%);
   transition: transform .1s linear;
 }
+.ci-i-wr:before {
+  content: '';
+  background-color: #0000000b;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+}
 .ci-ttl {
   /*grid-column: 2 / -1;*/
   align-self: center;
@@ -79,6 +90,9 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
 }
 .ci-qty {
   align-self: center;
+  height: 3rem;
+  min-height: 3rem;
+  width: 8rem;
 }
 .ci-total {
   justify-self: flex-end;
