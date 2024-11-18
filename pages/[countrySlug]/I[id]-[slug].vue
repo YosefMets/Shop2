@@ -6,6 +6,7 @@ import SvgCart1 from "~/components/imgs/svg-cart1.vue";
 
 const { params } = useRoute();
 const localePath = useLocalePath();
+const route = useRoute();
 
 const { t } = useI18n()
 
@@ -60,10 +61,9 @@ const unit = computed( () => {
       <div class="ai-info-top">
 
         <h1 class="ai-ttl">
+          <NuxtImg :src="`/${brand.I}.avif`" class="ai-brand-logo" />
           <span>{{ item?.N }}</span>
-          <div v-if="brand" class="ai-brand">
-            <NuxtImg :src="`/${brand.I}.avif`" class="ai-brand-logo" />
-          </div>
+<!--          <div v-if="brand" class="ai-brand"></div>-->
           <CharsMain :item="item" class="ai-chars-main" />
         </h1>
       </div>
@@ -96,7 +96,8 @@ const unit = computed( () => {
               </NButton>
             </template>
             <template v-else>
-              <NButton :to="'/cart'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
+<!--              <NButton :to="'/cart'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>-->
+              <NButton @click="navigateTo({ query: {...route.query, ['cart']: null} })" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
             </template>
             <!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
             <!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
@@ -150,6 +151,7 @@ const unit = computed( () => {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
+  height: 30rem;
 }
 .ai-ttl {
   /*font-size: 2.6rem;*/
@@ -158,7 +160,7 @@ const unit = computed( () => {
   line-height: 1.2em;
   margin: 0 0 1rem 0;
   min-height: 4rem;
-  display: grid;
+  /*display: grid;*/
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   /*grid-auto-columns: auto;*/
@@ -168,7 +170,7 @@ const unit = computed( () => {
   row-gap: .5rem;
 }
 .ai-chars-main {
-  /*margin: 2rem 0;*/
+  margin: 1rem 0 0;
   grid-column: 1 / -1;
 }
 .ai-kashruts {
@@ -201,7 +203,7 @@ const unit = computed( () => {
   /*gap: .5rem;*/
 }
 .ai-qty-wr {
-  width: 9rem;
+  width: 10rem;
 }
 .ai-qty-anim-wr {
   width: 100%;
@@ -261,6 +263,9 @@ const unit = computed( () => {
   object-position: 100% 0;
   width: 100%;
   height: 100%;
+  max-width: 5rem;
+  float: right;
+  margin: 0 0 1rem 1rem;
 }
 
 .ai-fav {
@@ -305,6 +310,9 @@ const unit = computed( () => {
   }
   .ai-gal-info {
     grid-area: info;
+  }
+  .ai-info {
+    height: unset;
   }
   .ai-ttl {
     margin: 0 0 1rem 0;

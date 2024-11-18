@@ -357,7 +357,7 @@ ol > li.curr > .image {
   }
   /*.slider:before { background-color: #0000000b; }*/
   .slider .slide {
-    padding: 1rem 1rem 0;
+    /*padding: 1rem 1rem 0;*/
   }
 
   .ig-pgng {

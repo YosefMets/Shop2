@@ -46,7 +46,7 @@ const isInChain = computed( () => {
 <template>
   <li class="cat-item" @click.stop="activate(dir)"><!--, { 'in-chain': isInChain }-->
 
-    <div v-if="dir.children"
+    <div v-if="dir?.children"
          :class="['cat-link', { 'cat-link-curr': dir === group }]"
          @click="() => actDir.value = props.dir">
       <i class="cat-ic">{{ dir.IC }}</i>
@@ -153,8 +153,12 @@ const isInChain = computed( () => {
 
 @media (max-width: 480px) {
   .cat-link {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+    padding: 1rem;
     /*font-weight: 500;*/
+  }
+  .cat-ic {
+    width: 2.2rem;
   }
   /*
   .cat-item:hover > .cat-link {

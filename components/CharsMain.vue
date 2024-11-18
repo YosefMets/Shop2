@@ -20,11 +20,11 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
         <template v-for="v in val">
           <NuxtImg v-if="attr === 'co'" :src="`/${v}.svg`" />
           <b v-else class="mch">
-            <i class="mch-dig" v-if="attr !== 'mev'">
-              {{ parseFloat(v).toLocaleString(locale) }}{{ attr === 'al' ? '%' : '' }}
+            <i class="mch-dig" v-if="typeof v === 'number' && attr !== 'mev'">
+              {{ parseFloat(v < 1000 ? v : v/1000).toLocaleString(locale) }}{{ attr === 'al' ? '%' : '' }}
             </i>
             <i class="mch-abc">
-              {{ attr === 'v' ? $t( v < 1000 ? 'ml' : 'l' ) : '' }}
+              {{ attr === 'v' ? $t(item.unit) : '' }}
               {{ attr === 'mev' ? $t( v === 1 ? 'mevushal' : 'lomevushal') : '' }}
             </i>
           </b>
@@ -41,7 +41,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
   gap: .5rem;
   align-items: end;
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
 }
 .mch {
   font-weight: inherit;
@@ -49,7 +49,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 .mch-dig {
   font-style: normal;
   font-family: 'Stint Ultra Condensed', 'Six Caps', 'Rubik', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2rem;
   line-height: 1em;
 }
 .mch-abc {
@@ -58,8 +58,8 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 img {
   display: inline-block;
   align-self: center;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
   margin-right: .5rem;
   border-radius: 50%;
   border: .1rem solid #fff;

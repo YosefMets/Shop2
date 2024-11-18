@@ -1,7 +1,6 @@
 <script setup>
 import SvgCart1 from "~/components/imgs/svg-cart1.vue";
 import NLink from "~/components/controls/NLink.vue";
-// import PriceRegular from "~/components/items/PriceRegular.vue";
 
 const route = useRoute();
 const localePath = useLocalePath();
@@ -26,10 +25,12 @@ watch(quantity, (newVal, oldVal) => {
 
 <template>
   <div class="cart-but-wr">
-    <NLink :to="'/cart'"
-           :class="['cart-but', { 'cart-but-full': quantity > 0 }]"
-           :alt="$t('cart')"
-           :title="$t('cart')">
+    <NuxtLink :to="{ query: {...route.query, ['cart']: null} }"
+              :class="['cart-but', { 'cart-but-full': quantity > 0 }]">
+<!--    <NLink :to="'/cart'"-->
+<!--           :class="['cart-but', { 'cart-but-full': quantity > 0 }]"-->
+<!--           :alt="$t('cart')"-->
+<!--           :title="$t('cart')">-->
 
       <div class="cart-but-ic-el">
         <svg-cart1 class="cart-but-ic" />
@@ -43,8 +44,11 @@ watch(quantity, (newVal, oldVal) => {
   <!--      <PriceRegular :price="total" />-->
       </div>
 
-    </NLink>
+<!--    </NLink>-->
+    </NuxtLink>
   </div>
+
+  <Cart />
 </template>
 
 <style scoped>
