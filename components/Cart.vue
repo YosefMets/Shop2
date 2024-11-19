@@ -23,7 +23,9 @@ const { total } = storeToRefs( useCartStore() );
         <CartItem  v-for="item in items" :key="item" :cartItem="item" />
 
         <div class="chck-delivery">
-          <SvgTrack class="chck-delivery-ic" />
+          <div class="chck-delivery-ic-wr">
+            <SvgTrack class="chck-delivery-ic" />
+          </div>
           <div class="chck-delivery-lbl">{{ $t('delivery') }}</div>
           <PriceRegular :amount="10" class="chck-delivery-price" />
         </div>
@@ -79,9 +81,19 @@ const { total } = storeToRefs( useCartStore() );
   display: grid;
   grid-template-columns: 4rem 1fr auto;
   align-items: center;
-  padding: 1rem 1rem 1rem .5rem;
+  padding: .5rem 1rem .5rem .5rem;
   border: .2rem solid #fff;
   gap: .5rem;
+}
+.chck-delivery-ic-wr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: #fff;
+  overflow: hidden;
 }
 svg.chck-delivery-ic {
   stroke: #000;

@@ -280,16 +280,6 @@ const unit = computed( () => {
   .ai-fav-lbl { display: none; }
 }
 
-.ai-qty-enter-active,
-.ai-qty-leave-active {
-  transition: width .2s;
-}
-
-.ai-qty-enter-from,
-.ai-qty-leave-to {
-  width: 0;
-}
-
 
 @media (max-width: 480px) {
   .ai {
@@ -351,5 +341,15 @@ const unit = computed( () => {
     margin: 0;
     line-height: 1em;
   }
+}
+
+.ai-qty-enter-active,
+.ai-qty-leave-active {
+  transition: width .2s;
+}
+
+.ai-qty-enter-from,
+.ai-qty-leave-to {
+  width: 0;
 }
 </style>

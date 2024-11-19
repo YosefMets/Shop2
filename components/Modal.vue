@@ -38,7 +38,9 @@ useHead({
 
           <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
 
-          <svg-x v-if="x" class="mdlx" @click="emit('close')" />
+          <div v-if="x" class="mdl-x-wr">
+            <svg-x class="mdl-x" @click="emit('close')" />
+          </div>
 
           <div><slot/></div>
 
@@ -127,7 +129,7 @@ useHead({
 .mdl-ttl-x {
   /*margin-right: 2rem;*/
 }
-svg.mdlx {
+.mdl-x-wr {
   position: absolute;
   right: 1.5rem;
   top: 1.5rem;
@@ -136,6 +138,10 @@ svg.mdlx {
   display: block;
   width: 1rem;
   height: 1rem;
+}
+.ic-x.mdl-x {
+  width: 100%;
+  height: 100%;
 }
 .fog-x {
   position: absolute;
@@ -210,7 +216,7 @@ svg.mdlx {
     top: unset;
   }
   .modal-container {
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 8rem;
     width: 100%;
     height: unset;
     max-height: 100vh;
@@ -230,6 +236,23 @@ svg.mdlx {
   .mc-w-full { width: 100%; }
 
   .mc-h-full { border-radius: 0; }
+
+  .mdl-x-wr {
+    position: absolute;
+    right: 50%;
+    top: unset;
+    bottom: 3rem;
+    translate: 50% 0;
+    cursor: pointer;
+    z-index: 1;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+  }
+  .ic-x.mdl-x {
+    width: 100%;
+    height: 100%;
+  }
 
   .modal-enter-active {
     transition: opacity 0s, background-color .4s;

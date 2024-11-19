@@ -369,7 +369,7 @@ ol > li.curr > .image {
     border-radius: 10rem;
     padding: .5rem;
     grid-gap: .5rem;
-    z-index: 1;
+    z-index: 10;
     translate: -50% 50%;
   }
   .ig-pgng > li {
