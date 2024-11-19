@@ -65,8 +65,8 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   transform: translate(-50%, -50%);
   transition: transform .1s linear;
 }

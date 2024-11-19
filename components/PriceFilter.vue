@@ -18,7 +18,8 @@ const getDisplayedValue = (min, max) => currency.value.S + (min || 0) + (max ? '
 </script>
 
 <template>
-  <NDropDown :placeholder="placeholder"
+  <NDropDown v-if="filters"
+             :placeholder="placeholder"
              :multiple="false"
              :x="false"
              :selected="priceMin || priceMax"

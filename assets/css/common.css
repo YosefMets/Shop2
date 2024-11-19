@@ -34,7 +34,7 @@
   --menu-height: 2.6rem;
   --header-height: calc( var(--bar-height) + var(--menu-height) );
   --search-height: 3.2rem;
-  --cntl-h: 3rem;
+  --cntl-h: 3.6rem;
   --half-search-height: calc( var(--search-height) / 2 );
 
   --mobar-height: 4rem;

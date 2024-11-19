@@ -14,12 +14,11 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
            :to="activeGroup"
            :brand="activeBrand"
            :filters="keyword"
-           :class="['keyword', { curr: filters?.[keyword.char]?.includes(keyword.value), ava: db?.[keyword.value]?.ISO || db?.[keyword.value]?.A }]">
+           :class="['kw', { curr: filters?.[keyword.char]?.includes(keyword.value), ava: db?.[keyword.value]?.Iso || db?.[keyword.value]?.A }]">
 
-      <i v-if="db?.[keyword.value]?.ISO || db?.[keyword.value]?.A" :class="['kw-a', { flag: db?.[keyword.value]?.ISO }]">
-        <img :src="db?.[keyword.value]?.ISO ? `/flags/${db?.[keyword.value]?.ISO}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''"
-             alt="" />
-      </i>
+<!--      <i v-if="db?.[keyword.value]?.Iso || db?.[keyword.value]?.A" :class="['kw-a', { flag: keyword.char === 'co' }]">-->
+<!--        <NuxtImg :src="db?.[keyword.value]?.Iso ? `/${db?.[keyword.value]?.Iso}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''" />-->
+<!--      </i>-->
 
       {{ db?.[keyword.value]?.N || keyword.value }}
 
@@ -37,27 +36,32 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   list-style: none;
   display: flex;
   align-items: stretch;
-  grid-gap: .5rem;
-  height: 2.4rem;
+  grid-gap: .2rem;
+  /*height: 2.4rem;*/
 }
-.keyword {
+.kw {
   position: relative;
   cursor: pointer;
-  background-color: var(--bg2);
+  background-color: var(--bg);
   display: flex;
   align-items: center;
   /*border-radius: var(--br);*/
   border-radius: 10rem;
   color: #000;
-  padding: 0 1rem;
+  padding: .2rem 1rem;
   /*box-shadow: inset 0 0 0 .05rem #000000;*/
   overflow: hidden;
+  font-size: 1.1rem;
+  transition: padding .2s, background-color .2s;
 }
 .keyword.ava {
   display: flex;
   grid-gap: 1rem;
 }
-.keyword.curr {
+.kw:hover {
+  background-color: var(--active-bg);
+}
+.kw.curr {
   background-color: #000;
   color: #fff;
 }

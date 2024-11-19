@@ -14,13 +14,10 @@ const showOptions = ref(false);
 
 <template>
   <div class="dd">
-    <div :class="['dd-box', { sel: selected, open: showOptions }]"
-         @click="showOptions = !showOptions">
-
+    <div :class="['dd-box', { sel: selected, open: showOptions }]" @click="showOptions = !showOptions">
       <div class="dd-lbl" v-html="placeholder" />
       <SvgX v-if="x" @click.stop="emit('clear')" class="dd-ic" />
       <SvgV v-else class="dd-ic" />
-
     </div>
 
     <div v-if="showOptions" class="options-wr">
@@ -50,7 +47,6 @@ const showOptions = ref(false);
   height: 100%;
   cursor: pointer;
   position: relative;
-  anchor-name: --ndd;
 }
 .dd-box.sel {
   background-color: #000;
@@ -81,23 +77,12 @@ const showOptions = ref(false);
 
 .options-wr {
   background-color: #000;
+  position: absolute;
   z-index: 2000;
   min-width: 100%;
   border-radius: 0 0 var(--br) var(--br);
   overflow: hidden;
-
-  position-try: --compact-target, flip-block, flip-inline, flip-start;
-  position: absolute;
-  position-anchor: --ndd;
-  top: anchor(bottom);
-  left: anchor(left);
 }
-@position-try --compact-target {
-  top: anchor(bottom);
-  left: unset;
-  right: anchor(right);
-}
-
 .dd-fog {
   display: block;
   position: fixed;

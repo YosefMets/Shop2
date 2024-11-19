@@ -166,8 +166,11 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 @media (max-width: 480px) {
   .cat-list { padding: .5rem 0; }
   .cat-link {
-    font-size: 1.6rem;
+    /*font-size: 1.6rem;*/
     padding: 1rem;
+  }
+  .cat-back {
+    font-size: 1rem;
   }
   .cat-ic {
     width: 2.2rem;

@@ -31,7 +31,7 @@
     <ol v-if="previews.length > 1" class="ig-pgng">
       <li v-for="(media, i) in previews" @click="I = i" :class="{ curr: i === I % previews.length }">
         <NuxtImg :src="p.item?.M?.[i]?.search(/^\w{2,4}$/) === -1 ? `https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg` : media"
-                 class="gal-pvw"
+                 class="ig-pvw"
                  :alt="p.item.N" />
       </li>
     </ol>
@@ -170,6 +170,7 @@ const swipeEnd = (e) => {
 <style scoped>
 .gallery {
   width: 100%;
+  position: relative;
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr;
@@ -332,7 +333,7 @@ iframe {
   height: 100%;
 }
 
-.gal-pvw {
+.ig-pvw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -364,23 +365,24 @@ ol > li.curr > .image {
     background-color: #fff;
     position: absolute;
     left: 50%;
-    bottom: -.5rem;
-    transform: translateX(-50%);
+    bottom: 0;
     border-radius: 10rem;
-    padding: .3rem;
-    grid-gap: .3rem;
+    padding: .5rem;
+    grid-gap: .5rem;
     z-index: 1;
+    translate: -50% 50%;
   }
   .ig-pgng > li {
-    min-width: .4rem;
-    width: .4rem;
+    min-width: .6rem;
+    width: .6rem;
     border-radius: 50%;
     border: none;
     background-color: var(--contr);
   }
   .ig-pgng > li.curr {
     background-color: var(--active);
-    transform: scale(1.4);
+    transform: scale(1.2);
   }
+  .ig-pvw { display: none; }
 }
 </style>

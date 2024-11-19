@@ -91,13 +91,14 @@ const unit = computed( () => {
               </div>
             </transition>
             <template v-if="!thisItemInCard">
-              <NButton @click="cartStore.add(item)" :style="'style3'" class="ai-cart-btn">
+              <NButton @click="cartStore.add(item)" class="ai-cart-btn">
                 {{ $t('addToCart') }}
               </NButton>
             </template>
             <template v-else>
-<!--              <NButton :to="'/cart'" class="ai-cart-btn">{{ $t('toCart') }}</NButton>-->
-              <NButton @click="navigateTo({ query: {...route.query, ['cart']: null} })" class="ai-cart-btn">{{ $t('toCart') }}</NButton>
+              <NButton @click="navigateTo({ query: {...route.query, ['cart']: null} })"
+                       :style="'style3'"
+                       class="ai-cart-btn">{{ $t('toCart') }}</NButton>
             </template>
             <!--          <NButton @click="addToFavorites(item)" :style="'style3'" class="ai-fav">-->
             <!--            <SvgLove :class="['ai-heart', { love: item?.$f }]" />-->
@@ -267,7 +268,6 @@ const unit = computed( () => {
   max-height: 5rem;
   float: right;
   margin: 0 0 1rem 1rem;
-  translate: 0 -1.5rem;
 }
 
 .ai-fav {
@@ -320,8 +320,8 @@ const unit = computed( () => {
     margin: 0 0 1rem 0;
     /*align-items: center;*/
   }
-  .ai-brand {
-    margin-top: -1.5rem;
+  .ai-brand-logo {
+    translate: 0 -1.5rem;
   }
   .ai-chars-main {
     /*margin: 0;*/

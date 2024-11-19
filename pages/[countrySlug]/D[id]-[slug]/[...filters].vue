@@ -30,10 +30,12 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
 
     <h1 class="d-ttl">{{ dir?.N }}</h1>
 
-    <div class="d-filters-bar">
-      <Keywords />
-      <Sorting2 />
-    </div>
+    <Keywords class="d-keywords scroll" />
+
+<!--    <div class="d-filters-bar scroll">-->
+
+<!--      <Sorting2 />-->
+<!--    </div>-->
 
     <div class="d-cv"></div>
 
@@ -55,11 +57,18 @@ const cover = computed( () => dir.value?.c ? `url(/i/${dir.value.I}-cover.${dir.
   line-height: 1.2em;
   margin: 1rem 0;
 }
+.d-keywords {
+  margin-bottom: 1rem;
+  overflow: auto;
+  width: 100%;
+}
 .d-filters-bar {
   height: var(--mobar-el-size);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow: auto;
+  width: 100%;
 }
 .d-cv {
   aspect-ratio: 1 / .15;

@@ -26,6 +26,7 @@
       "mbr body"
       "mbr footer";
 }
+.store-layout > * { min-width: 0; } /* hack: overflow scroll inside the grid */
 .mr-store-layout {
   grid-area: mbr;
   position: sticky;

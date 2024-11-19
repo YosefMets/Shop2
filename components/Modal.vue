@@ -125,7 +125,7 @@ useHead({
 }
 
 .mdl-ttl-x {
-  margin-right: 2rem;
+  /*margin-right: 2rem;*/
 }
 svg.mdlx {
   position: absolute;
