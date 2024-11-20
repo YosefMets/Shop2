@@ -13,10 +13,12 @@ const { total } = storeToRefs( useCartStore() );
          :width="'35rem'"
          @close="navigateTo({ query: {...route.query, ['cart']: undefined} })">
 
-    <template #header>
-        {{ $t('cart') }}
+    <div class="chck-gap chck-gap-top" />
+
+    <h2 class="chck-ttl">
+        🛒 {{ $t('cart') }}
         <PriceRegular :amount="total" class="cart-total" />
-    </template>
+    </h2>
 
     <div class="cart-layout">
       <TransitionGroup name="adding" tag="div" class="cart-items">
@@ -58,6 +60,30 @@ const { total } = storeToRefs( useCartStore() );
 
 .cart-layout {
 }
+
+.chck-gap {
+  position: absolute;
+  background-color: var(--bg);
+  height: 3rem;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 50;
+}
+
+.chck-ttl {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  font-weight: 500;
+  background-color: var(--bg);
+  /*position: relative;*/
+  padding: 0 0 2rem;
+  margin: 0;
+  z-index: 50;
+}
 .cart-items {
   display: flex;
   flex-direction: column;
@@ -68,6 +94,7 @@ const { total } = storeToRefs( useCartStore() );
   font-size: 1rem;
   align-self: end;
   line-height: 1em;
+  font-weight: 500;
 }
 .chck-btn-cont {
   width: 100%;
@@ -82,8 +109,9 @@ const { total } = storeToRefs( useCartStore() );
   grid-template-columns: 4rem 1fr auto;
   align-items: center;
   padding: .5rem 1rem .5rem .5rem;
-  border: .2rem solid #fff;
+  /*border: .2rem solid #fff;*/
   gap: .5rem;
+  background-color: #fff;
 }
 .chck-delivery-ic-wr {
   display: flex;
@@ -92,7 +120,7 @@ const { total } = storeToRefs( useCartStore() );
   width: 100%;
   position: relative;
   aspect-ratio: 1 / 1;
-  background-color: #fff;
+  background-color: var(--bg);
   overflow: hidden;
 }
 svg.chck-delivery-ic {
@@ -118,5 +146,18 @@ svg.chck-delivery-ic {
   background-color: #fff;
   border: .1rem solid var(--contr);
   padding: 0 1rem;
+}
+
+
+@media (max-width: 480px) {
+  .chck-gap {
+    height: 1.5rem;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  .chck-ttl {
+  }
 }
 </style>

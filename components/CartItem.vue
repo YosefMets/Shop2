@@ -101,5 +101,21 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
 
 
 @media (max-width: 480px) {
+  .ci {
+    grid-template-columns: 4rem 1fr 5.2rem;
+    grid-template-rows: auto auto;
+    grid-auto-flow: dense;
+    /*column-gap: .5rem;*/
+    /*row-gap: .5rem;*/
+    /*background-color: #fff;*/
+    /*padding: .5rem 1rem .5rem .5rem;*/
+    /*border-radius: var(--br);*/
+  }
+  .ci-ttl {
+    grid-column: 1 / -1;
+  }
+  .ci-qty {
+    justify-self: end;
+  }
 }
 </style>

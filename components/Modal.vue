@@ -34,18 +34,20 @@ useHead({
 
       <div :class="['fog', sideClass]" v-if="show">
 
-        <div class="modal-container scroll" :style="`--modal-width: ${width || '100%'}`">
+        <div class="modal-container-wr" :style="`--modal-width: ${width || '100%'}`">
+          <div class="modal-container scroll">
 
-          <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
+            <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
+
+            <div><slot/></div>
+
+            <div v-if="footer" class="mdx-footer"><slot name="footer" /></div>
+
+          </div>
 
           <div v-if="x" class="mdl-x-wr">
             <svg-x class="mdl-x" @click="emit('close')" />
           </div>
-
-          <div><slot/></div>
-
-          <div v-if="footer" class="mdx-footer"><slot name="footer" /></div>
-
         </div>
 
         <div v-if="closeout" class="fog-x" @click="emit('close')" />
@@ -83,18 +85,22 @@ useHead({
   top: 0;
   bottom: 0;
 }
-.modal-container {
+.modal-container-wr {
   position: relative;
-  background-color: var(--bg);
-  padding: 3rem;
   width: var(--modal-width);
   height: 100%;
   z-index: 10;
-  /*max-height: 100vh;*/
-  overflow: auto;
+  max-height: 100vh;
   box-shadow: 0 .2rem 1rem -.7rem #000000;
   display: grid;
   grid-template-rows: auto 1fr auto;
+}
+.modal-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg);
+  padding: 3rem;
+  overflow: auto;
 }
 /*
 .mc-w-s { width: 30rem; }
@@ -134,7 +140,7 @@ useHead({
   right: 1.5rem;
   top: 1.5rem;
   cursor: pointer;
-  z-index: 1;
+  z-index: 100;
   display: block;
   width: 1rem;
   height: 1rem;
@@ -215,17 +221,19 @@ useHead({
     right: 0;
     top: unset;
   }
-  .modal-container {
-    padding: 1.5rem 1.5rem 8rem;
+  .modal-container-wr {
     width: 100%;
     height: unset;
-    max-height: 100vh;
+    max-height: calc( 100dvh - 2rem );
     /*border-radius: 0;*/
-    border-radius: var(--br) var(--br) 0 0;
+    /*border-radius: var(--br) var(--br) 0 0;*/
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  .modal-container {
+    padding: 1.5rem;
   }
   .mdx-footer { padding-top: 1.5rem; }
   .mdx-footer:after { height: 1.5rem; }
@@ -238,20 +246,23 @@ useHead({
   .mc-h-full { border-radius: 0; }
 
   .mdl-x-wr {
-    position: absolute;
-    right: 50%;
-    top: unset;
-    bottom: 3rem;
-    translate: 50% 0;
-    cursor: pointer;
-    z-index: 1;
-    display: block;
-    width: 2rem;
-    height: 2rem;
+    /*position: fixed;*/
+    /*right: 1.5rem;*/
+    top: 0;
+    translate: 0 -50%;
+    /*cursor: pointer;*/
+    /*z-index: 1;*/
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .ic-x.mdl-x {
-    width: 100%;
-    height: 100%;
+    width: 40%;
+    height: 40%;
   }
 
   .modal-enter-active {
