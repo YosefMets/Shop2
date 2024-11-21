@@ -6,7 +6,7 @@ const cloudinary = require('cloudinary').v2;
 const { Buffer } = require('node:buffer');
 
 export default defineEventHandler( async (event) => {
-  const body = await readBody(event);
+  // const body = getRouterParam(event, 'body');
 
   // const s3 = new AWS.S3({
   //   accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
@@ -23,8 +23,10 @@ export default defineEventHandler( async (event) => {
   // console.log( 1, process.env, 1 )
 
 
-  const jsonData = JSON.stringify({ message: body, timestamp: Date.now() });
+  const jsonData = JSON.stringify({ message: 'qweqwe', timestamp: Date.now() });
   const fileBuffer = Buffer.from(jsonData, 'utf-8'); // Преобразуем JSON в Buffer
+
+  console.log(jsonData);
 
   try {
     const result = await new Promise((resolve, reject) => {
