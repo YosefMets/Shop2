@@ -198,6 +198,7 @@ const swipeEnd = (e) => {
   display: block;
   z-index: 5;
   background-color: #0000000a;
+  /*background: radial-gradient(circle, rgb(0 0 0 / 0) 20%, rgb(0 0 0 / 0.05) 100%);*/
 }
 .slider > .slides {
   list-style: none;

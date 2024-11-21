@@ -62,7 +62,7 @@ const unit = computed( () => {
 
         <h1 class="ai-ttl">
           <NuxtImg :src="`/${brand.I}.avif`" class="ai-brand-logo" />
-          <span>{{ item?.N }}</span>
+          <span>{{ brand?.N }} {{ item?.N }}</span>
 <!--          <div v-if="brand" class="ai-brand"></div>-->
           <CharsMain :item="item" class="ai-chars-main" />
         </h1>
@@ -96,7 +96,7 @@ const unit = computed( () => {
               </NButton>
             </template>
             <template v-else>
-              <NButton @click="navigateTo({ query: {...route.query, ['cart']: null} })"
+              <NButton @click="navigateTo({ query: {...route.query, ['cart']: null} } )"
                        :style="'style3'"
                        class="ai-cart-btn">{{ $t('toCart') }}</NButton>
             </template>

@@ -156,8 +156,7 @@ svg.chck-delivery-ic {
     left: 0;
     top: 0;
   }
-
-  .chck-ttl {
-  }
+  .chck-ttl {}
+  .cart-items { gap: .5rem; }
 }
 </style>

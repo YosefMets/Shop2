@@ -26,6 +26,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
             <i class="mch-abc">
               {{ attr === 'v' ? $t(item.unit) : '' }}
               {{ attr === 'mev' ? $t( v === 1 ? 'mevushal' : 'lomevushal') : '' }}
+              {{ db[v]?.N }}
             </i>
           </b>
         </template>

@@ -104,18 +104,23 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   .ci {
     grid-template-columns: 4rem 1fr 5.2rem;
     grid-template-rows: auto auto;
-    grid-auto-flow: dense;
-    /*column-gap: .5rem;*/
-    /*row-gap: .5rem;*/
-    /*background-color: #fff;*/
-    /*padding: .5rem 1rem .5rem .5rem;*/
-    /*border-radius: var(--br);*/
+    grid-template-areas:
+        "cittl cittl cittl"
+        "ciimg ciqty citotal";
+  }
+  .ci-i-wr {
+    grid-area: ciimg;
   }
   .ci-ttl {
-    grid-column: 1 / -1;
+    grid-area: cittl;
   }
   .ci-qty {
+    grid-area: ciqty;
     justify-self: end;
+    width: 10rem;
+  }
+  .ci-total {
+    grid-area: citotal;
   }
 }
 </style>

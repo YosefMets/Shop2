@@ -64,6 +64,7 @@ const brand = computed( () => props.item.B ? db.value?.[props.item.B] : null );
   z-index: 1;
   transition: background-color .1s linear;
   background-color: #0000000a;
+  /*background: radial-gradient(circle, rgb(0 0 0 / 0) 20%, rgb(0 0 0 / 0.05) 100%);*/
 }
 .item:hover > .it-i:before {
   /*background-color: transparent;*/
