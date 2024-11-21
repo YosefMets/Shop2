@@ -6,7 +6,7 @@ const { t, locale } = useI18n();
 
 const dir = computed( () => props.item?.P ? db.value?.[props.item.P] : null );
 const chars = computed( () => Object.keys(dir.value?.X || {})
-                                    .filter( x => dir.value?.X[x]?.M && x in props.item )
+                                    .filter( x => dir.value?.X[x]?.M ) //  && x in props.item
                                     .reduce( (r, x) => {
                                       r[x] = [props.item?.[x]].flat();
                                       return r }, {}
@@ -20,13 +20,17 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
         <template v-for="v in val">
           <NuxtImg v-if="attr === 'co'" :src="`/${v}.svg`" />
           <b v-else class="mch">
-            <i class="mch-dig" v-if="typeof v === 'number' && attr !== 'mev'">
-              {{ parseFloat(v < 1000 ? v : v/1000).toLocaleString(locale) }}{{ attr === 'al' ? '%' : '' }}
-            </i>
-            <i class="mch-abc">
-              {{ attr === 'v' ? $t(item.unit) : '' }}
-              {{ attr === 'mev' ? $t( v === 1 ? 'mevushal' : 'lomevushal') : '' }}
-              {{ db[v]?.N }}
+
+            <template v-if="typeof v === 'number'">
+              <i class="mch-dig">
+                {{ parseFloat(v < 1000 ? v : v/1000).toLocaleString(locale) }}{{ attr === 'al' ? '%' : '' }}
+              </i>
+              <i class="mch-abc">{{ attr === 'v' ? $t(item.unit) : '' }}</i>
+            </template>
+
+            <i v-else class="mch-abc">
+              <template v-if="db[v]">{{ db[v]?.N }}</template>
+              <template v-if="attr === 'mev'">{{ $t( v ? 'mevushal' : 'lomevushal') }}</template>
             </i>
           </b>
         </template>
@@ -39,7 +43,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 .main-chars {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: .2rem;
   align-items: end;
   font-weight: 400;
   font-size: 1.2rem;
@@ -47,6 +51,14 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
 .mch {
   font-weight: inherit;
 }
+.mch:after {
+  content: '\2022';
+  color: #f00;
+  margin-left: .2rem;
+  display: inline-block;
+}
+.mch:last-of-type:after { content: none; }
+
 .mch-dig {
   font-style: normal;
   font-family: 'Stint Ultra Condensed', 'Six Caps', 'Rubik', sans-serif;

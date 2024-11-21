@@ -7,7 +7,7 @@ const { db, activeGroup: dir, activeBrand, displayedItems, filters, priceMin, pr
 
 const entity = db.value?.['D'+params.id];
 if (entity && entity.I !== dir.value?.I) {
-  console.log('activateGroup', entity.I, dir.value?.I);
+  // console.log('activateGroup', entity.I, dir.value?.I);
   appStore.activateGroup(entity);
 }
 

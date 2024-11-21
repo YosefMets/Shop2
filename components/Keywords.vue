@@ -10,17 +10,17 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
 <template>
   <div v-if="keywords" class="keywords">
 
-    <NLink v-for="keyword in keywords"
+    <NLink v-for="{char, value, type} in keywords"
            :to="activeGroup"
            :brand="activeBrand"
            :filters="keyword"
-           :class="['kw', { curr: filters?.[keyword.char]?.includes(keyword.value), ava: db?.[keyword.value]?.Iso || db?.[keyword.value]?.A }]">
+           :class="['kw', { curr: filters?.[char]?.includes(value), ava: db?.[value]?.Iso || db?.[value]?.A }]">
 
 <!--      <i v-if="db?.[keyword.value]?.Iso || db?.[keyword.value]?.A" :class="['kw-a', { flag: keyword.char === 'co' }]">-->
 <!--        <NuxtImg :src="db?.[keyword.value]?.Iso ? `/${db?.[keyword.value]?.Iso}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''" />-->
 <!--      </i>-->
-
-      {{ db?.[keyword.value]?.N || keyword.value }}
+{{type}}
+      {{ db?.[value]?.N || value }}
 
     </NLink>
 
