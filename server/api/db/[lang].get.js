@@ -1,6 +1,6 @@
 export default defineEventHandler( (event) => {
   const lang = getRouterParam(event, 'lang');
-  const fetchUri = 'https://script.google.com/macros/s/AKfycbxfYnIrcx1OhRwpGshVDPOPpLQ5GC3Y-ngLx3jzS7ZezKSwURYMZ5DgIWbG4OM1dVcWyw/exec';
+  const fetchUri = 'https://res.cloudinary.com/deucrhprn/raw/upload/v1732216901/db/db.json';
 
-  return $fetch( `${fetchUri}?lang=${lang}`);
+  return $fetch( fetchUri );
 })
