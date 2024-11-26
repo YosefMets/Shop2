@@ -22,12 +22,17 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 <template>
   <ul :class="['cat-list', 'scroll', 'cat-'+depth ]">
 
-    <li v-if="dir" class="cat-back" @click.stop="$emit('back')">
-      <svg-arr class="cat-back-ic" />
-      {{ dir.P && db?.[dir.P] ? db?.[dir.P].N : $t('mainMenu') }}
-    </li>
+<!--    <li v-if="dir" class="cat-back" @click.stop="$emit('back')">-->
+<!--      <svg-arr class="cat-back-ic" />-->
+<!--      {{ dir.P && db?.[dir.P] ? db?.[dir.P].N : $t('mainMenu') }}-->
+<!--    </li>-->
 
-    <li v-if="dir" class="cat-subtitle">{{ dir?.N }}</li>
+    <li v-if="dir" class="cat-subtitle">
+      <i class="cat-back-" @click.stop="$emit('back')">
+        <svg-arr class="cat-back-ic-" />
+      </i>
+      {{ dir?.N }}
+    </li>
 
     <li v-if="dir" class="cat-item">
       <NLink :to="dir"
@@ -127,6 +132,31 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   line-height: 1.2em;
   border-bottom: .1rem solid var(--active-bg);
   background-color: #fff;
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  align-items: center;
+  column-gap: .5rem;
+}
+
+.cat-back- {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  /*background-color: #000;*/
+  cursor: pointer;
+  margin: -.3rem;
+  transition: translate .2s, background-color .2s;
+}
+.cat-back-ic- {
+  /*stroke: #fff;*/
+  stroke-width: .15rem;
+  rotate: 180deg;
+}
+.cat-back-:hover {
+  translate: -.2rem;
+  background-color: var(--bg);
 }
 
 .cat-item {
@@ -166,11 +196,18 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 @media (max-width: 480px) {
   .cat-list { padding: .5rem 0; }
   .cat-link {
-    /*font-size: 1.6rem;*/
+    font-size: 1.4rem;
     padding: 1rem;
   }
   .cat-back {
     font-size: 1rem;
+  }
+  .cat-subtitle {
+    grid-template-columns: 2.2rem 1fr;
+  }
+  .cat-back-ic- {
+    width: 1.6rem;
+    height: 1.6rem;
   }
   .cat-ic {
     width: 2.2rem;

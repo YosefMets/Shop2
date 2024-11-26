@@ -153,7 +153,7 @@ const isInChain = computed( () => {
 
 @media (max-width: 480px) {
   .cat-link {
-    /*font-size: 1.6rem;*/
+    font-size: 1.4rem;
     padding: 1rem;
     /*font-weight: 500;*/
   }
