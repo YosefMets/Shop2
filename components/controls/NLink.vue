@@ -15,39 +15,42 @@ const props = defineProps({
   query: Object,
 });
 
-const filtersQuery1 = computed( () => {
-  if (!props.filters) return undefined;
+const filtersQuery = computed( () => {
+  if ( !props.filters ) return undefined;
 
   const dblFilters = JSON.parse(JSON.stringify(filters.value));
   const _filters = props.filters === true ? [] : [props.filters];
 
-  _filters.flat().forEach( ({ char, value }) => {
-    if (dblFilters?.[char]?.includes(value)) {
-      dblFilters?.[char].splice(dblFilters?.[char].indexOf(value), 1);
-      if (!dblFilters?.[char].length || value === undefined)
-        delete dblFilters?.[char]
+  _filters.flat().forEach( ({ char, value, type }) => {
+
+    if ( type === 'boolean') {
+      if (char in dblFilters) delete dblFilters[char];
+      else dblFilters[char] = true
+      return
     }
-    else {
-      if (!dblFilters?.[char]) dblFilters[char] = [];
-      dblFilters?.[char].push(value);
+
+    if (dblFilters?.[char]?.includes(value)) { // если в активных фильтрах оно уже есть
+      dblFilters?.[char].splice(dblFilters?.[char].indexOf(value), 1); // удалаяем это значение
+      if (!dblFilters?.[char].length || value === undefined) // если больше ничего не осталось
+        delete dblFilters?.[char] // удаляем этот чар
     }
-  })
+    else { // если такого фильтра еще нет
+      if (!dblFilters?.[char]) dblFilters[char] = []; // если чара нет, добавляем и делаем его пустым массивом
+      dblFilters?.[char].push(value); // добавляем значение в этот массив
+    }
+  });
 
   return ( Object.keys( dblFilters ) || [] ).flatMap( key => {
-    return dblFilters?.[key]?.map( value => {
-      const dbValue = db.value?.[value];
-      const res = dbValue?.P
-          ? [ dbValue.I, dbValue.S ]
-          : [ key, value ]
-      return res.join('-')
+    if ( dblFilters[key] === true ) return db.value?.[key]?.S;
+    return dblFilters[key]?.map( value => {
+      const entity = db.value?.[value];
+      return entity.S || 'i-dont-know'
     })
-  }).join('/')
-  // if (!Object.keys( dblFilters ).length) return undefined
-  // return Object.values( dblFilters ).flat().map( value => `${db.value?.[value]?.I}-${db.value?.[value]?.S}` ).join('/');
+  }).join('/');
 });
 
 const brandUrl = computed( () => props.brand?.I ? `/${props.brand.S}/${props.brand.I}` : '');
-const filtersUrl = computed( () => filtersQuery1.value ? `/${filtersQuery1.value}` : '');
+const filtersUrl = computed( () => filtersQuery.value ? `/${filtersQuery.value}` : '');
 const min = computed( () => {
   const price = props.min === null ? null : props.min || priceMin.value || null;
   return price ? '/min-' + price : '';
@@ -63,8 +66,8 @@ const url = computed( () => {
     if ((/^https?:\/\//i).test(props.to)) return props.to;
     res = `/${country.value.ISO}${props.to}`;
   } else if (props.to) {
-    // res = '/'+country.value.ISO+brand.value+`/${props.to.I}-${props.to.S}`+min.value+max.value+(filtersQuery1.value ? `/${filtersQuery1.value}` : '' );
-    res = '/'+country.value.ISO+brandUrl.value+`/${props.to.I}-${props.to.S}/`+min.value+max.value+filtersUrl.value;
+    // res = '/'+country.value.ISO+brand.value+`/${props.to.I}-${props.to.S}`+min.value+max.value+(filtersQuery.value ? `/${filtersQuery.value}` : '' );
+    res = '/'+country.value.ISO+brandUrl.value+`/${props.to.I}-${props.to.S}` + min.value + max.value + filtersUrl.value;
   } else if (props.to === null) {
     res = `/${country.value.ISO}`;
   } else {

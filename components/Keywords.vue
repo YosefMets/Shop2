@@ -10,17 +10,21 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
 <template>
   <div v-if="keywords" class="keywords">
 
-    <NLink v-for="{char, value, type} in keywords"
+    <NLink v-for="{ char, value, type } in keywords"
            :to="activeGroup"
            :brand="activeBrand"
-           :filters="keyword"
-           :class="['kw', { curr: filters?.[char]?.includes(value), ava: db?.[value]?.Iso || db?.[value]?.A }]">
+           :filters="{ char, value, type }"
+           :class="['kw', {
+             curr: ( type === 'boolean' && filters?.[char] ) || filters?.[char]?.includes(value),
+             ava: db?.[value]?.Iso || db?.[value]?.A
+           }]"><!--curr: filters?.[char]?.includes(value), -->
 
 <!--      <i v-if="db?.[keyword.value]?.Iso || db?.[keyword.value]?.A" :class="['kw-a', { flag: keyword.char === 'co' }]">-->
 <!--        <NuxtImg :src="db?.[keyword.value]?.Iso ? `/${db?.[keyword.value]?.Iso}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''" />-->
 <!--      </i>-->
-{{type}}
-      {{ db?.[value]?.N || value }}
+
+      <template v-if="type === 'boolean'">{{ db?.[char].N }}</template>
+      <template v-else>{{ db?.[value]?.N || value }}</template>
 
     </NLink>
 
@@ -47,11 +51,12 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   align-items: center;
   /*border-radius: var(--br);*/
   border-radius: 10rem;
-  color: #000;
-  padding: .2rem 1rem;
+  color: var(--dark);
+  padding: .3rem 1rem;
   /*box-shadow: inset 0 0 0 .05rem #000000;*/
   overflow: hidden;
   font-size: 1.1rem;
+  font-weight: 500;
   transition: padding .2s, background-color .2s;
 }
 .keyword.ava {
@@ -62,8 +67,10 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   background-color: var(--active-bg);
 }
 .kw.curr {
-  background-color: #000;
-  color: #fff;
+  /*background-color: #000;*/
+  /*color: #fff;*/
+  background-color: #ff000011;
+  color: #f00;
 }
 
 .kw-a {

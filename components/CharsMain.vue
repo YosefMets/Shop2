@@ -13,7 +13,7 @@ const chars = computed( () => Object.keys(dir.value?.X || {})
                                     ));
 </script>
 
-<template>
+<template>{{chars}}
   <div v-if="item && Object.keys(chars).length" class="main-chars">
     <template v-for="(val, attr) in chars">
       <template v-if="val && val.length" class="char">

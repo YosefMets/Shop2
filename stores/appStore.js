@@ -34,10 +34,10 @@ export const useAppStore = defineStore('app', () => {
   const activeSort = ref('priceUp');
 
   const dbArray = computed( () => db.value ? Object.values( db.value ) : null );
-  const dbSlug = computed( () => db.value ? Object.values( db.value ).reduce( (res, en) => (en.S ? {...res, [en.S]: en.I} : res), {} ) : null );
-  const items = computed( () => dbArray.value?.filter( ({ I }) => (/^I/).test( I ) ) || null);
+  const dbSlug = computed( () => db.value ? Object.values( db.value ).reduce( (res, en) => (en.S ? {...res, [en.S]: en} : res), {} ) : null );
+  const items = computed( () => dbArray.value?.filter( ({ W }) => W === 'I' ) || null);
   const dirs = computed( () => dbArray.value?.filter( ({ W }) => W === 'D' ) || null);
-  const brands = computed( () => dbArray.value?.filter( ({ I }) => (/^03/).test( I ) ) || null);
+  const brands = computed( () => dbArray.value?.filter( ({ F }) => F === 'B' ) || null);
   const brandsSlugs = computed( () => brands.value?.reduce( (res, brand) => {res[brand.S] = brand; return res}, {}));
   const scopedItems = computed( () => {
     const brandItems = activeBrand.value?.items;
@@ -112,7 +112,7 @@ export const useAppStore = defineStore('app', () => {
   }
   const activateGroup = _activeGroup => {
     activeGroup.value = _activeGroup;
-    console.log(_activeGroup);
+    // console.log(_activeGroup);
     // if (process.client) window.scroll({ top: 0 });
   }
   const activateBrand = _activeBrand => {

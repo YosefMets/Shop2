@@ -40,9 +40,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       return navigateTo({path: `/${locale}/${countryIso}`, query})
     }
 
-    const t = Date.now()
+    let t;
+    t = Date.now()
     db.value = await $fetch(`/api/db/${locale}`);
-    console.log('Fetching DB:', Date.now() - t, 'ms');
+    console.log('Fetching DB own api:', Date.now() - t, 'ms');
     prepareDB();
   }
   const nuxtApp = useNuxtApp();
