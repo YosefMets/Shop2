@@ -12,7 +12,7 @@ watch( locale, async n => {
   const activeItemId = activeItem.value?.I
   const activeGroupId = activeGroup.value?.I
   const activeBrandId = activeBrand.value?.I
-  db.value = await $fetch(`/api/getDB/${n}`);
+  db.value = await $fetch(`/api/db/${n}`);
   prepareDB();
   // await new Promise( resolve => setTimeout( resolve, 10))
   if (activeItemId) appStore.activateItem( db.value?.[activeItemId] );

@@ -32,7 +32,7 @@ if (item.value?.S !== params.slug) {
 const brand = computed( () => db.value?.[item.value?.B] );
 const brandLogo = computed( () => brand.value?.l ? `/i/${brand.value.I}-l.${brand.value?.l}` : null )
 
-const kashruts = computed( () => [item.value?.k].flat().map( id => db.value?.[id] ))
+const kashruts = computed( () => item.value?.K && Array.isArray( item.value.K ) ? item.value.K.flat().map( id => db.value?.[id] ) : null)
 
 const thisItemInCard = computed( () => cartItems.value?.find( ({ item: itm }) => itm === item.value ) )
 
@@ -71,9 +71,9 @@ const unit = computed( () => {
       <div class="ai-info-bottom">
 
         <div class="ai-price-acts">
-          <ul v-if="kashruts.length" class="ai-kashruts">
+          <ul v-if="kashruts" class="ai-kashruts">
             <li v-for="kashrut in kashruts" class="ai-kashrut">
-              <NuxtImg :src="`/${kashrut.I}.${kashrut.LG || 'avif'}`" class="ai-kashrut-sign" />
+              <NuxtImg :src="`/${kashrut?.I}.${kashrut.LG || 'avif'}`" class="ai-kashrut-sign" />
             </li>
           </ul>
           <div class="ai-price-wr">

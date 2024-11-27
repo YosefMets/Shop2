@@ -18,7 +18,7 @@
 
 <style scoped>
 .store-layout {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: var(--mobar-size) 1fr;
   grid-template-rows: 1fr auto;

@@ -126,16 +126,27 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 }
 
 .cat-subtitle {
+  position: relative;
   padding: .3rem 0 1rem 1rem;
   margin: 0 0 .5rem;
   font-size: 1.8rem;
   line-height: 1.2em;
-  border-bottom: .1rem solid var(--active-bg);
+  /*border-bottom: .1rem solid var(--active-bg);*/
   background-color: #fff;
   display: grid;
   grid-template-columns: 1.6rem 1fr;
   align-items: center;
   column-gap: .5rem;
+}
+.cat-subtitle:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0;
+  height: .1rem;
+  border-bottom: .1rem solid var(--active-bg);
 }
 
 .cat-back- {
@@ -196,7 +207,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
 @media (max-width: 480px) {
   .cat-list { padding: .5rem 0; }
   .cat-link {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     padding: 1rem;
   }
   .cat-back {
@@ -204,7 +215,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   }
   .cat-subtitle {
     grid-template-columns: 2.2rem 1fr;
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
   .cat-back-ic- {
     width: 1.6rem;
