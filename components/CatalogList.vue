@@ -204,6 +204,7 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   }
   .cat-subtitle {
     grid-template-columns: 2.2rem 1fr;
+    font-size: 2.4rem;
   }
   .cat-back-ic- {
     width: 1.6rem;

@@ -36,6 +36,7 @@ watch( locale, async n => {
 
     <div class="lngs">
       <NMiniButton v-for="lcl in locales"
+                   class="lng-btn"
                    :current="locale === lcl.code">
 
         <NuxtLink :to="switchLocalePath( lcl.code )"
@@ -56,11 +57,15 @@ watch( locale, async n => {
   padding: 0;
   display: flex;
   flex-direction: column;
-  /*grid-gap: .5rem;*/
+  grid-gap: .5rem;
   /*border: .1rem solid var(--contr);*/
   /*border-radius: var(--border-radius);*/
   /*height: var(--search-height);*/
   /*overflow: hidden;*/
+}
+.lng-btn {
+  width: max-content;
+  display: inline-flex;
 }
 .lng-wr {
   margin: 0;

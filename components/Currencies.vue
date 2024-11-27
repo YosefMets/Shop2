@@ -24,6 +24,7 @@ const set = (iso) => {
 
     <div class="crncs">
       <NMiniButton v-for="currency in currencies"
+                   class="crnc-btn"
                    :current="user.currency === currency.ISO"
                    @click="set(currency.ISO)">
         <template #icon>{{ currencies?.[currency.ISO]?.S }}</template>
@@ -42,11 +43,15 @@ const set = (iso) => {
   display: flex;
   flex-direction: column;
   /*align-items: flex-start;*/
-  /*grid-gap: .5rem;*/
+  grid-gap: .5rem;
   /*border: .1rem solid var(--contr);*/
   /*border-radius: var(--border-radius);*/
   /*height: var(--search-height);*/
   /*overflow: hidden;*/
+}
+.crnc-btn {
+  width: max-content;
+  display: inline-flex;
 }
 .crnc-wr {
   margin: 0;

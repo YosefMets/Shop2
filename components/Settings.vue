@@ -22,18 +22,24 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   </NuxtLink>
 
   <Modal :show="route.query?.['settings'] !== undefined"
-         :width="'var(--mobar-size)'"
+         :width="'30rem'"
          :side="'left'"
          @close="navigateTo({ query: {...route.query, ['settings']: undefined} })">
 
-    <h2 class="ccs-ttl">{{ $t('language') }}:</h2>
-    <Langs />
+    <div class="settings-lang-curr">
+      <div>
+        <h2 class="ccs-ttl">{{ $t('language') }}:</h2>
+        <Langs />
+      </div>
+
+      <div>
+        <h2 class="ccs-ttl">{{ $t('currency') }}:</h2>
+        <Currencies />
+      </div>
+    </div>
 
     <h2 class="ccs-ttl">{{ $t('country') }}:</h2>
     <Countries />
-
-    <h2 class="ccs-ttl">{{ $t('currency') }}:</h2>
-    <Currencies />
 
   </Modal>
 </template>
@@ -97,10 +103,17 @@ const { currencies, country, currency } = storeToRefs( useAppStore() );
   font-weight: 500;
   font-size: 1.2rem;
   line-height: 1.2rem;
+  border-bottom: .1rem solid var(--active-bg);
+  padding-bottom: 1rem;
 }
 .ccs-ttl:first-of-type { margin-top: 0; }
 
-
+.settings-lang-curr {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3rem;
+  margin-bottom: 3rem;
+}
 
 @media (max-width: 480px) {
   .ccs-call-wr {

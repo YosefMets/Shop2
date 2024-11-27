@@ -15,16 +15,16 @@ const icon = ref(!!slots.icon);
 
 <style scoped>
 .mini-btn {
-  /*border-radius: 10rem;*/
+  border-radius: 10rem;
   /*border-radius: var(--br);*/
   /*background-color: #fff;*/
-  padding: .8rem 1rem;
+  padding: .3rem 1rem;
   display: flex;
   align-items: center;
   gap: .5rem;
   cursor: pointer;
   transition: background-color .2s;
-  line-height: 1em;
+  line-height: 1.5em;
 }
 .mini-btn:hover { background-color: #fff; }
 .mini-btn-ic {
@@ -38,7 +38,7 @@ const icon = ref(!!slots.icon);
   aspect-ratio: 1 / 1;
   background-color: #fff;
   color: #000;
-  margin: -.3rem 0 -.3rem -.6rem;
+  margin: -.3rem 0 -.3rem -.8rem;
 }
 
 .mini-btn.curr {

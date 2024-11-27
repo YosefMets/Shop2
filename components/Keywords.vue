@@ -5,35 +5,46 @@ const appStore = useAppStore();
 const { db, activeGroup, activeBrand, filters } = storeToRefs( appStore );
 
 const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup.value?.keywords );
+// keywords.value.sort( ( a, b ) => {
+//   const aa = ( a.type === 'boolean' && filters.value?.[a.char] ) || filters.value?.[a.char]?.includes(a.value);
+//   const bb = ( b.type === 'boolean' && filters.value?.[b.char] ) || filters.value?.[b.char]?.includes(b.value);
+//   if ( aa && !bb ) return -1
+//   if ( !aa && bb ) return 1
+// });
 </script>
 
 <template>
-  <div v-if="keywords" class="keywords">
+  <div v-if="keywords?.length" class="keywords-wr scroll">
+    <div class="keywords">
 
-    <NLink v-for="{ char, value, type } in keywords"
-           :to="activeGroup"
-           :brand="activeBrand"
-           :filters="{ char, value, type }"
-           :class="['kw', {
-             curr: ( type === 'boolean' && filters?.[char] ) || filters?.[char]?.includes(value),
-             ava: db?.[value]?.Iso || db?.[value]?.A
-           }]"><!--curr: filters?.[char]?.includes(value), -->
+      <NLink v-for="{ char, value, type } in keywords"
+             :to="activeGroup"
+             :brand="activeBrand"
+             :filters="{ char, value, type }"
+             :class="['kw', {
+               curr: ( type === 'boolean' && filters?.[char] ) || filters?.[char]?.includes(value),
+               ava: db?.[value]?.Iso || db?.[value]?.A
+             }]"><!--curr: filters?.[char]?.includes(value), -->
 
-<!--      <i v-if="db?.[keyword.value]?.Iso || db?.[keyword.value]?.A" :class="['kw-a', { flag: keyword.char === 'co' }]">-->
-<!--        <NuxtImg :src="db?.[keyword.value]?.Iso ? `/${db?.[keyword.value]?.Iso}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''" />-->
-<!--      </i>-->
+  <!--      <i v-if="db?.[keyword.value]?.Iso || db?.[keyword.value]?.A" :class="['kw-a', { flag: keyword.char === 'co' }]">-->
+  <!--        <NuxtImg :src="db?.[keyword.value]?.Iso ? `/${db?.[keyword.value]?.Iso}.svg` :  db?.[keyword.value]?.A ? `/i/${db?.[keyword.value]?.I}.${db?.[keyword.value]?.A}` : ''" />-->
+  <!--      </i>-->
 
-      <template v-if="type === 'boolean'">{{ db?.[char].N }}</template>
-      <template v-else>{{ db?.[value]?.N || value }}</template>
+        <template v-if="type === 'boolean'">{{ db?.[char].N }}</template>
+        <template v-else>{{ db?.[value]?.N || value }}</template>
 
-    </NLink>
+      </NLink>
 
-    <PriceFilter />
+      <PriceFilter />
 
+    </div>
   </div>
 </template>
 
 <style scoped>
+.keywords-wr {
+  overflow: auto;
+}
 .keywords {
   margin: 0;
   padding: 0;
@@ -41,6 +52,7 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   display: flex;
   align-items: stretch;
   grid-gap: .2rem;
+  width: max-content;
   /*height: 2.4rem;*/
 }
 .kw {
@@ -55,7 +67,7 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   padding: .3rem 1rem;
   /*box-shadow: inset 0 0 0 .05rem #000000;*/
   overflow: hidden;
-  font-size: 1.1rem;
+  /*font-size: 1.1rem;*/
   font-weight: 500;
   transition: padding .2s, background-color .2s;
 }
@@ -67,10 +79,10 @@ const keywords = computed( () => activeBrand.value ? getKeywords() : activeGroup
   background-color: var(--active-bg);
 }
 .kw.curr {
-  /*background-color: #000;*/
-  /*color: #fff;*/
-  background-color: #ff000011;
-  color: #f00;
+  background-color: var(--dark);
+  color: #fff;
+  /*background-color: #ff000011;*/
+  /*color: #f00;*/
 }
 
 .kw-a {

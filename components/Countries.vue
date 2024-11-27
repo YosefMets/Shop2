@@ -35,6 +35,7 @@ const set = (iso) => {
     <div v-if="hints.length" class="main-cntrs">
 
       <NMiniButton v-for="cntry in hints"
+                   class="main-cntr-btn"
                    :current="cntry.iso === country?.ISO">
 
         <template #icon>
@@ -60,20 +61,31 @@ const set = (iso) => {
   margin: 0;
   padding: 0;
   /*columns: 2;*/
-  /*column-gap: 1rem;*/
+  column-gap: 3rem;
   /*gap: .5rem;*/
-  display: flex;
-  flex-direction: column;
+  /*display: flex;*/
+  /*flex-direction: column;*/
   /*align-items: flex-start;*/
+  /*columns: 2;*/
+  /*width: fit-content;*/
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: .5rem;
+
+}
+.main-cntr-btn {
+  width: max-content;
+  /*margin-bottom: .5rem;*/
+  display: inline-flex;
 }
 .main-cntr {
   margin: 0;
   /*padding: .6rem;*/
-  display: flex;
+  display: inline-flex;
   align-items: center;
   grid-gap: .4rem;
   /*font-size: 1.2rem;*/
-  line-height: 1em;
+  /*line-height: 1em;*/
   border-radius: var(--br);
   cursor: pointer;
   text-decoration: none;
