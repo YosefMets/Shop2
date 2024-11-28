@@ -16,6 +16,8 @@ const header = ref(!!slots.header);
 const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
+console.log(slots);
+
 const sideClass = computed( () => props.side ? `modal-side-${props.side}` : null );
 const selfWidth = ref( props.width || '30%' );
 
@@ -37,9 +39,10 @@ useHead({
         <div class="modal-container-wr" :style="`--modal-width: ${width || '100%'}`">
           <div class="modal-container scroll">
 
-            <h2 :class="['mdl-ttl', { 'mdl-ttl-x': x, empty: !header && !title }]"><slot name="header" /></h2>
-
-            <div><slot/></div>
+            <div>
+              <h2 v-if="header" :class="['mdl-ttl', { 'mdl-ttl-x': x }]"><slot name="header" /></h2>
+              <slot/>
+            </div>
 
             <div v-if="footer" class="mdx-footer"><slot name="footer" /></div>
 
@@ -100,7 +103,9 @@ useHead({
   padding: 3rem;
   overflow: auto;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr;
+  grid-auto-rows: auto;
+  grid-auto-flow: row;
 }
 /*
 .mc-w-s { width: 30rem; }
@@ -223,7 +228,7 @@ useHead({
   }
   .modal-container-wr {
     width: 100%;
-    height: unset;
+    height: v-bind(height);
     max-height: calc( 100dvh - 2rem );
     /*border-radius: 0;*/
     /*border-radius: var(--br) var(--br) 0 0;*/
