@@ -16,7 +16,7 @@ const header = ref(!!slots.header);
 const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
-console.log(slots);
+const heightComp = computed( () => props.height );
 
 const sideClass = computed( () => props.side ? `modal-side-${props.side}` : null );
 const selfWidth = ref( props.width || '30%' );
