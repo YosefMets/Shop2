@@ -1,6 +1,7 @@
 <script setup>
 import NLink from "~/components/controls/NLink.vue";
 import Terms from "~/components/Terms.vue";
+import NButton from "~/components/controls/NButton.vue";
 
 const showArticle = ref(false);
 
@@ -28,13 +29,17 @@ const showLaw = ( article ) => {
 
   <Modal :show="showArticle"
          :width="'40rem'"
-         :height="'100%'"
+         :mobile-full-height="true"
          @close="showArticle = false">
 
     <template #header>{{ articleTitle }}</template>
 
     <Component v-if="typeof articleBody === 'object'" :is="articleBody"></Component>
     <template v-else>{{ articleBody }}</template>
+
+    <template #footer>
+      <NButton >Шеф, всё понял</NButton>
+    </template>
 
   </Modal>
 </template>

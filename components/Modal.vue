@@ -8,6 +8,7 @@ const props = defineProps({
   closeout: { type: Boolean, default: true },
   width: String,
   height: String,
+  mobileFullHeight: Boolean,
   side: String,
 });
 
@@ -17,6 +18,7 @@ const title = ref(!!slots.title);
 const footer = ref(!!slots.footer);
 
 const heightComp = computed( () => props.height );
+const mobileFullHeightComp = computed( () => props.mobileFullHeight ? '100dvh' : 'unset' );
 
 const sideClass = computed( () => props.side ? `modal-side-${props.side}` : null );
 const selfWidth = ref( props.width || '30%' );
@@ -99,7 +101,8 @@ useHead({
 .modal-container {
   width: 100%;
   height: 100%;
-  background-color: var(--bg);
+  /*background-color: var(--bg);*/
+  background-color: #fff;
   padding: 3rem;
   overflow: auto;
   display: grid;
@@ -168,7 +171,7 @@ useHead({
   position: sticky;
   bottom: 0;
   z-index: 50;
-  padding-top: 3rem;
+  padding-top: 2rem;
   background-color: #fff;
 }
 .mdx-footer:after {
@@ -220,16 +223,13 @@ useHead({
 @media (max-width: 480px) {
   .fog {
     width: unset;
-    height: 100dvh; /* Fallback for browsers that do not support Custom Properties */
-    /*height: calc(var(--vh, 1vh) * 100);*/
-    /*height: 100dvh;*/
     right: 0;
     top: unset;
   }
   .modal-container-wr {
     width: 100%;
-    height: v-bind(height);
-    max-height: calc( 100dvh - 2rem );
+    height: v-bind(mobileFullHeightComp);
+    max-height: 100dvh;
     /*border-radius: 0;*/
     /*border-radius: var(--br) var(--br) 0 0;*/
     position: absolute;
@@ -240,7 +240,10 @@ useHead({
   .modal-container {
     padding: 1.5rem;
   }
-  .mdx-footer { padding-top: 1.5rem; }
+  .mdx-footer {
+    padding: 1.5rem 0;
+    /*margin-bottom: -1.5rem;*/
+  }
   .mdx-footer:after { height: 1.5rem; }
 
   .mc-w-s,
@@ -250,11 +253,14 @@ useHead({
 
   .mc-h-full { border-radius: 0; }
 
+  .mdl-ttl-x {
+    margin-right: 3rem;
+  }
   .mdl-x-wr {
     /*position: fixed;*/
     /*right: 1.5rem;*/
-    top: 0;
-    translate: 0 -50%;
+    /*top: 0;*/
+    /*translate: 0 -50%;*/
     /*cursor: pointer;*/
     /*z-index: 1;*/
     width: 3rem;
