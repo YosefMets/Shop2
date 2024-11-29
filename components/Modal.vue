@@ -38,7 +38,11 @@ useHead({
 
       <div :class="['fog', sideClass]" v-if="show">
 
-        <div class="modal-container-wr" :style="`--modal-width: ${width || '100%'}`">
+        <div class="modal-container-wr" :style="`
+          --modal-width: ${ width || '100%' };
+          --modal-height: ${ mobileFullHeight ? '100dvh' : 'unset' }
+        `">
+
           <div class="modal-container scroll">
 
             <div>
@@ -228,7 +232,7 @@ useHead({
   }
   .modal-container-wr {
     width: 100%;
-    height: v-bind(mobileFullHeightComp);
+    height: var(--modal-height);
     max-height: 100dvh;
     /*border-radius: 0;*/
     /*border-radius: var(--br) var(--br) 0 0;*/
