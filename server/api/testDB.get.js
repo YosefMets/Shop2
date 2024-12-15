@@ -1,10 +1,9 @@
-export default defineEventHandler( (event) => {
+export default defineEventHandler( async (event) => {
 
-  const qwe = hubDatabase()
-  console.log( qwe );
+  const db = hubDatabase()
+  console.log( db );
 
-  const req = qwe.prepare('SELECT * FROM Customers');
-  const res = req.all();
+  const req = await db.prepare('SELECT * FROM Customers').all()
 
   return req;
 
