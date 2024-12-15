@@ -90,7 +90,8 @@ const isInChain = computed( () => {
   font-size: 1.1rem;
   cursor: pointer;
   transition: all .2s;
-  background-color: #fff;
+  /*background-color: #fff;*/
+  background-color: var(--bg);
 }
 .cat-link:after {
   /*content: '';*/

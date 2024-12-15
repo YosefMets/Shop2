@@ -1,7 +1,12 @@
 <script setup>
 import NLink from "~/components/controls/NLink.vue";
-import Terms from "~/components/Terms.vue";
 import NButton from "~/components/controls/NButton.vue";
+import Delivery from "~/components/Delivery.vue";
+import Payments from "~/components/Payments.vue";
+import Terms from "~/components/Terms.vue";
+import Privacy from "~/components/Privacy.vue";
+import Refund from "~/components/Refund.vue";
+import Imprint from "~/components/Imprint.vue";
 
 const showArticle = ref(false);
 
@@ -18,12 +23,30 @@ const showLaw = ( article ) => {
 
 <template>
   <footer class="app-footer">
-    <div class="copy-group">
-      <span>&copy; {{ $t('allRights') }} The company name</span>
+    <div class="af-service">
+      <NLink :to="'/delivery'" class="copy-group-link">
+        <span @click.prevent="showLaw({ title: $t('delivery'), body: Delivery })">{{ $t('delivery') }}</span>
+      </NLink>
+      <NLink :to="'/payments'" class="copy-group-link">
+        <span @click.prevent="showLaw({ title: $t('payments'), body: Payments })">{{ $t('payments') }}</span>
+      </NLink>
+    </div>
+    <div class="af-law">
       <NLink :to="'/terms'" class="copy-group-link">
         <span @click.prevent="showLaw({ title: $t('terms'), body: Terms })">{{ $t('terms') }}</span>
       </NLink>
-      <NLink :to="'/privacy'" class="copy-group-link">{{ $t('privacy') }}</NLink>
+      <NLink :to="'/privacy'" class="copy-group-link">
+        <span @click.prevent="showLaw({ title: $t('privacy'), body: Privacy })">{{ $t('privacy') }}</span>
+      </NLink>
+      <NLink :to="'/refund'" class="copy-group-link">
+        <span @click.prevent="showLaw({ title: $t('refund'), body: Refund })">{{ $t('refund') }}</span>
+      </NLink>
+      <NLink :to="'/imprint'" class="copy-group-link">
+        <span @click.prevent="showLaw({ title: $t('imprint'), body: Imprint })">{{ $t('imprint') }}</span>
+      </NLink>
+    </div>
+    <div class="af-copy">
+      <span>&copy; {{ $t('allRights') }} The company name</span>
     </div>
   </footer>
 
@@ -46,14 +69,20 @@ const showLaw = ( article ) => {
 
 <style scoped>
 .app-footer {
-  padding: 1.8rem 2rem;
-}
-.copy-group {
+  padding: 2rem 2rem 1.4rem;
   display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.af-service,
+.af-law,
+.af-copy {
+  display: flex;
+  justify-content: center;
   gap: 1rem;
   color: var(--dark);
 }
-.copy-group > .copy-group-link {
+.app-footer .copy-group-link {
   color: #000;
 }
 

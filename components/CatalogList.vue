@@ -69,7 +69,8 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #fff;
+  /*background-color: #fff;*/
+  background-color: var(--bg);
   /*background-color: var(--dark);*/
   z-index: 910;
 
@@ -132,7 +133,8 @@ const dirs_ = computed(() => props.dir ? props.dir.children?.map( id => db.value
   font-size: 1.8rem;
   line-height: 1.2em;
   /*border-bottom: .1rem solid var(--active-bg);*/
-  background-color: #fff;
+  /*background-color: #fff;*/
+  background-color: var(--bg);
   display: grid;
   grid-template-columns: 1.6rem 1fr;
   align-items: center;

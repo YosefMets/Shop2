@@ -39,11 +39,12 @@ const { activeGroup } = storeToRefs( useAppStore() );
       "srch srch"
       "cat  cat"
       "sett sett";
-  background-color: #fff;
+  /*background-color: #fff;*/
+  background-color: var(--bg);
   color: #000;
   padding: 1rem;
   grid-gap: .5rem;
-  box-shadow: 0 0 0 .05rem var(--active-bg);
+  /*box-shadow: 0 0 0 .05rem var(--active-bg);*/
 }
 .mb-logo {
   grid-area: logo;
