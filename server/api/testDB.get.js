@@ -3,8 +3,8 @@ export default defineEventHandler( async (event) => {
   const db = hubDatabase()
   console.log( db );
 
-  const req = await db.prepare('SELECT * FROM Customers').all()
+  const { results: customers } = await db.prepare('SELECT * FROM Customers').all()
 
-  return req;
+  return customers;
 
 })
