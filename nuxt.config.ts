@@ -5,9 +5,7 @@ import { image } from './configs/image'
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  hub: {
-    database: true
-  },
+
   app: {
     // pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' }
@@ -24,5 +22,9 @@ export default defineNuxtConfig({
     ['@pinia/nuxt', { autoImports: ['defineStore', 'storeToRefs'] }],
     ['@nuxtjs/i18n', i18n],
     ['@nuxt/image', image],
+    '@nuxthub/core',
   ],
+  hub: {
+    database: true
+  }
 })

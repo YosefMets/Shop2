@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.8.1",
+    "@nuxthub/core": "^0.8.8",
     "@nuxtjs/i18n": "^8.5.5",
     "@pinia/nuxt": "^0.5.5",
     "aws-sdk": "^2.1692.0",
@@ -19,5 +20,8 @@
     "stripe": "^17.4.0",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "wrangler": "^3.95.0"
   }
 }
