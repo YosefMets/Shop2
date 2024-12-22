@@ -14,9 +14,9 @@ function generateSessionToken(length = 32) {
 }
 
 function getCookieExpiryDate(days = 1) {
-  const date = new Date();
-  date.setDate(date.getDate() + days);
-  return date; // Возвращаем дату в формате UTC для cookie
+  // const date = new Date();
+  // date.setDate(date.getDate() + days);
+  return Date.now() + (86400000 * days);
 }
 
 // Установка cookie с этой датой:
@@ -33,15 +33,15 @@ export default defineEventHandler( async (event) => {
     const token = generateSessionToken(64);
 
     const expDate = getCookieExpiryDate();
-    console.log('expDate', expDate.toUTCString())
+    // console.log('expDate', expDate.toUTCString())
 
     const setSessionPrepare = db.prepare(
       `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (${token}, ${expDate})`
     );
-    // const res = await setSessionPrepare.run();
+    const res = await setSessionPrepare.run();
 
-    setCookie( event,  'session',  token, { expires: expDate, secure: true, httpOnly: true });
-    // console.log('DB set cookie: ', res )
+    setCookie( event,  'session',  token, { expires: new Date(expDate), secure: true, httpOnly: true });
+    console.log('DB set cookie: ', res )
   }
   console.log('New request: ', session, cookies )
 })
