@@ -36,10 +36,9 @@ export default defineEventHandler( async (event) => {
     console.log('expDate', expDate.toUTCString())
 
     const setSessionPrepare = db.prepare(
-      `INSERT INTO Sessions ("SessionId", "SessionExp")` +
-      `VALUES (${token}, ${expDate.toString()})`
+      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (${token}, ${expDate})`
     );
-    const res = await setSessionPrepare.run();
+    // const res = await setSessionPrepare.run();
 
     setCookie( event,  'session',  token, { expires: expDate, secure: true, httpOnly: true });
     console.log('DB set cookie: ', res )
