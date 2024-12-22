@@ -41,7 +41,7 @@ export default defineEventHandler( async (event) => {
     // const res = await setSessionPrepare.run();
 
     setCookie( event,  'session',  token, { expires: expDate, secure: true, httpOnly: true });
-    console.log('DB set cookie: ', res )
+    // console.log('DB set cookie: ', res )
   }
   console.log('New request: ', session, cookies )
 })
