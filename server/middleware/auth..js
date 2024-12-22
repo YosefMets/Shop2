@@ -40,6 +40,7 @@ export default defineEventHandler( async (event) => {
     );
     const res = await setSessionPrepare.run();
 
+
     setCookie( event,  'session',  token, { expires: new Date(expDate), secure: true, httpOnly: true });
     console.log('DB set cookie: ', res )
   }
