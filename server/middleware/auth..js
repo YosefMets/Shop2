@@ -36,7 +36,7 @@ export default defineEventHandler( async (event) => {
     // console.log('expDate', expDate.toUTCString())
 
     const setSessionPrepare = db.prepare(
-      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (${token}, ${expDate})`
+      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${token}', ${expDate})`
     );
     const res = await setSessionPrepare.run();
 
