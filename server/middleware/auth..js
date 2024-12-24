@@ -27,22 +27,23 @@ function getCookieExpiryDate(days = 1) {
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const cookies = parseCookies(event)
-  const session = cookies?.session;
+  let sessionId = cookies?.sessionId;
 
-  if ( !session ) {
-    const token = generateSessionToken(64);
-
+  if ( !sessionId ) {
+    sessionId = generateSessionToken(64);
     const expDate = getCookieExpiryDate();
-    // console.log('expDate', expDate.toUTCString())
 
     const setSessionPrepare = db.prepare(
-      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${token}', ${expDate})`
+      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${sessionId}', ${expDate})`
     );
     const res = await setSessionPrepare.run();
-
-
-    setCookie( event,  'session',  token, { expires: new Date(expDate), secure: true, httpOnly: true });
-    console.log('DB set cookie: ', res )
+    setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
+  } else {
+    const qwe = db.prepare(
+      `SELECT * FROM Sessions WHERE SessionId = ?1`
+    );
+    const asd = qwe.bind(sessionId);
+    const res = await asd.first();
+    console.log(res);
   }
-  console.log('New request: ', session, cookies )
 })
