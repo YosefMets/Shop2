@@ -26,25 +26,35 @@ function getCookieExpiryDate(days = 1) {
 
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
+  const session = {};
   const cookies = parseCookies(event)
   let sessionId = cookies?.sessionId;
+  let isExpired = false;
 
-  if ( !sessionId ) {
+  if ( sessionId ) {
+    const qwe = db.prepare(
+      `SELECT * FROM Sessions WHERE SessionId = ?1`
+    );
+    const asd = qwe.bind(sessionId);
+    const res = await asd.first();
+    Object.assign( session, res );
+    isExpired = Date.now() > res.SessionExp;
+  }
+
+  if ( !sessionId || isExpired ) {
     sessionId = generateSessionToken(64);
+    session.SessionId = sessionId;
     const expDate = getCookieExpiryDate();
+    session.SessionExp = expDate;
+    session.CustomerId = null;
 
     const setSessionPrepare = db.prepare(
       `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${sessionId}', ${expDate})`
     );
     const res = await setSessionPrepare.run();
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
-  } else {
-    const qwe = db.prepare(
-      `SELECT * FROM Sessions WHERE SessionId = ?1`
-    );
-    const asd = qwe.bind(sessionId);
-    const res = await asd.first();
-    // if (res.SessionExp === sessionId.expires)
-    setCookie( event,  'serverLogs',  JSON.stringify( { server: res.SessionExp, now: Date.now(), res: Date.now() < res.SessionExp }));
   }
+
+  setCookie( event,  'serverLogs',  JSON.stringify( session ));
+
 })
