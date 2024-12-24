@@ -3,6 +3,17 @@ import NLink from "~/components/controls/NLink.vue";
 import Logo from "~/components/imgs/logo.vue";
 
 const { activeGroup } = storeToRefs( useAppStore() );
+
+const testAuth = async () => {
+  const auth = await $fetch('/api/auth', {
+    method: 'post',
+    body: {
+      email: 'qwe@qwe.com',
+      pass: '61724732164721'
+    }
+  });
+  console.log( auth );
+}
 </script>
 
 <template>
@@ -14,7 +25,7 @@ const { activeGroup } = storeToRefs( useAppStore() );
       <CartButton />
     </div>
     <div class="mb-user">
-      <div class="user-component">Hi Yosef! Grossemorengasse 45/2, 1020, Vienna, Austria </div>
+      <div class="user-component" @click="testAuth">Hi Yosef! Grossemorengasse 45/2, 1020, Vienna, Austria </div>
     </div>
     <div class="mb-search">
 <!--      <Search />-->

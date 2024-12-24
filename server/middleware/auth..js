@@ -55,6 +55,6 @@ export default defineEventHandler( async (event) => {
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
 
-  setCookie( event,  'serverLogs',  JSON.stringify( session ));
+  event.session = session;
 
 })
