@@ -9,7 +9,8 @@ const testAuth = async () => {
     method: 'post',
     body: {
       email: 'qwe@qwe.com',
-      pass: '61724732164721'
+      pass: '61724732164721',
+      firstName: 'Arye'
     }
   });
   console.log( auth );
