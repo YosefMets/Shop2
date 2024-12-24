@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { useLogger } from '@nuxt/kit'
 
 function generateSessionToken(length = 32) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -45,8 +44,6 @@ export default defineEventHandler( async (event) => {
     );
     const asd = qwe.bind(sessionId);
     const res = await asd.first();
-    const logger = useLogger();
-    logger.info(res);
     console.log(res);
   }
 })
