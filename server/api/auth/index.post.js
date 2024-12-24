@@ -29,7 +29,7 @@ export default defineEventHandler( async (event) => {
   }
   await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
 
-  setCookie( event,  'serverLogs',  JSON.stringify( { customer, firstName } ));
+  setCookie( event,  'serverLogs',  JSON.stringify( Date.now() ));
 
   return { customer, firstName };
 })
