@@ -44,6 +44,7 @@ export default defineEventHandler( async (event) => {
     );
     const asd = qwe.bind(sessionId);
     const res = await asd.first();
-    setCookie( event,  'serverLogs',  JSON.stringify( res ));
+    // if (res.SessionExp === sessionId.expires)
+    setCookie( event,  'serverLogs',  JSON.stringify( sessionId ));
   }
 })
