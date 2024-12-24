@@ -37,8 +37,10 @@ export default defineEventHandler( async (event) => {
     );
     const asd = qwe.bind(sessionId);
     const res = await asd.first();
-    Object.assign( session, res );
-    isExpired = Date.now() > res.SessionExp;
+    if (res) {
+      Object.assign(session, res);
+      isExpired = Date.now() > res.SessionExp;
+    }
   }
 
   if ( !sessionId || isExpired ) {
