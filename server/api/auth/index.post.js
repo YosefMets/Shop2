@@ -27,7 +27,7 @@ export default defineEventHandler( async (event) => {
 
     const res = await putCustomerToSessionPrepare.run();
   }
-  db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
+  await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
 
   setCookie( event,  'serverLogs',  JSON.stringify( { customer, firstName } ));
 
