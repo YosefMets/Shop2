@@ -31,9 +31,10 @@ const getOrder = async ( customerId, orderId ) => {
     expOrder = await order.bind( customerId, orderId ).first();
   }
   if ( !orderId || !expOrder ) {
-    expOrder = await db.prepare(`
+    const newOrder = await db.prepare(`
         INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, null, null);
     `).bind( Date.now() ).run();
+    expOrder = newOrder?.last_row_id;
   }
 
   return expOrder;
@@ -73,7 +74,7 @@ export default defineEventHandler( async (event) => {
     );
     const res = await setSessionPrepare.run();
     const orderId  = await getOrder();
-    setCookie( event,  'MidWereLogs',  JSON.stringify( orderId ), { expires: new Date(expDate), secure: true, httpOnly: true });
+    setCookie( event,  'MidWereLogs', JSON.stringify( orderId ), { expires: new Date(expDate), secure: true, httpOnly: true });
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
 
