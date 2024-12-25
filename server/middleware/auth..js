@@ -42,7 +42,6 @@ const getOrder = async ( customerId, orderId ) => {
 
 
 export default defineEventHandler( async (event) => {
-
   const db = hubDatabase();
   const session = {};
   const cookies = parseCookies(event)
@@ -76,7 +75,7 @@ export default defineEventHandler( async (event) => {
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
   const orderId  = await getOrder();
-  setCookie( event,  'MidWereLogs', JSON.stringify( orderId ) );
+  setCookie( event,  'MidWereLogs', JSON.stringify( event ) );
 
   event.session = session;
 
