@@ -1,7 +1,5 @@
 import crypto from 'crypto';
 
-const db = hubDatabase();
-
 function generateSessionToken(length = 32) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -20,19 +18,22 @@ function getCookieExpiryDate(days = 1) {
 }
 
 const getOrder = async ( customerId, orderId ) => {
-  let expOrder = {};
-  if (customerId) {
-    const order = db.prepare(
-      `SELECT Orders.Id FROM Orders 
-        INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
-        INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
-        WHERE Customers.CustomerId = ?1 AND Orders.Id != ?2`
-    );
-    expOrder = await order.bind(customerId, order).first();
+
+  const db = hubDatabase();
+  let expOrder = null;
+  if ( customerId ) {
+    const order = db.prepare(`
+      SELECT Orders.Id FROM Orders 
+      INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
+      INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
+      WHERE Customers.CustomerId = ?1 AND Orders.Id != ?2
+    `);
+    expOrder = await order.bind( customerId, orderId ).first();
   }
-  if ( !orderId || expOrder === {} ){
-    expOrder = await db.prepare(`INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) Values (?1, ?1, null, null);`)
-      .bind(Date.now()).run();
+  if ( !orderId || !expOrder ) {
+    expOrder = await db.prepare(`
+        INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, null, null);
+    `).bind( Date.now() ).run();
   }
 
   return expOrder;
@@ -40,6 +41,8 @@ const getOrder = async ( customerId, orderId ) => {
 
 
 export default defineEventHandler( async (event) => {
+
+  const db = hubDatabase();
   const session = {};
   const cookies = parseCookies(event)
   let sessionId = cookies?.sessionId;
