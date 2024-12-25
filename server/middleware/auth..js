@@ -75,7 +75,7 @@ export default defineEventHandler( async (event) => {
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
   const orderId  = await getOrder();
-  setCookie( event,  'MidWereLogs', JSON.stringify({domen: event.domen, origin: event.origin} ) );
+  setCookie( event,  'MidWereLogs', JSON.stringify({ a: event.domain, b: event.origin } ) );
 
   event.session = session;
 
