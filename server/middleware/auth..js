@@ -29,7 +29,7 @@ export default defineEventHandler( async (event) => {
   const session = {};
   const cookies = parseCookies(event)
   let sessionId = cookies?.sessionId;
-  let isExpired = false;
+  let isExpired = true;
 
   if ( sessionId ) {
     const qwe = db.prepare(
@@ -43,6 +43,7 @@ export default defineEventHandler( async (event) => {
     }
   }
 
+  // create new session
   if ( !sessionId || isExpired ) {
     sessionId = generateSessionToken(64);
     session.SessionId = sessionId;
