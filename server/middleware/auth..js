@@ -32,7 +32,7 @@ const getOrder = async ( customerId, orderId ) => {
   }
   if ( !orderId || !expOrder ) {
     expOrder = await db.prepare(`
-        INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, null, null);
+        INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, null, null);
     `).bind( Date.now() ).run();
   }
 
