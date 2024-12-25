@@ -23,19 +23,16 @@ const getOrder = async ( customerId, orderId ) => {
   let expOrder = {};
   if (customerId) {
     const order = db.prepare(
-      `SELECT Orders.Id 
-      FROM Orders 
-      INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id
-      INNER JOIN Customer ON Shippings.CustomerId = Customer.Id
-      WHERE Customer.CustomerId = ?1 AND Orders.Id != ?2`
+      `SELECT Orders.Id FROM Orders 
+        INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
+        INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
+        WHERE Customers.CustomerId = ?1 AND Orders.Id != ?2`
     );
-    expOrder = order.bind(customerId, order).first();
+    expOrder = await order.bind(customerId, order).first();
   }
   if ( !orderId || expOrder === {} ){
-    expOrder = await db.prepare(`
-        INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) 
-        Values (?1, ?1, null, null);
-    `).bind(Date.now()).run();
+    expOrder = await db.prepare(`INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) Values (?1, ?1, null, null);`)
+      .bind(Date.now()).run();
   }
 
   return expOrder;
