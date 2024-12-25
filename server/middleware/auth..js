@@ -34,7 +34,7 @@ const getOrder = async ( customerId, orderId ) => {
     const newOrder = await db.prepare(`
         INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, null, null);
     `).bind( Date.now() ).run();
-    expOrder = newOrder?.last_row_id;
+    expOrder = newOrder;
   }
 
   return expOrder;
