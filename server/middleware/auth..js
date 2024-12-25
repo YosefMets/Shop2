@@ -1,5 +1,7 @@
 import crypto from 'crypto';
 
+const db = hubDatabase();
+
 function generateSessionToken(length = 32) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -14,18 +16,33 @@ function generateSessionToken(length = 32) {
 }
 
 function getCookieExpiryDate(days = 1) {
-  // const date = new Date();
-  // date.setDate(date.getDate() + days);
   return Date.now() + (86400000 * days);
 }
 
-// Установка cookie с этой датой:
-// document.cookie = `myCookie=value; expires=${expiryDate}; path=/`;
+const getOrder = async ( customerId, orderId ) => {
+  let expOrder = {};
+  if (customerId) {
+    const order = db.prepare(
+      `SELECT Orders.Id 
+      FROM Orders 
+      INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id
+      INNER JOIN Customer ON Shippings.CustomerId = Customer.Id
+      WHERE Customer.CustomerId = ?1 AND Orders.Id != ?2`
+    );
+    expOrder = order.bind(customerId, order).first();
+  }
+  if ( !orderId || expOrder === {} ){
+    expOrder = await db.prepare(`
+        INSERT INTO Orders (CreateAt, ModifiedAt, ShippingId, PaymentStatus) 
+        Values (?1, ?1, null, null);
+    `).bind(Date.now()).run();
+  }
 
+  return expOrder;
+}
 
 
 export default defineEventHandler( async (event) => {
-  const db = hubDatabase();
   const session = {};
   const cookies = parseCookies(event)
   let sessionId = cookies?.sessionId;
@@ -55,6 +72,8 @@ export default defineEventHandler( async (event) => {
       `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${sessionId}', ${expDate})`
     );
     const res = await setSessionPrepare.run();
+    const orderId  = await getOrder();
+    setCookie( event,  'MidWereLogs',  orderId, { expires: new Date(expDate), secure: true, httpOnly: true });
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
 
