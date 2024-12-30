@@ -3,8 +3,21 @@ import NButton from "~/components/controls/NButton.vue";
 import SvgTrack from "~/components/imgs/svg-track.vue";
 
 const route = useRoute();
-const { items } = storeToRefs( useCartStore() );
-const { total } = storeToRefs( useCartStore() );
+const { items, total } = storeToRefs( useCartStore() );
+
+const email = ref('');
+const pass = ref('');
+
+const auth = async () => {
+  const authRes = await $fetch('/api/auth', {
+    method: 'post',
+    body: {
+      email: email.value,
+      pass: pass.value,
+    }
+  });
+  console.log( authRes );
+}
 </script>
 
 <template>
@@ -32,12 +45,18 @@ const { total } = storeToRefs( useCartStore() );
           <PriceRegular :amount="10" class="chck-delivery-price" />
         </div>
 
-        <form action="" class="chck-form">
-          <input type="email"
+        <form action="" class="chck-form" @submit.prevent="auth">
+          <input v-model="email"
+                 type="email"
                  autocomplete="email"
                  required
                  class="chck-email"
-                 :placeholder="$t('email4Checkout')" />
+                 :placeholder="$t('email')" />
+          <input v-model="pass"
+                 type="password"
+                 required
+                 class="chck-email"
+                 :placeholder="$t('password')" />
           <NButton>{{ $t('checkout') }}</NButton>
         </form>
 
@@ -140,6 +159,9 @@ svg.chck-delivery-ic {
   grid-template-columns: 1fr 30%;
   position: sticky;
   bottom: 0;
+
+  display: flex;
+  flex-direction: column;
 }
 .chck-email {
   appearance: none;
