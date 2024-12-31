@@ -1,3 +1,63 @@
+const getOrder = async ( customerId, shippingId ) => {
+
+  const db = hubDatabase();
+  let orderId = null,
+      expOrder = null;
+  if ( customerId ) {
+    const order = db.prepare(`
+      SELECT Orders.Id FROM Orders 
+      INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
+      INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
+      WHERE Customers.CustomerId = ?1 AND PaymentStatus NOT IN ["1","2"]
+      ORDER BY Id ASC
+    `);
+    expOrder = await order.bind( customerId ).first();
+    orderId = expOrder?.Id
+  }
+  if ( !expOrder ) {
+    const newOrder = await db.prepare(`
+        INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, ?2, ?3);
+    `).bind( Date.now(), shippingId, "0" ).run();
+    orderId = newOrder?.meta?.last_row_id;
+  }
+
+  return orderId;
+}
+
+const getShippings = async ( customerId ) => {
+  const db = hubDatabase();
+  const shippingsPrepare = db.prepare(
+    `SELECT * FROM Shippings WHERE CustomerId = ?1 ORDER BY Id ASC`
+  );
+  let shippings = shippingsPrepare.bind( customerId ).all();
+
+  if ( !shippings?.length ) { // если шипинга нет
+    const creatingNewShipping = await db.prepare(
+      `INSERT INTO Shippings ("CustomerId") VALUES ?1`
+    ).bind( customerId ).run();
+    const id = creatingNewShipping?.meta?.last_row_id;
+    if ( !id ) throw ('')
+
+    shippings = shippingsPrepare.bind(customerId).all();
+  }
+  return shippings
+}
+
+const mapCustomerToOrder = ( sessionId, shippingId ) => {
+  const db = hubDatabase();
+  const sessions = db.prepare(
+    `UPDATE Orders SET ShippingId = ?1 WHERE SessionId = ?2`
+  ).bind( customer.Id ).all();
+
+  if ( !shippings?.length ) { // если шипинга нет
+    const creatingNewShipping = db.prepare(
+      `INSERT INTO Shippings ("CustomerId") VALUES ?1`
+    ).bind( customer.Id ).run();
+  } else {
+
+  }
+}
+
 
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
@@ -27,9 +87,17 @@ export default defineEventHandler( async (event) => {
 
     const res = await putCustomerToSessionPrepare.run();
   }
+
+  const shippings = getShippings( customer.Id );
+
+  const order = getOrder( customer.Id, shippings[0]?.Id );
+
+  // TODO: секция удаления старых данных
   await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
+  // TODO: удалить ордера
+  // TODO: удалить корзины
 
   // setCookie( event,  'serverLogs',  Date.now().toString() );
 
-  return { customer, firstName };
+  return { customer, shippings, order };
 })

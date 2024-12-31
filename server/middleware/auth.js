@@ -17,6 +17,7 @@ function getCookieExpiryDate(days = 1) {
   return Date.now() + (86400000 * days);
 }
 
+/*
 const getOrder = async ( customerId, orderId ) => {
 
   const db = hubDatabase();
@@ -39,7 +40,7 @@ const getOrder = async ( customerId, orderId ) => {
 
   return expOrder;
 }
-
+*/
 
 export default defineEventHandler( async (event) => {
 
@@ -78,7 +79,7 @@ export default defineEventHandler( async (event) => {
     const res = await setSessionPrepare.run();
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
-  const orderId  = await getOrder();
+  // const orderId = await getOrder();
   setCookie( event,  'MidWereLogs', JSON.stringify(event?.headers), { maxAge: 10000000 } );
 
   event.session = session;
