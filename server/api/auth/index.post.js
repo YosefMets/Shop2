@@ -1,11 +1,9 @@
 const getOrder = async ( customerId, shippingId ) => {
 
   const db = hubDatabase();
-  let log = '';
   let orderId = null,
       expOrder = null;
   if ( customerId ) {
-    log += '8->';
     const order = db.prepare(`
       SELECT Orders.Id FROM Orders 
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
@@ -15,20 +13,16 @@ const getOrder = async ( customerId, shippingId ) => {
     `);
     expOrder = await order.bind( customerId ).first();
     orderId = expOrder?.Id
-    log += `18:${orderId}->`;
   }
 
   if ( !orderId ) {
-    log += `22:${orderId}->`;
     const newOrder = await db.prepare(`
         INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, ?2, ?3);
     `).bind( Date.now(), shippingId, "0" ).run();
-    log += `26:${JSON.stringify(newOrder)}->`;
     orderId = newOrder?.meta?.last_row_id;
-    log += `28:${orderId}->`;
   }
 
-  return log;
+  return orderId;
 }
 
 const getShippings = async ( customerId ) => {
