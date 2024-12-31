@@ -12,6 +12,7 @@ const getOrder = async ( customerId, shippingId ) => {
       ORDER BY Id ASC
     `);
     expOrder = await order.bind( customerId ).first();
+    return expOrder
     orderId = expOrder?.Id
   }
   if ( !expOrder ) {
