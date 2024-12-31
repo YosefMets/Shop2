@@ -30,6 +30,7 @@ const getShippings = async ( customerId ) => {
     `SELECT * FROM Shippings WHERE CustomerId = ?1 ORDER BY Id ASC`
   );
   let shippings = await shippingsPrepare.bind( customerId ).all();
+  return shippings
   const qwe = Object.assign( {}, shippings );
 
   if ( !shippings?.length ) { // если шипинга нет
@@ -90,6 +91,7 @@ export default defineEventHandler( async (event) => {
   }
 
   const shippings = getShippings( customer.Id );
+  return shippings
 
   const order = getOrder( customer.Id, shippings?.shippings?.[0]?.Id );
 
