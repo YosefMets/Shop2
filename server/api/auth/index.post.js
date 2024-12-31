@@ -14,7 +14,9 @@ const getOrder = async ( customerId, shippingId ) => {
     expOrder = await order.bind( customerId ).first();
     orderId = expOrder?.Id
   }
+
   if ( !orderId ) {
+    return 18
     const newOrder = await db.prepare(`
         INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, ?2, ?3);
     `).bind( Date.now(), shippingId, "0" ).run();
