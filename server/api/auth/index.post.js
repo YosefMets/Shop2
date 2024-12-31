@@ -34,7 +34,7 @@ const getShippings = async ( customerId ) => {
 
   if ( !shippings?.length ) { // если шипинга нет
     const creatingNewShipping = await db.prepare(
-      `INSERT INTO Shippings ("CustomerId") VALUES ?1`
+      `INSERT INTO Shippings (CustomerId, AddressLine1 ,Zip, City, Country) VALUES (?1, "", "", "", "")`
     ).bind( customerId ).run();
     const id = creatingNewShipping?.meta?.last_row_id;
     if ( !id ) throw ('')
@@ -52,7 +52,7 @@ const mapCustomerToOrder = ( sessionId, shippingId ) => {
 
   if ( !shippings?.length ) { // если шипинга нет
     const creatingNewShipping = db.prepare(
-      `INSERT INTO Shippings ("CustomerId") VALUES ?1`
+      `INSERT INTO Shippings ("CustomerId") VALUES (?1)`
     ).bind( customer.Id ).run();
   } else {
 
@@ -91,7 +91,7 @@ export default defineEventHandler( async (event) => {
 
   const shippings = getShippings( customer.Id );
 
-  const order = getOrder( customer.Id, shippings.shippings[0]?.Id );
+  const order = getOrder( customer.Id, shippings?.shippings[0]?.Id );
 
   // TODO: секция удаления старых данных
   await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
