@@ -29,7 +29,7 @@ const getShippings = async ( customerId ) => {
   const shippingsPrepare = db.prepare(
     `SELECT * FROM Shippings WHERE CustomerId = ?1 ORDER BY Id ASC`
   );
-  let shippings = shippingsPrepare.bind( customerId ).all();
+  let shippings = await shippingsPrepare.bind( customerId ).all();
 
   if ( !shippings?.length ) { // если шипинга нет
     const creatingNewShipping = await db.prepare(
@@ -38,7 +38,7 @@ const getShippings = async ( customerId ) => {
     const id = creatingNewShipping?.meta?.last_row_id;
     if ( !id ) throw ('')
 
-    shippings = shippingsPrepare.bind(customerId).all();
+    shippings = await shippingsPrepare.bind(customerId).all();
   }
   return shippings
 }
