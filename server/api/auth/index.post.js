@@ -11,7 +11,7 @@ const getOrder = async ( customerId, shippingId ) => {
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
       INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
       WHERE Customers.Id = ?1 AND PaymentStatus NOT IN ('1','2')
-      ORDER BY Id ASC
+      ORDER BY Orders.Id ASC
     `);
     expOrder = await order.bind( customerId ).first();
     orderId = expOrder?.Id
