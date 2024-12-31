@@ -30,6 +30,7 @@ const getShippings = async ( customerId ) => {
     `SELECT * FROM Shippings WHERE CustomerId = ?1 ORDER BY Id ASC`
   );
   let shippings = await shippingsPrepare.bind( customerId ).all();
+  const qwe = Object.assign( {}, shippings );
 
   if ( !shippings?.length ) { // если шипинга нет
     const creatingNewShipping = await db.prepare(
@@ -40,7 +41,7 @@ const getShippings = async ( customerId ) => {
 
     shippings = await shippingsPrepare.bind(customerId).all();
   }
-  return shippings
+  return { shippings, qwe }
 }
 
 const mapCustomerToOrder = ( sessionId, shippingId ) => {
@@ -90,7 +91,7 @@ export default defineEventHandler( async (event) => {
 
   const shippings = getShippings( customer.Id );
 
-  const order = getOrder( customer.Id, shippings[0]?.Id );
+  const order = getOrder( customer.Id, shippings.shippings[0]?.Id );
 
   // TODO: секция удаления старых данных
   await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
