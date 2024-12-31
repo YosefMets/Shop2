@@ -91,9 +91,8 @@ export default defineEventHandler( async (event) => {
   }
 
   const shippings = await getShippings( customer.Id );
-  return shippings
 
-  const order = getOrder( customer.Id, shippings?.shippings?.[0]?.Id );
+  const order = getOrder( customer.Id, shippings?.[0]?.Id );
 
   // TODO: секция удаления старых данных
   await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
