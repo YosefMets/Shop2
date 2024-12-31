@@ -30,19 +30,19 @@ const getShippings = async ( customerId ) => {
     `SELECT * FROM Shippings WHERE CustomerId = ?1 ORDER BY Id ASC`
   );
   let shippings = await shippingsPrepare.bind( customerId ).all();
-  return shippings
-  const qwe = Object.assign( {}, shippings );
+  // return shippings
+  // const qwe = Object.assign( {}, shippings );
 
-  if ( !shippings?.length ) { // если шипинга нет
+  if ( !shippings?.results?.length ) { // если шипинга нет
     const creatingNewShipping = await db.prepare(
-      `INSERT INTO Shippings (CustomerId, AddressLine1 ,Zip, City, Country) VALUES (?1, "", "", "", "")`
+      `INSERT INTO Shippings (CustomerId, AddressLine1, Zip, City, Country) VALUES (?1, "", "", "", "")`
     ).bind( customerId ).run();
     const id = creatingNewShipping?.meta?.last_row_id;
-    if ( !id ) throw ('')
+    if ( !id ) throw ('Error insert')
 
     shippings = await shippingsPrepare.bind(customerId).all();
   }
-  return { shippings, qwe }
+  return shippings?.results
 }
 
 const mapCustomerToOrder = ( sessionId, shippingId ) => {
@@ -90,7 +90,7 @@ export default defineEventHandler( async (event) => {
     const res = await putCustomerToSessionPrepare.run();
   }
 
-  const shippings = getShippings( customer.Id );
+  const shippings = await getShippings( customer.Id );
   return shippings
 
   const order = getOrder( customer.Id, shippings?.shippings?.[0]?.Id );
