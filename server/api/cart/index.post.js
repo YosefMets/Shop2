@@ -8,7 +8,7 @@ const getOrder = async ( customerId, shippingId ) => {
       SELECT Orders.Id FROM Orders 
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
       INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
-      WHERE Customers.Id = ?1 AND OrderStatusId NOT IN ('1','2')
+      WHERE Customers.Id = ?1 AND PaymentStatus NOT IN ('1','2')
       ORDER BY Orders.Id ASC
     `);
     expOrder = await order.bind( customerId ).first();
@@ -17,8 +17,8 @@ const getOrder = async ( customerId, shippingId ) => {
 
   if ( !orderId ) {
     const newOrder = await db.prepare(`
-        INSERT INTO Orders (ShippingId, OrderStatusId) VALUES (?1, ?2);
-    `).bind( shippingId, 0 ).run();
+        INSERT INTO Orders (CreatedAt, ModifiedAt, ShippingId, PaymentStatus) VALUES (?1, ?1, ?2, ?3);
+    `).bind( Date.now(), shippingId, "0" ).run();
     orderId = newOrder?.meta?.last_row_id;
   }
 
@@ -41,7 +41,7 @@ const getShippings = async ( customerId ) => {
     const id = creatingNewShipping?.meta?.last_row_id;
     if ( !id ) throw ('Error insert')
 
-    shippings = await shippingsPrepare.bind( customerId ).all();
+    shippings = await shippingsPrepare.bind(customerId).all();
   }
   return shippings?.results
 }
@@ -61,49 +61,34 @@ const mapCustomerToOrder = ( sessionId, shippingId ) => {
   }
 }
 
+/*
+[ { nestId, qty, price } ]
+i34,i75,i84
+ */
 
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
-  const body = await readBody(event);
-  const res = { session: event.session, body }
+  const cart = await readBody(event);
+  const session = event.session;
+  const orderId = session.orderId;
 
-  const { email, pass, firstName } = body;
+  // const getSessionPrepare = db.prepare(
+  //   `SELECT * FROM Sessions WHERE SessionId = ?1`
+  // );
+  // let session = await getSessionPrepare.bind( sessionId ).first();
 
-  const getCustomerPrepare = db.prepare(
-    `SELECT * FROM Customers WHERE Email = ?1`
-  );
+  if ( !session.CustomerId ) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
 
-  let customer = await getCustomerPrepare.bind( email ).first();
-
-  if ( !customer ) {
-    const putCustomerToCustomers = await db.prepare(
-      `INSERT INTO Customers ("Email", "Pass") VALUES ( ?1, ?2 )`
-    ).bind( email, pass ).run();
-
-    customer = await getCustomerPrepare.bind( email ).first();
+  const isDeleted = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+  if ( isDeleted ) {
+    const nestIds = cart?.map( ({ nestId }) => nestId ).join(',');
+    const updateCartPrepare = await db.prepare(`INSERT INTO Carts (ProductId, Qty, Price) VALUES ( ?1, ?2, ?3 )`);
+    const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
+    products.forEach( async ( product ) => {
+      await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+    });
+    const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+    return updatedCart;
   }
 
-  let shippings = null,
-      order = null;
-
-  if ( customer?.Pass === pass ) {
-    const putCustomerToSessionPrepare = db.prepare(
-      `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE SessionId = ?3`
-    );
-    shippings = await getShippings( customer.Id );
-    order = await getOrder( customer.Id, shippings?.[0]?.Id );
-    const res = await putCustomerToSessionPrepare.bind( customer.Id, order.Id, event.session?.SessionId ).run();
-  } else {
-    throw ('Forbidden');
-  }
-
-
-  // TODO: секция удаления старых данных
-  await db.prepare( `DELETE FROM Sessions WHERE SessionExp < ?1` ).bind( Date.now() ).run();
-  // TODO: удалить ордера
-  // TODO: удалить корзины
-
-  // setCookie( event,  'serverLogs',  Date.now().toString() );
-
-  return { customer, shippings, order };
 })

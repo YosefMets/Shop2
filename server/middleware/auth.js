@@ -74,9 +74,9 @@ export default defineEventHandler( async (event) => {
     session.CustomerId = null;
 
     const setSessionPrepare = db.prepare(
-      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES ('${sessionId}', ${expDate})`
+      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (?1, ?2)`
     );
-    const res = await setSessionPrepare.run();
+    const res = await setSessionPrepare.bind( sessionId, expDate ).run();
     setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
   // const orderId = await getOrder();
