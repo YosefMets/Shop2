@@ -8,7 +8,7 @@ const getOrder = async ( customerId, shippingId ) => {
       SELECT Orders.Id FROM Orders 
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
       INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
-      WHERE Customers.Id = ?1 AND OrderStatusId NOT IN ('1','2')
+      WHERE Customers.Id = ?1 AND OrderStatusId NOT IN (1,2)
       ORDER BY Orders.Id ASC
     `);
     expOrder = await order.bind( customerId ).first();
@@ -96,7 +96,7 @@ export default defineEventHandler( async (event) => {
     shippings = await getShippings( customer.Id );
     setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     order = await getOrder( customer.Id, shippings?.[0]?.Id );
-    setCookie( event,  'order', JSON.stringify(order), { maxAge: 10000000 } );
+    setCookie( event,  'Order', JSON.stringify(order), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, order.Id, event.session?.SessionId ).run();
   } else {
     throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
