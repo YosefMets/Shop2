@@ -68,7 +68,8 @@ i34,i75,i84
 
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
-  const cart = await readBody(event);
+  const cart_ = await readBody(event);
+  const cart = cart_?.map( cartItem => ({ nestId: cartItem.id, qty: cartItem.qty, price: cartItem.price }) );
   const session = event.session;
   const orderId = session.orderId;
 
@@ -84,8 +85,10 @@ export default defineEventHandler( async (event) => {
     const nestIds = cart?.map( ({ nestId }) => nestId ).join(',');
     const updateCartPrepare = await db.prepare(`INSERT INTO Carts (ProductId, Qty, Price) VALUES ( ?1, ?2, ?3 )`);
     const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
+    let successInsert = true;
     products.forEach( async ( product ) => {
-      await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+      const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+      if ( !res.success ) successInsert = false;
     });
     const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
     return updatedCart;

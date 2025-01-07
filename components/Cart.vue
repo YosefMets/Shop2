@@ -18,6 +18,12 @@ const auth = async () => {
   });
   console.log( authRes );
 }
+
+const serverCart = await $fetch('/api/cart', {
+  method: 'post',
+  body: items.value?.map( ({ item, qty }) => ({ id: item.I, qty, price: item.$ }) ),
+});
+console.log( serverCart );
 </script>
 
 <template>
