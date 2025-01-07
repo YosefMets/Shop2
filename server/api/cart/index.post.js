@@ -69,9 +69,11 @@ i34,i75,i84
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const cart_ = await readBody(event);
-  const cart = cart_?.map( cartItem => ({ nestId: cartItem.id, qty: cartItem.qty, price: cartItem.price }) );
+  const cart = cart_?.map( cartItem => ({ nestId: cartItem.id, qty: cartItem.qty, price: cartItem.price * 100 }) );
   const session = event.session;
   const orderId = session.orderId;
+  setCookie( event,  'Cart', JSON.stringify(cart), { maxAge: 10000000 } );
+  setCookie( event,  'Session', JSON.stringify(session), { maxAge: 10000000 } );
 
   // const getSessionPrepare = db.prepare(
   //   `SELECT * FROM Sessions WHERE SessionId = ?1`
@@ -80,11 +82,14 @@ export default defineEventHandler( async (event) => {
 
   if ( !session.CustomerId ) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
 
-  const isDeleted = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+  const { success: isDeleted } = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+  setCookie( event,  'isDeleted', JSON.stringify(isDeleted), { maxAge: 10000000 } );
   if ( isDeleted ) {
     const nestIds = cart?.map( ({ nestId }) => nestId ).join(',');
+    setCookie( event,  'NestIds', JSON.stringify(nestIds), { maxAge: 10000000 } );
     const updateCartPrepare = await db.prepare(`INSERT INTO Carts (ProductId, Qty, Price) VALUES ( ?1, ?2, ?3 )`);
     const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
+    setCookie( event,  'Products', JSON.stringify(products), { maxAge: 10000000 } );
     let successInsert = true;
     products.forEach( async ( product ) => {
       const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();

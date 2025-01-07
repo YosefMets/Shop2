@@ -5,7 +5,6 @@ const getOrder = async ( customerId, shippingId, e ) => {
       expOrder = null;
   if ( customerId ) {
 
-    setCookie( e,  'CustomerId', JSON.stringify(true), { maxAge: 10000000 } );
     const order = db.prepare(`
       SELECT Orders.Id FROM Orders 
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
@@ -13,9 +12,7 @@ const getOrder = async ( customerId, shippingId, e ) => {
       WHERE Customers.Id = ?1 AND OrderStatusId NOT IN (1,2)
       ORDER BY Orders.Id ASC
     `);
-    setCookie( e,  'OrderPrepare', JSON.stringify(true), { maxAge: 10000000 } );
     expOrder = await order.bind( customerId ).first();
-    setCookie( e,  'ExpOrder', JSON.stringify(expOrder), { maxAge: 10000000 } );
     orderId = expOrder?.Id
   }
 
@@ -78,7 +75,6 @@ export default defineEventHandler( async (event) => {
   );
 
   let customer = await getCustomerPrepare.bind( email ).first();
-  setCookie( event,  'Customer', JSON.stringify(customer), { maxAge: 10000000 } );
 
   if ( !customer ) {
     const putCustomerToCustomers = await db.prepare(
@@ -87,21 +83,16 @@ export default defineEventHandler( async (event) => {
 
     customer = await getCustomerPrepare.bind( email ).first();
   }
-  setCookie( event,  'Customer2', JSON.stringify(customer), { maxAge: 10000000 } );
 
   let shippings = null,
       orderId = null;
 
   if ( customer?.Pass === pass ) {
-    setCookie( event,  'PassCorrect', JSON.stringify(true), { maxAge: 10000000 } );
     const putCustomerToSessionPrepare = db.prepare(
       `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE SessionId = ?3`
     );
     shippings = await getShippings( customer.Id );
-    setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
-    setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
-    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.SessionId} ), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.SessionId ).run();
   } else {
     throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
