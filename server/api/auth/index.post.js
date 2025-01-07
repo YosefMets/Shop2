@@ -90,7 +90,7 @@ export default defineEventHandler( async (event) => {
   setCookie( event,  'Customer2', JSON.stringify(customer), { maxAge: 10000000 } );
 
   let shippings = null,
-      order = null;
+      orderId = null;
 
   if ( customer?.Pass === pass ) {
     setCookie( event,  'PassCorrect', JSON.stringify(true), { maxAge: 10000000 } );
@@ -99,10 +99,10 @@ export default defineEventHandler( async (event) => {
     );
     shippings = await getShippings( customer.Id );
     setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
-    order = await getOrder( customer.Id, shippings?.[0]?.Id, event );
-    setCookie( event,  'Order', JSON.stringify(order), { maxAge: 10000000 } );
-    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId: order.Id, SessionId: event.session?.SessionId} ), { maxAge: 10000000 } );
-    const res = await putCustomerToSessionPrepare.bind( customer.Id, order.Id, event.session?.SessionId ).run();
+    orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
+    setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
+    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.SessionId} ), { maxAge: 10000000 } );
+    const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.SessionId ).run();
   } else {
     throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
   }
@@ -115,5 +115,5 @@ export default defineEventHandler( async (event) => {
 
   // setCookie( event,  'serverLogs',  Date.now().toString() );
 
-  return { customer, shippings, order };
+  return { customer, shippings, orderId };
 })
