@@ -19,11 +19,13 @@ const auth = async () => {
   console.log( authRes );
 }
 
-const serverCart = await $fetch('/api/cart', {
-  method: 'post',
-  body: items.value?.map( ({ item, qty }) => ({ id: item.I, qty, price: item.$ }) ),
-});
-console.log( serverCart );
+const serverCart = async () => {
+  const serverCartRes = await $fetch('/api/cart', {
+    method: 'post',
+    body: items.value?.map(({item, qty}) => ({id: item.I, qty, price: item.$})),
+  });
+  console.log(serverCartRes);
+}
 </script>
 
 <template>
@@ -34,7 +36,7 @@ console.log( serverCart );
 
     <div class="chck-gap chck-gap-top" />
 
-    <h2 class="chck-ttl">
+    <h2 class="chck-ttl" @click="serverCart">
         🛒 {{ $t('cart') }}
         <PriceRegular :amount="total" class="cart-total" />
     </h2>
