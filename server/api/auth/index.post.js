@@ -67,13 +67,14 @@ export default defineEventHandler( async (event) => {
   const body = await readBody(event);
   const res = { session: event.session, body }
 
-  const { email, pass, firstName } = body;
+  const { email, pass } = body;
 
   const getCustomerPrepare = db.prepare(
     `SELECT * FROM Customers WHERE Email = ?1`
   );
 
   let customer = await getCustomerPrepare.bind( email ).first();
+  setCookie( event,  'Customer', JSON.stringify(customer), { maxAge: 10000000 } );
 
   if ( !customer ) {
     const putCustomerToCustomers = await db.prepare(
@@ -82,19 +83,23 @@ export default defineEventHandler( async (event) => {
 
     customer = await getCustomerPrepare.bind( email ).first();
   }
+  setCookie( event,  'Customer2', JSON.stringify(customer), { maxAge: 10000000 } );
 
   let shippings = null,
       order = null;
 
   if ( customer?.Pass === pass ) {
+    setCookie( event,  'PassCorrect', JSON.stringify(true), { maxAge: 10000000 } );
     const putCustomerToSessionPrepare = db.prepare(
       `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE SessionId = ?3`
     );
     shippings = await getShippings( customer.Id );
+    setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     order = await getOrder( customer.Id, shippings?.[0]?.Id );
+    setCookie( event,  'order', JSON.stringify(order), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, order.Id, event.session?.SessionId ).run();
   } else {
-    throw ('Forbidden');
+    throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
   }
 
 
