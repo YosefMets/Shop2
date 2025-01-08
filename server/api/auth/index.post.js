@@ -102,7 +102,8 @@ export default defineEventHandler( async (event) => {
     orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
     setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
     setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.SessionId} ), { maxAge: 10000000 } );
-    const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.SessionId ).run();
+    const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.Id ).run();
+    setCookie( event,  'Res', JSON.stringify( res ), { maxAge: 10000000 } );
   } else {
     throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
   }

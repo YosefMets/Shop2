@@ -48,27 +48,26 @@ export default defineEventHandler( async (event) => {
   if ( host !== 'shop2.nuxt.dev') return;
 
   const db = hubDatabase();
-  const session = {};
+  let session = {};
   const cookies = parseCookies(event)
-  let sessionId = cookies?.sessionId;
+  let sessionToken = cookies?.sessionId;
   let isExpired = true;
+  const getSessionPrepare = db.prepare(
+    `SELECT * FROM Sessions WHERE SessionId = ?1`
+  );
 
-  if ( sessionId ) {
-    const qwe = db.prepare(
-      `SELECT * FROM Sessions WHERE SessionId = ?1`
-    );
-    const asd = qwe.bind(sessionId);
-    const res = await asd.first();
+  if ( sessionToken ) {
+    const res = await getSessionPrepare.bind( sessionToken ).first();
     if (res) {
-      Object.assign(session, res);
+      session = res;
       isExpired = Date.now() > res.SessionExp;
     }
   }
 
   // create new session
-  if ( !sessionId || isExpired ) {
-    sessionId = generateSessionToken(64);
-    session.SessionId = sessionId;
+  if ( !sessionToken || isExpired ) {
+    sessionToken = generateSessionToken(64);
+    session.SessionId = sessionToken;
     const expDate = getCookieExpiryDate();
     session.SessionExp = expDate;
     session.CustomerId = null;
@@ -76,9 +75,11 @@ export default defineEventHandler( async (event) => {
     const setSessionPrepare = db.prepare(
       `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (?1, ?2)`
     );
-    const res = await setSessionPrepare.bind( sessionId, expDate ).run();
-    setCookie( event,  'sessionId',  sessionId, { expires: new Date(expDate), secure: true, httpOnly: true });
+    const res = await setSessionPrepare.bind( sessionToken, expDate ).run();
+    if ( !res.success ) throw createError({ statusCode: 511, statusMessage: JSON.stringify( res ) });
+    setCookie( event,  'sessionId',  sessionToken, { expires: new Date(expDate), secure: true, httpOnly: true });
   }
+  session = await getSessionPrepare.bind( sessionToken ).first();
   // const orderId = await getOrder();
   setCookie( event,  'MidWereLogs', JSON.stringify(event?.headers), { maxAge: 10000000 } );
 
