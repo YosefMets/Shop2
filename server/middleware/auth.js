@@ -53,7 +53,7 @@ export default defineEventHandler( async (event) => {
   let sessionToken = cookies?.sessionId;
   let isExpired = true;
   const getSessionPrepare = db.prepare(
-    `SELECT * FROM Sessions WHERE SessionId = ?1`
+    `SELECT * FROM Sessions WHERE SessionToken = ?1`
   );
 
   if ( sessionToken ) {
@@ -73,7 +73,7 @@ export default defineEventHandler( async (event) => {
     session.CustomerId = null;
 
     const setSessionPrepare = db.prepare(
-      `INSERT INTO Sessions ("SessionId", "SessionExp") VALUES (?1, ?2)`
+      `INSERT INTO Sessions ("SessionToken", "SessionExp") VALUES (?1, ?2)`
     );
     const res = await setSessionPrepare.bind( sessionToken, expDate ).run();
     if ( !res.success ) throw createError({ statusCode: 511, statusMessage: JSON.stringify( res ) });

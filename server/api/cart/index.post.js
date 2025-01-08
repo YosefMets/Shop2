@@ -46,20 +46,20 @@ const getShippings = async ( customerId ) => {
   return shippings?.results
 }
 
-const mapCustomerToOrder = ( sessionId, shippingId ) => {
-  const db = hubDatabase();
-  const sessions = db.prepare(
-    `UPDATE Orders SET ShippingId = ?1 WHERE SessionId = ?2`
-  ).bind( customer.Id ).all();
-
-  if ( !shippings?.length ) { // если шипинга нет
-    const creatingNewShipping = db.prepare(
-      `INSERT INTO Shippings ("CustomerId") VALUES (?1)`
-    ).bind( customer.Id ).run();
-  } else {
-
-  }
-}
+// const mapCustomerToOrder = ( sessionId, shippingId ) => {
+//   const db = hubDatabase();
+//   const sessions = db.prepare(
+//     `UPDATE Orders SET ShippingId = ?1 WHERE SessionId = ?2`
+//   ).bind( customer.Id ).all();
+//
+//   if ( !shippings?.length ) { // если шипинга нет
+//     const creatingNewShipping = db.prepare(
+//       `INSERT INTO Shippings ("CustomerId") VALUES (?1)`
+//     ).bind( customer.Id ).run();
+//   } else {
+//
+//   }
+// }
 
 /*
 [ { nestId, qty, price } ]

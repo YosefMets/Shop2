@@ -50,20 +50,20 @@ const getShippings = async ( customerId ) => {
   return shippings?.results
 }
 
-const mapCustomerToOrder = ( sessionId, shippingId ) => {
-  const db = hubDatabase();
-  const sessions = db.prepare(
-    `UPDATE Orders SET ShippingId = ?1 WHERE SessionId = ?2`
-  ).bind( customer.Id ).all();
-
-  if ( !shippings?.length ) { // если шипинга нет
-    const creatingNewShipping = db.prepare(
-      `INSERT INTO Shippings ("CustomerId") VALUES (?1)`
-    ).bind( customer.Id ).run();
-  } else {
-
-  }
-}
+// const mapCustomerToOrder = ( sessionId, shippingId ) => {
+//   const db = hubDatabase();
+//   const sessions = db.prepare(
+//     `UPDATE Orders SET ShippingId = ?1 WHERE SessionId = ?2`
+//   ).bind( customer.Id ).all();
+//
+//   if ( !shippings?.length ) { // если шипинга нет
+//     const creatingNewShipping = db.prepare(
+//       `INSERT INTO Shippings ("CustomerId") VALUES (?1)`
+//     ).bind( customer.Id ).run();
+//   } else {
+//
+//   }
+// }
 
 
 export default defineEventHandler( async (event) => {
@@ -101,7 +101,7 @@ export default defineEventHandler( async (event) => {
     setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
     setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
-    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.Id} ), { maxAge: 10000000 } );
+    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, sessionId: event.session?.Id} ), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.Id ).run();
     setCookie( event,  'Res', JSON.stringify( res ), { maxAge: 10000000 } );
   } else {
