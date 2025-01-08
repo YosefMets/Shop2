@@ -10,7 +10,7 @@ const getOrder = async ( customerId, shippingId, e ) => {
       SELECT Orders.Id FROM Orders 
       INNER JOIN Shippings ON Orders.ShippingId = Shippings.Id 
       INNER JOIN Customers ON Shippings.CustomerId = Customers.Id 
-      WHERE Customers.Id = ?1 AND OrderStatusId NOT IN (1,2)
+      WHERE Customers.Id = ?1 AND OrderStatusId NOT IN (2)
       ORDER BY Orders.Id ASC
     `);
     setCookie( e,  'OrderPrepare', JSON.stringify(true), { maxAge: 10000000 } );
@@ -22,7 +22,7 @@ const getOrder = async ( customerId, shippingId, e ) => {
   if ( !orderId ) {
     const newOrder = await db.prepare(`
         INSERT INTO Orders (ShippingId, OrderStatusId) VALUES (?1, ?2);
-    `).bind( shippingId, 0 ).run();
+    `).bind( shippingId, 1 ).run();
     orderId = newOrder?.meta?.last_row_id;
   }
 
