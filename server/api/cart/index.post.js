@@ -71,6 +71,7 @@ export default defineEventHandler( async (event) => {
   const cart_ = await readBody(event);
   const cart = cart_?.map( cartItem => ({ nestId: cartItem.id, qty: cartItem.qty, price: cartItem.price * 100 }) );
   const session = event.session;
+  // TODO: 7.01.25 в session нет orderId
   const orderId = session.orderId;
   setCookie( event,  'Cart', JSON.stringify(cart), { maxAge: 10000000 } );
   setCookie( event,  'Session', JSON.stringify(session), { maxAge: 10000000 } );
