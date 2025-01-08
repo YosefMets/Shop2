@@ -95,13 +95,13 @@ export default defineEventHandler( async (event) => {
   if ( customer?.Pass === pass ) {
     setCookie( event,  'PassCorrect', JSON.stringify(true), { maxAge: 10000000 } );
     const putCustomerToSessionPrepare = db.prepare(
-      `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE SessionId = ?3`
+      `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE Id = ?3`
     );
     shippings = await getShippings( customer.Id );
     setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
     setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
-    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.SessionId} ), { maxAge: 10000000 } );
+    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, SessionId: event.session?.Id} ), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.Id ).run();
     setCookie( event,  'Res', JSON.stringify( res ), { maxAge: 10000000 } );
   } else {

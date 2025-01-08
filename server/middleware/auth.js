@@ -67,7 +67,7 @@ export default defineEventHandler( async (event) => {
   // create new session
   if ( !sessionToken || isExpired ) {
     sessionToken = generateSessionToken(64);
-    session.SessionId = sessionToken;
+    session.SessionToken = sessionToken;
     const expDate = getCookieExpiryDate();
     session.SessionExp = expDate;
     session.CustomerId = null;
