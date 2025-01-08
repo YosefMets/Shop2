@@ -72,7 +72,7 @@ export default defineEventHandler( async (event) => {
   const cart = cart_?.map( cartItem => ({ nestId: cartItem.id, qty: cartItem.qty, price: cartItem.price * 100 }) );
   const session = event.session;
   // TODO: 7.01.25 в session нет orderId
-  const orderId = session.orderId;
+  // const orderId = session.orderId;
   setCookie( event,  'Cart', JSON.stringify(cart), { maxAge: 10000000 } );
   setCookie( event,  'Session', JSON.stringify(session), { maxAge: 10000000 } );
 
@@ -83,7 +83,7 @@ export default defineEventHandler( async (event) => {
 
   if ( !session.CustomerId ) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
 
-  const { success: isDeleted } = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+  const { success: isDeleted } = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
   setCookie( event,  'isDeleted', JSON.stringify(isDeleted), { maxAge: 10000000 } );
   if ( isDeleted ) {
     const nestIds = cart?.map( ({ nestId }) => nestId ).join(',');
@@ -96,7 +96,7 @@ export default defineEventHandler( async (event) => {
       const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
       if ( !res.success ) successInsert = false;
     });
-    const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( orderId ).run();
+    const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
     return updatedCart;
   }
 

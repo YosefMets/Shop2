@@ -81,7 +81,7 @@ export default defineEventHandler( async (event) => {
   }
   session = await getSessionPrepare.bind( sessionToken ).first();
   // const orderId = await getOrder();
-  setCookie( event,  'MidWereLogs', JSON.stringify(event?.headers), { maxAge: 10000000 } );
+  setCookie( event,  'MidWereLogs', JSON.stringify( session ), { maxAge: 10000000 } );
 
   event.session = session;
 

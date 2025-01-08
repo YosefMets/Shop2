@@ -69,7 +69,6 @@ const getShippings = async ( customerId ) => {
 export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const body = await readBody(event);
-  const res = { session: event.session, body }
 
   const { email, pass } = body;
 
