@@ -95,7 +95,10 @@ export default defineEventHandler( async (event) => {
     for ( let q = products.length; q--; ) {
       setCookie( event,  'Q', JSON.stringify( q ), { maxAge: 10000000 } );
       const product = products[q];
-      const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+      setCookie( event,  'Product', JSON.stringify( product ), { maxAge: 10000000 } );
+      const qwe = cart?.find( ({ nestId }) => nestId === product.NestId );
+      setCookie( event,  'Qwe', JSON.stringify( qwe ), { maxAge: 10000000 } );
+      const res = await updateCartPrepare.bind( product.Id, qwe?.qty, product.PriceActual ).run();
       setCookie( event,  'Insert', JSON.stringify( res ), { maxAge: 10000000 } );
       if ( !res.success ) successInsert = false;
     }
