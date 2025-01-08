@@ -92,11 +92,21 @@ export default defineEventHandler( async (event) => {
     const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
     setCookie( event,  'Products', JSON.stringify(products), { maxAge: 10000000 } );
     let successInsert = true;
-    products.forEach( async ( product ) => {
+    for ( let q = products.length; q--; ) {
+      setCookie( event,  'Q', JSON.stringify( q ), { maxAge: 10000000 } );
+      const product = products[q];
       const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+      setCookie( event,  'Insert', JSON.stringify( res ), { maxAge: 10000000 } );
       if ( !res.success ) successInsert = false;
-    });
+    }
+    setCookie( event,  'SuccessInsert', JSON.stringify( successInsert ), { maxAge: 10000000 } );
+    // products.forEach( async ( product ) => {
+    //   const res = await updateCartPrepare.bind( product.Id, cart?.find( ({ nestId }) => nestId === product.nestId )?.qty, product.PriceActual ).run();
+    //   if ( !res.success ) successInsert = false;
+    // });
+
     const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
+    setCookie( event,  'UpdatedCart', JSON.stringify( updatedCart ), { maxAge: 10000000 } );
     return updatedCart;
   }
 
