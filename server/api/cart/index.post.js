@@ -60,7 +60,7 @@ const setOrderDiscounts = async (cart, privatePercentDiscount, discounts) =>{
   let orderPrice = 0;
   cart.forEach((item) => {
     const productDiscount = item.Qty * (item.PriceOld - item.PriceActual);
-    orderPrice += item.PriceOld;
+    orderPrice += item.Qty * item.PriceOld;
     productsDiscount += productDiscount;
     if (productDiscount === 0){
       privateDiscount += item.Qty * item.PriceActual * privatePercentDiscount / 100;
