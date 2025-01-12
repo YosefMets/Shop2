@@ -109,10 +109,12 @@ export default defineEventHandler( async (event) => {
   const { success: isDeleted } = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
   setCookie( event,  'isDeleted', JSON.stringify(isDeleted), { maxAge: 10000000 } );
   if ( isDeleted ) {
-    const nestIds = cart?.map( ({ nestId }) => "'"+nestId+"'" ).join(',');
-    setCookie( event,  'NestIds', JSON.stringify(nestIds), { maxAge: 10000000 } );
+    // const nestIds = cart?.map( ({ nestId }) => "'"+nestId+"'" ).join(',');
+    const nestIds = cart?.map(({ nestId }) => nestId); // массив значений
+    const placeholders = nestIds.map(() => '?').join(','); // создаем плейсхолдеры
+    setCookie( event,  'NestIds', JSON.stringify(placeholders), { maxAge: 10000000 } );
     const updateCartPrepare = await db.prepare(`INSERT INTO Carts (OrderId, ProductId, Qty, PriceOld, PriceActual) VALUES ( ?1, ?2, ?3, ?4, ?5 )`);
-    const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
+    const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( placeholders ).all();
     setCookie( event,  'Products', JSON.stringify(products), { maxAge: 10000000 } );
     let successInsert = true;
     for ( let q = products.length; q--; ) {
