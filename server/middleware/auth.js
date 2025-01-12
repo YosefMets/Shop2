@@ -52,8 +52,17 @@ export default defineEventHandler( async (event) => {
   const cookies = parseCookies(event)
   let sessionToken = cookies?.sessionId;
   let isExpired = true;
+  // const getSessionPrepare = db.prepare(
+  //   `SELECT * FROM Sessions WHERE SessionToken = ?1`
+  // );
   const getSessionPrepare = db.prepare(
-    `SELECT * FROM Sessions WHERE SessionToken = ?1`
+    `SELECT Sessions.SessionToken, Sessions.SessionExp,
+    Customers.Id AS CustomerId, Customers.Adult,
+    FROM Sessions 
+    LEFT JOIN Customers ON Sessions.CustomerId = Customers.Id
+    WHERE Sessions.SessionToken = '?1';`
+
+  // `SELECT * FROM Sessions WHERE SessionToken = ?1`
   );
 
   if ( sessionToken ) {

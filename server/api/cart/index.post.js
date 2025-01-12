@@ -46,6 +46,25 @@ const getShippings = async ( customerId ) => {
   return shippings?.results
 }
 
+const setOrderDiscounts = async (cart, customer, discounts) =>{
+  //TODO
+  //Get Discounts from DB
+
+  // Calculate private discount
+  let productsDiscount = 0;
+  let privateDiscount = 0;
+  let orderPrice = 0;
+  cart.forEach((item) => {
+    const productDiscount = item.qty * (item.PriceOld - item.PriceActual);
+    cartPrice += item.PriceOld;
+    productsDiscount += productDiscount;
+    if (productDiscount == 0){
+      privateDiscount += item.qty * item.PriceActual * customer?.Discount;
+    }
+  })
+  return {cart, orderPrice, productsDiscount, privateDiscount }
+}
+
 // const mapCustomerToOrder = ( sessionId, shippingId ) => {
 //   const db = hubDatabase();
 //   const sessions = db.prepare(
@@ -88,7 +107,7 @@ export default defineEventHandler( async (event) => {
   if ( isDeleted ) {
     const nestIds = cart?.map( ({ nestId }) => nestId ).join(',');
     setCookie( event,  'NestIds', JSON.stringify(nestIds), { maxAge: 10000000 } );
-    const updateCartPrepare = await db.prepare(`INSERT INTO Carts (OrderId, ProductId, Qty, Price) VALUES ( ?1, ?2, ?3, ?4 )`);
+    const updateCartPrepare = await db.prepare(`INSERT INTO Carts (OrderId, ProductId, Qty, PriceOld, PriceActual) VALUES ( ?1, ?2, ?3, ?4, ?5 )`);
     const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (?1)` ).bind( nestIds ).all();
     setCookie( event,  'Products', JSON.stringify(products), { maxAge: 10000000 } );
     let successInsert = true;
@@ -98,7 +117,7 @@ export default defineEventHandler( async (event) => {
       setCookie( event,  'Product', JSON.stringify( product ), { maxAge: 10000000 } );
       const qwe = cart?.find( ({ nestId }) => nestId === product.NestId );
       setCookie( event,  'Qwe', JSON.stringify( qwe ), { maxAge: 10000000 } );
-      const res = await updateCartPrepare.bind( session.OrderId, product.Id, qwe?.qty, product.PriceActual ).run();
+      const res = await updateCartPrepare.bind( session.OrderId, product.Id, qwe?.qty, product.PriceOld, product.PriceActual ).run();
       setCookie( event,  'Insert', JSON.stringify( res ), { maxAge: 10000000 } );
       if ( !res.success ) successInsert = false;
     }
@@ -110,7 +129,9 @@ export default defineEventHandler( async (event) => {
 
     const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
     setCookie( event,  'UpdatedCart', JSON.stringify( updatedCart ), { maxAge: 10000000 } );
-    return updatedCart;
+
+    const order = setOrderDiscounts(updatedCart, session.customer, discounts);
+    return order;
   }
 
 })
