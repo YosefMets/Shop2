@@ -56,11 +56,11 @@ export default defineEventHandler( async (event) => {
   //   `SELECT * FROM Sessions WHERE SessionToken = ?1`
   // );
   const getSessionPrepare = db.prepare(
-    `SELECT Sessions.SessionToken, Sessions.SessionExp,
-    Customers.Id AS CustomerId, Customers.Adult
+    `SELECT Sessions.* AS Session,
+    Customers.* AS Customer
     FROM Sessions 
     LEFT JOIN Customers ON Sessions.CustomerId = Customers.Id
-    WHERE Sessions.SessionToken = '?1';`
+    WHERE Sessions.SessionToken = ?1;`
   );
 
   if ( sessionToken ) {
