@@ -46,7 +46,7 @@ const getShippings = async ( customerId ) => {
   return shippings?.results
 }
 
-const setOrderDiscounts = async (cart, customer, discounts) =>{
+const setOrderDiscounts = async (cart, privatePercentDiscount, discounts) =>{
   //TODO
   //Get Discounts from DB
 
@@ -62,8 +62,8 @@ const setOrderDiscounts = async (cart, customer, discounts) =>{
     const productDiscount = item.Qty * (item.PriceOld - item.PriceActual);
     orderPrice += item.PriceOld;
     productsDiscount += productDiscount;
-    if (productDiscount == 0){
-      privateDiscount += item.Qty * item.PriceActual * customer?.Discount;
+    if (productDiscount === 0){
+      privateDiscount += item.Qty * item.PriceActual * privatePercentDiscount / 100;
     }
   })
   return {cart, orderPrice, productsDiscount, privateDiscount }
@@ -134,7 +134,7 @@ export default defineEventHandler( async (event) => {
     const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
     setCookie( event,  'UpdatedCart', JSON.stringify( updatedCart ), { maxAge: 10000000 } );
 
-    const order = setOrderDiscounts(updatedCart, session.customer);
+    const order = setOrderDiscounts(updatedCart, session.Discount);
     return order;
   }
 
