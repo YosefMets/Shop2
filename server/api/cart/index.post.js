@@ -114,7 +114,7 @@ export default defineEventHandler( async (event) => {
     const placeholders = nestIds.map(() => '?').join(','); // создаем плейсхолдеры
     setCookie( event,  'NestIds', JSON.stringify(placeholders), { maxAge: 10000000 } );
     const updateCartPrepare = await db.prepare(`INSERT INTO Carts (OrderId, ProductId, Qty, PriceOld, PriceActual) VALUES ( ?1, ?2, ?3, ?4, ?5 )`);
-    const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (${placeholders})` ).bind( nestIds ).all();
+    const { results: products } = await db.prepare( `SELECT * FROM Products WHERE NestId IN (${placeholders})` ).bind( ...nestIds ).all();
     setCookie( event,  'Products', JSON.stringify(products), { maxAge: 10000000 } );
     let successInsert = true;
     for ( let q = products.length; q--; ) {
