@@ -57,7 +57,7 @@ export default defineEventHandler( async (event) => {
   // );
   const getSessionPrepare = db.prepare(
     `SELECT Sessions.SessionToken, Sessions.SessionExp,
-    Customers.Id AS CustomerId, Customers.Adult,
+    Customers.Id AS CustomerId, Customers.Adult
     FROM Sessions 
     LEFT JOIN Customers ON Sessions.CustomerId = Customers.Id
     WHERE Sessions.SessionToken = '?1';`
