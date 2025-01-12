@@ -61,8 +61,6 @@ export default defineEventHandler( async (event) => {
     FROM Sessions 
     LEFT JOIN Customers ON Sessions.CustomerId = Customers.Id
     WHERE Sessions.SessionToken = '?1';`
-
-  // `SELECT * FROM Sessions WHERE SessionToken = ?1`
   );
 
   if ( sessionToken ) {
