@@ -50,17 +50,20 @@ const setOrderDiscounts = async (cart, customer, discounts) =>{
   //TODO
   //Get Discounts from DB
 
+  // const { productsDiscount, privateDiscount, orderPrice } = cart?.reduce( (res, item) => {
+  //   return { res. }
+  // }, {})
+
   // Calculate private discount
   let productsDiscount = 0;
   let privateDiscount = 0;
   let orderPrice = 0;
-  let cartPrice = 0;
   cart.forEach((item) => {
-    const productDiscount = item.qty * (item.PriceOld - item.PriceActual);
-    cartPrice += item.PriceOld;
+    const productDiscount = item.Qty * (item.PriceOld - item.PriceActual);
+    orderPrice += item.PriceOld;
     productsDiscount += productDiscount;
     if (productDiscount == 0){
-      privateDiscount += item.qty * item.PriceActual * customer?.Discount;
+      privateDiscount += item.Qty * item.PriceActual * customer?.Discount;
     }
   })
   return {cart, orderPrice, productsDiscount, privateDiscount }
