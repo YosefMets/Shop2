@@ -54,6 +54,7 @@ const setOrderDiscounts = async (cart, customer, discounts) =>{
   let productsDiscount = 0;
   let privateDiscount = 0;
   let orderPrice = 0;
+  let cartPrice = 0;
   cart.forEach((item) => {
     const productDiscount = item.qty * (item.PriceOld - item.PriceActual);
     cartPrice += item.PriceOld;
@@ -130,7 +131,7 @@ export default defineEventHandler( async (event) => {
     const { results: updatedCart } = await db.prepare(`SELECT * FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
     setCookie( event,  'UpdatedCart', JSON.stringify( updatedCart ), { maxAge: 10000000 } );
 
-    const order = setOrderDiscounts(updatedCart, session.customer, discounts);
+    const order = setOrderDiscounts(updatedCart, session.customer);
     return order;
   }
 
