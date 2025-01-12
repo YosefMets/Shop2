@@ -57,10 +57,10 @@ export default defineEventHandler( async (event) => {
   // );
   const getSessionPrepare = db.prepare(
     `SELECT 
-    Session.Id AS SessionId,   
-    Session.SessionToken,
-    Session.SessionExp,
-    Session.OrderId,
+    Sessions.Id AS SessionId,   
+    Sessions.SessionToken,
+    Sessions.SessionExp,
+    Sessions.OrderId,
     Customers.Id AS CustomerId,
     Customers.FirstName,
     Customers.LastName,
