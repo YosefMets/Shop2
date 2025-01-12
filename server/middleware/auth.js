@@ -62,7 +62,6 @@ export default defineEventHandler( async (event) => {
     Session.SessionExp,
     Session.OrderId,
     Customers.Id AS CustomerId,
-//     Customers.Email TEXT NOT NULL,
     Customers.FirstName,
     Customers.LastName,
     Customers.Adult,
