@@ -1,8 +1,9 @@
 export default defineEventHandler( async (event) => {
-  const db = hubDatabase();
-  const body = await readBody(event);
   const { session } = event;
   if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+
+  const db = hubDatabase();
+  const body = await readBody(event);
 
   const {
     addressLine1,

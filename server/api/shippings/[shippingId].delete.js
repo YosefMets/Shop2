@@ -1,5 +1,3 @@
-import {routes} from "vue-router/auto-routes";
-
 export default defineEventHandler( async (event) => {
   const { session } = event;
   if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
@@ -7,10 +5,11 @@ export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const { shippingId } = getRouterParams(event);
 
+  /// TODO: Check last shipping left
   const res = await db.prepare(`DELETE FROM Shippings WHERE Id = ? AND CustomerId = ?;`)
     .bind(shippingId, session.CustomerId).run();
 
-  const isDefault = db.prepare(`SELECT * FROM Shippings WHERE c = 1 AND CustomerId = ?;`)
+  const isDefault = db.prepare(`SELECT * FROM Shippings WHERE IsDefault = 1 AND CustomerId = ?;`)
     .bind(session.CustomerId).first();
 
   if ( !isDefault ){
