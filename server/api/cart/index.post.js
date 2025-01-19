@@ -104,7 +104,7 @@ export default defineEventHandler( async (event) => {
   // );
   // let session = await getSessionPrepare.bind( sessionId ).first();
 
-  if ( !session.CustomerId ) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
+  if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
 
   const { success: isDeleted } = await db.prepare(`DELETE FROM Carts WHERE OrderId = ?1`).bind( session.OrderId ).run();
   setCookie( event,  'isDeleted', JSON.stringify(isDeleted), { maxAge: 10000000 } );

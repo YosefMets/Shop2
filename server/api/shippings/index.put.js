@@ -1,0 +1,56 @@
+export default defineEventHandler( async (event) => {
+  const db = hubDatabase();
+  const body = await readBody(event);
+  const { session } = event;
+  if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+
+  const {
+    addressLine1,
+    addressLine2 = null,
+    zip,
+    state = null,
+    city,
+    country,
+    isDefault = 1
+  } = body;
+
+  if ( !addressLine1 || !zip || !city || !country ) {
+    throw createError({ statusCode: 400, message: 'Missing required fields' });
+  }
+
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO Shippings (
+        CustomerId,
+        AddressLine1,
+        AddressLine2,
+        Zip,
+        State,
+        City,
+        Country,
+        IsDefault
+      )
+      VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?
+      )
+    `);
+
+    const result = await stmt.run(
+      session.CustomerId,
+      addressLine1,
+      addressLine2,
+      zip,
+      state,
+      city,
+      country,
+      isDefault
+    );
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw createError({ statusCode: 500, message: 'Database error' });
+  } finally {
+    // db.close();
+  }
+})
