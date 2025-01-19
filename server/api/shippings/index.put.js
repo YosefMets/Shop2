@@ -35,7 +35,7 @@ export default defineEventHandler( async (event) => {
       )
     `);
 
-    const result = await stmt.run(
+    const result = await stmt.bind(
       session.CustomerId,
       addressLine1,
       addressLine2,
@@ -44,7 +44,7 @@ export default defineEventHandler( async (event) => {
       city,
       country,
       isDefault
-    );
+    ).run();
 
     return result;
   } catch (error) {
