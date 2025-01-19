@@ -7,30 +7,18 @@ export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const { shippingId } = getRouterParams(event);
 
-  const res = await db.prepare(`
-    BEGIN TRANSACTION;
-    WITH DefaultShipping AS (
-        SELECT Id
-        FROM Shippings
-        WHERE Id = 5
-          AND IsDefault = 1
-    )
-    DELETE FROM Shippings
-    WHERE Id = 5;
-    
-    UPDATE Shippings
-    SET IsDefault = 1
-    WHERE CustomerId = (SELECT CustomerId FROM Shippings WHERE Id = 5)
-      AND Id != 5
-      AND IsDefault = 0
-    LIMIT 1;
-    
-    COMMIT;`)
+  const res = await db.prepare(`DELETE FROM Shippings WHERE Id = ? AND CustomerId = ?;`)
     .bind(shippingId, session.CustomerId).run();
 
+  const isDefault = db.prepare(`SELECT * FROM Shippings WHERE c = 1 AND CustomerId = ?;`)
+    .bind(session.CustomerId).first();
 
-  // const res = await db.prepare(`DELETE FROM Shippings WHERE Id = ? AND CustomerId = ?;`)
-  //   .bind(shippingId, session.CustomerId).run();
+  if ( !!isDefault ) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
 
-  return res;
+  const newDefault = await db.prepare(`UPDATE Shippings
+      SET IsDefault = 1
+      WHERE CustomerId = ?
+      LIMIT 1;`).bind(session.CustomerId).run();
+
+  return newDefault;
 })
