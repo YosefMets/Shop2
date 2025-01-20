@@ -5,8 +5,6 @@ export default defineEventHandler( async (event) => {
   const db = hubDatabase();
   const body = await readBody(event);
 
-  return body
-
   const {
     methodTypeName,
     providerName,
