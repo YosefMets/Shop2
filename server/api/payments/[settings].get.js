@@ -6,7 +6,7 @@ export default defineEventHandler( async (event) => {
   const { settings } = getRouterParams(event);
 
   if (settings !== "settings") throw createError({ statusCode: 400, statusMessage: `Rout "${settings}" is undefined` });
-  const {result} = db.prepare(`
+  const {result} = await db.prepare(`
       SELECT 
         pmt.Id AS MethodTypeId,
         pmt.Name AS MethodTypeName,
