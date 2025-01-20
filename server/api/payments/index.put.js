@@ -6,14 +6,14 @@ export default defineEventHandler( async (event) => {
   const body = await readBody(event);
 
   const {
-    methodType,
-    provider,
+    methodTypeName,
+    providerName,
     accountIdentifier,
     expiryDate,
     isDefault = 1
   } = body;
 
-  if (!methodType || !provider || !accountIdentifier || !expiryDate) {
+  if (!methodTypeName || !providerName || !accountIdentifier || !expiryDate) {
     throw createError({ statusCode: 400, message: 'Missing required fields' });
   }
 
@@ -40,8 +40,8 @@ export default defineEventHandler( async (event) => {
 
     const result = await stmt.bind(
       session.CustomerId,  // CustomerId
-      methodType,          // methodType
-      provider,            // provider
+      methodTypeName,          // methodType
+      providerName,            // provider
       accountIdentifier,   // accountIdentifier
       expiryDate,          // expiryDate
       isDefault            // isDefault
