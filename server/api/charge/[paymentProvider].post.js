@@ -10,6 +10,8 @@ const stripeCharge = async ({
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+  return stripe
+
   const charge = await stripe.charges.create({
     amount,
     currency,
