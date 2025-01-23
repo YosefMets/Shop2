@@ -7,10 +7,10 @@ const stripeCharge = async ({
                               orderId: receipt_number
   }) => {
 
+  return process.env.STRIPE_SECRET_KEY
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-  return stripe
 
   const charge = await stripe.charges.create({
     amount,
