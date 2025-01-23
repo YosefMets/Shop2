@@ -26,16 +26,18 @@ export default defineEventHandler( async (event) => {
   const { paymentProvider } = getRouterParams( event );
   const body = await readBody( event );
 
-  let res;
+  return { paymentProvider, body }
 
-  switch ( paymentProvider ) {
-    case 'stripe':
-      res = await stripeCharge( body );
-      break;
-    default:
-      break;
-  }
-
-  return res;
+  // let res;
+  //
+  // switch ( paymentProvider ) {
+  //   case 'stripe':
+  //     res = await stripeCharge( body );
+  //     break;
+  //   default:
+  //     break;
+  // }
+  //
+  // return res;
 
 });
