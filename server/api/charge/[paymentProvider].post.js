@@ -7,6 +7,13 @@ const stripeCharge = async ({
                               orderId: receipt_number
   }) => {
 
+  return {
+    amount,
+    currency,
+    source,
+    receipt_number
+  }
+
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -26,18 +33,18 @@ export default defineEventHandler( async (event) => {
   const { paymentProvider } = getRouterParams( event );
   const body = await readBody( event );
 
-  return { paymentProvider, body }
+  // return { paymentProvider, body }
 
-  // let res;
-  //
-  // switch ( paymentProvider ) {
-  //   case 'stripe':
-  //     res = await stripeCharge( body );
-  //     break;
-  //   default:
-  //     break;
-  // }
-  //
-  // return res;
+  let res;
+
+  switch ( paymentProvider ) {
+    case 'stripe':
+      res = await stripeCharge( body );
+      break;
+    default:
+      break;
+  }
+
+  return res;
 
 });
