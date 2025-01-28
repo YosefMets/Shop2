@@ -97,13 +97,13 @@ export default defineEventHandler( async (event) => {
       `UPDATE Sessions SET CustomerId = ?1, OrderId = ?2 WHERE Id = ?3`
     );
     shippings = await getShippings( customer.Id );
-    setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
+    // setCookie( event,  'Shippings', JSON.stringify(shippings), { maxAge: 10000000 } );
     orderId = await getOrder( customer.Id, shippings?.[0]?.Id, event );
-    setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
-    setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, sessionId: event.session?.Id} ), { maxAge: 10000000 } );
+    // setCookie( event,  'Order', JSON.stringify(orderId), { maxAge: 10000000 } );
+    // setCookie( event,  'OrderAfter', JSON.stringify( { customerId: customer.Id, orderId, sessionId: event.session?.Id} ), { maxAge: 10000000 } );
     const res = await putCustomerToSessionPrepare.bind( customer.Id, orderId, event.session?.SessionId ).run();
-    setCookie( event,  'SessionAuthUpdated', JSON.stringify( { session: event.session} ), { maxAge: 10000000 } );
-    setCookie( event,  'Res', JSON.stringify( res ), { maxAge: 10000000 } );
+    // setCookie( event,  'SessionAuthUpdated', JSON.stringify( { session: event.session} ), { maxAge: 10000000 } );
+    // setCookie( event,  'Res', JSON.stringify( res ), { maxAge: 10000000 } );
   } else {
     throw createError({ statusCode: 403, statusMessage: 'Pass in not correct' });
   }

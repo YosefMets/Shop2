@@ -1,23 +1,28 @@
 import Stripe from "stripe";
 
 export default defineEventHandler( async (event) => {
-  // const { session } = event;
-  // if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+  const { session } = event;
+  // if ( !session?.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
 
-  const db = hubDatabase();
+  // const db = hubDatabase();
   const body = await readBody(event);
+  // return  body;
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-  const {email, payment_method} = body
+  const {paymentMethod} = body;
 
 
+  console.log(session);
+  console.log(body);
   const customer = await stripe.customers.create({
-    email
+    email: session?.customer?.email ?? "mets@gmail.com",
+    payment_method: paymentMethod
   });
 
   console.log(customer);
 
+  //????????????
   // Привязываем PaymentMethod к клиенту
-  const r = await stripe.paymentMethods.attach(payment_method, {
+  const r = await stripe.paymentMethods.attach(paymentMethod, {
     customer: customer.id,
   });
 
@@ -27,7 +32,7 @@ export default defineEventHandler( async (event) => {
     amount: 4900, // Сумма в центах
     currency: 'usd',
     customer: customer.id, // ID клиента
-    payment_method, // ID сохранённого метода
+    payment_method: paymentMethod, // ID сохранённого метода
     off_session: true,
     confirm: true,
   });

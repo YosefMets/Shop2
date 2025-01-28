@@ -1,5 +1,6 @@
 import { i18n } from './configs/i18n'
 import { image } from './configs/image'
+import { stripe } from './configs/stripe'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -23,8 +24,18 @@ export default defineNuxtConfig({
     ['@nuxtjs/i18n', i18n],
     ['@nuxt/image', image],
     '@nuxthub/core',
+    '@unlok-co/nuxt-stripe',
+    '@nuxt/scripts'
   ],
   hub: {
     database: true
+  },
+  stripe,
+
+  scripts: {
+    registry: {
+      stripe: true,
+    }
   }
+
 })
