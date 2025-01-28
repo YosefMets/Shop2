@@ -9,7 +9,7 @@ const SetCustomerStripe = async (email, payment_method) => {
   });
 
   const res = await SetPaymentStripe(customer.id, payment_method);
-  if (res) throw createError({ statusCode: 500, statusMessage: 'Not Set' });
+  if (!res) throw createError({ statusCode: 500, statusMessage: 'Not Set' });
   return customer.id;
 }
 
