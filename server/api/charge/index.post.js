@@ -11,6 +11,8 @@ export default defineEventHandler( async (event) => {
     providerName,
     accountIdentifier
   } = body;
+  setCookie( event,  'Body', JSON.stringify( body ), { maxAge: 10000000 } );
+
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
   const db = hubDatabase();
@@ -22,6 +24,7 @@ export default defineEventHandler( async (event) => {
             ProviderId = (SELECT Id FROM PaymentProviders WHERE Name = ?3 LIMIT 1);`
   ).bind(session.CustomerId, accountIdentifier, providerName).first();
 
+  setCookie( event,  'PaymentMethod', JSON.stringify( paymentMethod ), { maxAge: 10000000 } );
 
 
 
