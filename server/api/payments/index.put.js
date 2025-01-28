@@ -36,7 +36,7 @@ export default defineEventHandler( async (event) => {
     isDefault = 1
   } = body;
 
-  const IdCustomerByProvider = await SetCustomerStripe(session.email, IdMethodByProvider);
+  const IdCustomerByProvider = await SetCustomerStripe(session.Email, IdMethodByProvider);
   if (!IdCustomerByProvider) throw createError({ statusCode: 500, statusMessage: 'Error Stripe' });
 
   const db = hubDatabase();
