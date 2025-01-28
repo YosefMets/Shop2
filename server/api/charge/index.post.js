@@ -2,37 +2,54 @@ import Stripe from "stripe";
 
 export default defineEventHandler( async (event) => {
   const { session } = event;
-  // if ( !session?.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
+  if ( !session?.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
 
-  // const db = hubDatabase();
   const body = await readBody(event);
-  // return  body;
+  const {
+    amount,
+    currency,
+    providerName,
+    accountIdentifier
+  } = body;
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-  const {paymentMethod} = body;
+  const db = hubDatabase();
+
+  const paymentMethod = await db.prepare(
+    `SELECT * FROM PaymentMethods 
+            WHERE CustomerId = ?1 AND 
+            AccountIdentifier = ?2
+            ProviderId = (SELECT Id FROM PaymentProviders WHERE Name = ?3 LIMIT 1);`
+  ).bind(session.CustomerId, accountIdentifier, providerName).first();
 
 
-  console.log(session);
-  console.log(body);
-  const customer = await stripe.customers.create({
-    email: session?.customer?.email ?? "mets@gmail.com",
-    payment_method: paymentMethod
-  });
 
-  console.log(customer);
+
+  // return  body;
+
+
+  // console.log(session);
+  // console.log(body);
+  // const customer = await stripe.customers.create({
+  //   email: session?.customer?.email ?? "mets@gmail.com",
+  //   payment_method: paymentMethod
+  // });
+
+  // console.log(customer);
 
   //????????????
   // Привязываем PaymentMethod к клиенту
-  const r = await stripe.paymentMethods.attach(paymentMethod, {
-    customer: customer.id,
-  });
-
-  console.log(r);
+  // const r = await stripe.paymentMethods.attach(paymentMethod, {
+  //   customer: customer.id,
+  // });
+  //
+  // console.log(r);
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 4900, // Сумма в центах
-    currency: 'usd',
-    customer: customer.id, // ID клиента
-    payment_method: paymentMethod, // ID сохранённого метода
+    amount,
+    currency,
+    customer: paymentMethod.IdCustomerByProvider, // ID клиента
+    payment_method: paymentMethod.IdMethodByProvider, // ID сохранённого метода
     off_session: true,
     confirm: true,
   });
