@@ -16,7 +16,13 @@ const auth = async () => {
       pass: pass.value,
     }
   });
-  console.log( authRes );
+
+  if ( !authRes?.customer ) {
+    // TODO обрабатываем ошибку
+  }
+  const paymentMethods = await $fetch('/api/payments');
+  const clientSecret = await $fetch('/api/payments/client-secret');
+  console.log( paymentMethods );
 }
 
 const serverCart = async () => {
