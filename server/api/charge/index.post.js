@@ -20,7 +20,7 @@ export default defineEventHandler( async (event) => {
   const paymentMethod = await db.prepare(
     `SELECT * FROM PaymentMethods 
             WHERE CustomerId = ?1 AND 
-            AccountIdentifier = ?2
+            AccountIdentifier = ?2 AND
             ProviderId = (SELECT Id FROM PaymentProviders WHERE Name = ?3 LIMIT 1);`
   ).bind(session.CustomerId, accountIdentifier, providerName).first();
 
