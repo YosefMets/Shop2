@@ -3,9 +3,10 @@ export default defineEventHandler( async (event) => {
   if ( !session.CustomerId ) throw createError({ statusCode: 401, statusMessage: 'Unauthorized' });
 
   const db = hubDatabase();
-  const { settings } = getRouterParams(event);
-
-  if (settings !== "settings") throw createError({ statusCode: 400, statusMessage: `Rout "${settings}" is undefined` });
+  // const qwe = getRouterParams(event);
+  // console.log( qwe );
+// return qwe;
+  // if (settings !== "settings") throw createError({ statusCode: 400, statusMessage: `Rout "${settings}" is undefined` });
   const {results} = await db.prepare(`
       SELECT 
         pmt.Id AS MethodTypeId,
