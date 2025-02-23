@@ -5,13 +5,8 @@ import SvgTrack from "~/components/imgs/svg-track.vue";
 const route = useRoute();
 const { items, total } = storeToRefs( useCartStore() );
 
-const user = ref(null);
-
 const email = ref('');
 const pass = ref('');
-
-// states: cart, auth, checkout
-const state = ref('cart');
 
 const auth = async () => {
   const authRes = await $fetch('/api/auth', {
@@ -41,65 +36,11 @@ const serverCart = async () => {
 
 <template>
 
-  <Modal :show="route.query?.['cart'] !== undefined"
+  <Modal :show="route.query?.['auth'] !== undefined"
          :width="'35rem'"
-         @close="navigateTo({ query: {...route.query, ['cart']: undefined} })">
+         @close="navigateTo({ query: {...route.query, 'auth': undefined} })">
 
-<!--    <div class="chck-gap chck-gap-top" />-->
-
-    <template v-if="state === 'cart'">
-
-      <NButton class="chck-ttl" @click="state = user ? 'checkout' : 'auth'">
-        {{ $t('checkout') }}
-        <PriceRegular :amount="total" class="cart-total" />
-      </NButton>
-
-      <div class="cart-layout">
-        <TransitionGroup name="adding" tag="div" class="cart-items">
-          <CartItem  v-for="item in items" :key="item" :cartItem="item" />
-
-  <!--        <div class="chck-delivery">-->
-  <!--          <div class="chck-delivery-ic-wr">-->
-  <!--            <SvgTrack class="chck-delivery-ic" />-->
-  <!--          </div>-->
-  <!--          <div class="chck-delivery-lbl">{{ $t('delivery') }}</div>-->
-  <!--          <PriceRegular :amount="10" class="chck-delivery-price" />-->
-  <!--        </div>-->
-
-  <!--        <form action="" class="chck-form" @submit.prevent="auth">-->
-  <!--          <input v-model="email"-->
-  <!--                 type="email"-->
-  <!--                 autocomplete="email"-->
-  <!--                 required-->
-  <!--                 class="chck-email"-->
-  <!--                 :placeholder="$t('email')" />-->
-  <!--          <input v-model="pass"-->
-  <!--                 type="password"-->
-  <!--                 required-->
-  <!--                 class="chck-email"-->
-  <!--                 :placeholder="$t('password')" />-->
-  <!--          <NButton>{{ $t('checkout') }}</NButton>-->
-  <!--        </form>-->
-
-  <!--        <NButton>-->
-  <!--          <div class="chck-btn-cont">-->
-  <!--            <i></i>-->
-  <!--            {{ $t('checkout') }}-->
-  <!--            <PriceRegular :amount="total" class="chck-btn-price" />-->
-  <!--          </div>-->
-  <!--        </NButton>-->
-
-        </TransitionGroup>
-      </div>
-    </template>
-
-    <template v-else-if="state === 'auth'">
-      Auth
-    </template>
-
-    <template v-else><!-- state === checkout -->
-      Checkout
-    </template>
+    <h1>Auth</h1>
 
   </Modal>
 
@@ -134,16 +75,6 @@ const serverCart = async () => {
   margin: 0;
   z-index: 50;
 }
-.chck-ttl:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 100%;
-  height: 3rem;
-  background-color: #fff;
-}
-
 .cart-items {
   display: flex;
   flex-direction: column;

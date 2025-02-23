@@ -6,6 +6,5 @@ export default defineEventHandler( async (event) => {
   const {results} = await db.prepare(`SELECT * FROM Shippings WHERE CustomerId = ?;`)
     .bind(session.CustomerId).all();
 
-
   return results;
 })

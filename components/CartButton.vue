@@ -25,7 +25,7 @@ watch(quantity, (newVal, oldVal) => {
 
 <template>
   <div class="cart-but-wr">
-    <NuxtLink :to="{ query: {...route.query, ['cart']: null} }"
+    <NuxtLink :to="{ query: {...route.query, 'cart': null} }"
               :class="['cart-but', { 'cart-but-full': quantity > 0 }]">
 <!--    <NLink :to="'/cart'"-->
 <!--           :class="['cart-but', { 'cart-but-full': quantity > 0 }]"-->

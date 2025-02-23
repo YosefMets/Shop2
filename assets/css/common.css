@@ -69,7 +69,7 @@ input:-webkit-autofill {
 
 html, body {
   height: 100%;
-  scrollbar-gutter: stable;
+  /*scrollbar-gutter: stable;*/
 }
 
 body {
@@ -216,7 +216,7 @@ a:hover {
   width: .5rem;
   height: 0;
 }
-.scroll::-webkit-scrollbar-button {}
+.scroll::-webkit-scrollbar-button { display: none; }
 .scroll::-webkit-scrollbar-track { background: transparent; }
 .scroll::-webkit-scrollbar-track-piece {}
 .scroll::-webkit-scrollbar-thumb {

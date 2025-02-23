@@ -44,7 +44,7 @@ const brandName = computed( () => db.value?.[item.value.B]?.N );
   column-gap: .5rem;
   row-gap: .5rem;
   background-color: #fff;
-  padding: .5rem 1rem .5rem .5rem;
+  padding: .5rem 1rem .5rem 0;
   /*border-radius: var(--br);*/
 }
 .ci-i-wr {

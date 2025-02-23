@@ -7,5 +7,7 @@ const { currency, activeGroup } = storeToRefs( useAppStore() );
     <NuxtPage />
   </NuxtLayout>
 
+<!--  <Auth />-->
+
 <!--  <Countries />-->
 </template>
