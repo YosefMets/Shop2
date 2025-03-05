@@ -27,8 +27,17 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     '@nuxt/scripts'
   ],
+  build: {
+    transpile: ['pinia']
+  },
+  alias: {
+    pinia: 'pinia/dist/pinia.cjs'
+  },
   hub: {
-    database: true
+    database: true,
+    kv: true,
+    blob: true,
+    cache: true,
   },
   stripe,
 
